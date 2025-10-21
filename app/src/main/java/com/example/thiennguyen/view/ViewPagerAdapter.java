@@ -5,9 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.thiennguyen.view.ChuTrang.HomeFragment;
+import com.example.thiennguyen.view.TrangChu.HomeFragment;
 import com.example.thiennguyen.view.bangtin.BangTinFragment;
 import com.example.thiennguyen.view.khampha.KhamPhaFragment;
+import com.example.thiennguyen.view.taikhoan.TaiKhoanFragment;
 import com.example.thiennguyen.view.ungho.UngHoFragment;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
@@ -23,12 +24,13 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             case 1:return  new UngHoFragment();
             case 2:return  new BangTinFragment();
             case 3:return  new KhamPhaFragment();
+            case 4:return  new TaiKhoanFragment();
             default: return new HomeFragment();
         }
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 5;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.thiennguyen.view.ChuTrang;
+package com.example.thiennguyen.view.TrangChu;
 
 import android.os.Bundle;
 

@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
             } else if (id == R.id.menu_khampha) {
                 viewPager2.setCurrentItem(3);
                 return true;
+            }else if (id == R.id.menu_taikhoan) {
+                viewPager2.setCurrentItem(4);
+                return true;
             }
 
             return false;
@@ -69,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 3:
                         bottomNavigationView.setSelectedItemId(R.id.menu_khampha);
+                        break;
+                    case 4:
+                        bottomNavigationView.setSelectedItemId(R.id.menu_taikhoan);
                         break;
                 }
             }

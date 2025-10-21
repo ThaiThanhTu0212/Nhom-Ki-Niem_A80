@@ -4,4 +4,5 @@
     <item android:id="@+id/menu_ungho" android:title="Ủng hộ" android:icon="@drawable/ung_ho"/>
     <item android:id="@+id/menu_bangtin" android:title="Bảng tin" android:icon="@drawable/ban_tin"/>
     <item android:id="@+id/menu_khampha" android:title="Khám phá" android:icon="@drawable/kham_pha"/>
+    <item android:id="@+id/menu_taikhoan" android:title="Tài Khoản" android:icon="@drawable/tai_khoan"/>
 </menu>
