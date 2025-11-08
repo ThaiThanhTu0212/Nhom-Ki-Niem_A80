@@ -16,6 +16,15 @@ import com.example.thiennguyen.view.model.ChienDich;
 import java.util.List;
 
 public class ChienDichHomeAdapter extends RecyclerView.Adapter<ChienDichHomeAdapter.ChienDichHomeHolder> {
+    public interface OnItemClickListener {
+        void onItemClick(ChienDich chienDich);
+    }
+    private OnItemClickListener listener;
+
+    public void setListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
     private List<ChienDich> chienDichList;
 
     public ChienDichHomeAdapter(List<ChienDich> chienDichList) {
@@ -41,6 +50,11 @@ public class ChienDichHomeAdapter extends RecyclerView.Adapter<ChienDichHomeAdap
                 .placeholder(R.drawable.chiendich_image) // ảnh hiển thị tạm khi đang tải
                 .error(R.drawable.chiendich_image)         // ảnh lỗi fallback (có thể dùng lại ảnh trong drawable)
                 .into(holder.imageViewCDhome);
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null){
+                listener.onItemClick(chienDich);
+            }
+        });
     }
 
     @Override

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.TrangChu.ChiTietChienDichHomeActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- ẢNH CHIẾN DỊCH -->
+            <ImageView
+                android:id="@+id/imageViewhinhAnhctcd"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/chiendich_image" />
+
+            <!-- DANH MỤC -->
+            <TextView
+                android:id="@+id/tvdm_ctcd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="Thiên tai"
+                android:textColor="#43D703"
+                android:textStyle="bold" />
+
+            <!-- TÊN CHIẾN DỊCH -->
+            <TextView
+                android:id="@+id/tvtencdctcd_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="Hướng về Cao Bằng: Chung tay khắc phục hậu quả bão lũ 2025"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- THÔNG TIN MỤC TIÊU VÀ NGÀY CÒN LẠI -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                android:weightSum="2">
+
+                <!-- MỤC TIÊU -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mục tiêu chiến dịch"
+                        android:textSize="13sp"
+                        android:textColor="#888888" />
+
+                    <TextView
+                        android:id="@+id/tvsoTienMucTieu_ctcd_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10.000.000 đ"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <!-- THỜI GIAN CÒN LẠI -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Thời gian còn lại"
+                        android:textSize="13sp"
+                        android:textColor="#888888" />
+
+                    <TextView
+                        android:id="@+id/tvsongayconlai_ctcd_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="32 ngày"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- THANH TIẾN ĐỘ QUYÊN GÓP -->
+            <ProgressBar
+                android:id="@+id/progressBarTienDo"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:max="100"
+                android:progress="50"
+                android:progressTint="#27D92E"
+                android:indeterminate="false" />
+
+            <!-- SỐ TIỀN ĐÃ ĐẠT -->
+            <TextView
+                android:id="@+id/tvsoTienHienTai_ctcd_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="6dp"
+                android:text="92.508.818 đ (1%)"
+                android:textSize="14sp"
+                android:textColor="#333333" />
+
+            <!-- PHẦN THÔNG TIN -->
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="16dp"
+                android:text="Thông tin chiến dịch"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:background="#E0E0E0" />
+
+            <!-- MÔ TẢ -->
+            <TextView
+                android:id="@+id/tvmoTa_ctcd_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="Vừa qua, hoàn lưu bão số 11 (Matmo) đã gây ra đợt mưa lũ lịch sử tại Cao Bằng..."
+                android:textSize="15sp"
+                android:textColor="#444444" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
