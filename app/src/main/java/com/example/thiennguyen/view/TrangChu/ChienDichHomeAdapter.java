@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
 import com.example.thiennguyen.view.model.ChienDich;
 
@@ -35,7 +36,11 @@ public class ChienDichHomeAdapter extends RecyclerView.Adapter<ChienDichHomeAdap
         if (chienDich== null)return;
         holder.tvtenCdHome.setText(chienDich.getTenCd());
         holder.tvsoTienHienTaiHome.setText(chienDich.getSoTienHienTai().toString());
-        holder.imageViewCDhome.setImageResource(R.drawable.chiendich_image);
+        Glide.with(holder.itemView.getContext())
+                .load(chienDich.getHinhAnh())
+                .placeholder(R.drawable.chiendich_image) // ảnh hiển thị tạm khi đang tải
+                .error(R.drawable.chiendich_image)         // ảnh lỗi fallback (có thể dùng lại ảnh trong drawable)
+                .into(holder.imageViewCDhome);
     }
 
     @Override

@@ -6,11 +6,18 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+
     <ImageView
         android:id="@+id/imageViewCDhome"
         android:layout_width="match_parent"
         android:layout_height="170dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_margin="10dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/home_round_image"
+
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/chiendich_image" />
 
     <TextView
         android:id="@+id/tvtenCdHome"

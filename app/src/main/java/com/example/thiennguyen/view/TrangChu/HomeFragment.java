@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment {
                 "TP.HCM",
                 "Quận 1",
                 "123 Nguyễn Huệ",
-                "https://example.com/tim.jpg",
+                "https://static.thiennguyen.app/public/donate-target/photo/2025/10/10/879b7786-cef5-4998-8821-76b057efec01.jpg",
                 nd1,
                 dm1
         );
@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
                 "Lào Cai",
                 "Bát Xát",
                 "Thôn A, xã Bản Vược",
-                "https://example.com/school.jpg",
+                "https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2021/3/12/888480/Pham-Dinh-Quy-2.jpg",
                 nd2,
                 dm2
         );
@@ -102,7 +102,7 @@ public class HomeFragment extends Fragment {
                 "Hà Nội",
                 "Cầu Giấy",
                 "456 Xuân Thủy",
-                "https://example.com/tree.jpg",
+                "https://maykhoanmakita.net/cdn/images/tin-tuc/cay-xanh-do-thi-la-gi-3.jpg",
                 nd3,
                 dm3
         );
@@ -119,7 +119,7 @@ public class HomeFragment extends Fragment {
                 "Quảng Nam",
                 "Tam Kỳ",
                 "Thôn Trung An",
-                "https://example.com/flood.jpg",
+                "https://dienbien.edu.vn/uploads/news/2024_09/image-20240901174657-7.jpeg",
                 nd4,
                 dm4
         );
