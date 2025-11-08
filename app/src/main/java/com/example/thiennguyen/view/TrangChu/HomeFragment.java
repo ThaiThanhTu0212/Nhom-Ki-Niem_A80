@@ -24,7 +24,7 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     View view;
-    RecyclerView chiendichHomeRecycleid, danhmucHomeRecyleid;
+    RecyclerView chiendichHomeRecycleid, danhmucHomeRecyleid, nguoiDungHomeRecycleid;
     List<ChienDich> chienDichListHome;
     List<DanhMuc> danhMuclistHome;
     List<NguoiDung> nguoiDungListHome;
@@ -45,10 +45,11 @@ public class HomeFragment extends Fragment {
     }
 
     private void creatListChienDich() {
-        NguoiDung nd1 = new NguoiDung(1, "Nguyễn Minh An", "an.nguyen@gmail.com", "0912345678", "123456", "nguoi_ung_ho", "hoat_dong", "/images/an.jpg");
-        NguoiDung nd2 = new NguoiDung(2, "Trần Thu Hà", "ha.tran@gmail.com", "0987654321", "123456", "nguoi_van_dong", "hoat_dong", "/images/ha.jpg");
-        NguoiDung nd3 = new NguoiDung(3, "Lê Quang Vũ", "vu.le@gmail.com", "0905123456", "123456", "admin", "hoat_dong", "/images/vu.jpg");
-        NguoiDung nd4 = new NguoiDung(4, "Phạm Thảo Nhi", "nhi.pham@gmail.com", "0977888999", "123456", "nguoi_ung_ho", "hoat_dong", "/images/nhi.jpg");
+        NguoiDung nd1 = new NguoiDung(1, "Sơn Tùng", "tungnguyen@gmail.com", "0912345678", "123456", "nguoi_ung_ho", "hoat_dong", "https://i.scdn.co/image/ab6761610000e5eb5a79a6ca8c60e4ec1440be53");
+        NguoiDung nd2 = new NguoiDung(2, "Double 2T", "ha.tran@gmail.com", "0987654321", "123456", "nguoi_van_dong", "hoat_dong", "https://cdn2.tuoitre.vn/zoom/700_525/471584752817336320/2025/3/21/vt-double-2t-1-1742527225983542614988-112-0-1102-1890-crop-17425286630251174539582.jpg");
+        NguoiDung nd3 = new NguoiDung(3, "Trần Hà Linh", "vu.le@gmail.com", "0905123456", "123456", "admin", "hoat_dong", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS1EMSNtn7o75dTQvCvyarrLhvgtLWyA0P6g&s");
+        NguoiDung nd4 = new NguoiDung(4, "Độ Mixi", "mixi.pham@gmail.com", "0977888999", "123456", "nguoi_ung_ho", "hoat_dong", "https://cafefcdn.com/203337114487263232/2024/12/24/xi-cau-hon-vo-lan-2-nhung-qua-khung-the-nao-ma-cong-dong-mang-lai-choang-the-nay-16484388521731690750957-17350132878921014156514-1735022686155-17350226863391385593884.jpg");
+        NguoiDung nd5 = new NguoiDung(5, "Độ Mixi", "mixi.pham@gmail.com", "0977888999", "123456", "nguoi_ung_ho", "hoat_dong", "");
 
         DanhMuc dm1 = new DanhMuc(1, "Y tế");
         DanhMuc dm2 = new DanhMuc(2, "Giáo dục");
@@ -137,6 +138,13 @@ public class HomeFragment extends Fragment {
         danhMuclistHome.add(dm3);
         danhMuclistHome.add(dm4);
 
+        nguoiDungListHome = new ArrayList<>();
+        nguoiDungListHome.add(nd1);
+        nguoiDungListHome.add(nd2);
+        nguoiDungListHome.add(nd3);
+        nguoiDungListHome.add(nd4);
+        nguoiDungListHome.add(nd5);
+
     }
 
     private void initListener() {
@@ -157,6 +165,12 @@ public class HomeFragment extends Fragment {
         danhmucHomeRecyleid.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         danhmucHomeRecyleid.setAdapter(danhMuchHomeAdapter);
+        //recycleView for nguoi dung
+        nguoiDungHomeRecycleid = view.findViewById(R.id.nguoiDungHomeRecycleid);
+        NguoiDungHomeAdapter nguoiDungHomeAdapter = new NguoiDungHomeAdapter(nguoiDungListHome);
+        nguoiDungHomeRecycleid.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        nguoiDungHomeRecycleid.setAdapter(nguoiDungHomeAdapter);
 
     }
 }
