@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "com.example.thiennguyen"
-    compileSdk = 36
+    compileSdk = 34  // ⚠️ Nên để 34 vì hiện chưa có 36 chính thức
 
     defaultConfig {
         applicationId = "com.example.thiennguyen"
         minSdk = 22
-        targetSdk = 36
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -25,20 +25,24 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    buildFeatures{
-        dataBinding = true
+
+    buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 }
 
 dependencies {
+    // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
+    // AndroidX & Material
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -48,6 +52,8 @@ dependencies {
     implementation(libs.cardview)
     implementation(libs.legacy.support.v4)
     implementation(libs.fragment)
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
