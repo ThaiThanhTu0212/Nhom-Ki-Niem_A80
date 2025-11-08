@@ -55,26 +55,73 @@ public class HomeFragment extends Fragment {
         DanhMuc dm3 = new DanhMuc(3, "Cứu trợ thiên tai");
         DanhMuc dm4 = new DanhMuc(4, "Hỗ trợ người vô gia cư");
 
-        // Tạo 4 đối tượng ChienDich
+        // Tạo 4 chiến dịch
         ChienDich cd1 = new ChienDich(
-                1, nd1, dm1, "Chiến dịch 1", "Mô tả chiến dịch 1",
-                new BigDecimal("5000000"), new BigDecimal("1000000"),
-                new Date(), new Date(System.currentTimeMillis() + 86400000L * 30),
-                "Đang diễn ra", "Hà Nội", "Hoàn Kiếm", "123 Đường A"
+                1,
+                "Gây quỹ mổ tim cho trẻ em",
+                "Chiến dịch hỗ trợ chi phí phẫu thuật tim cho trẻ em nghèo.",
+                new BigDecimal("100000000"),
+                new BigDecimal("25000000"),
+                new Date(2025 - 1900, 10, 1),   // 1/11/2025
+                new Date(2025 - 1900, 11, 1),   // 1/12/2025
+                "dang_dien_ra",
+                "TP.HCM",
+                "Quận 1",
+                "123 Nguyễn Huệ",
+                "https://example.com/tim.jpg",
+                nd1,
+                dm1
         );
 
         ChienDich cd2 = new ChienDich(
-                2, nd1, dm1, "Chiến dịch 2", "Mô tả chiến dịch 2",
-                new BigDecimal("10000000"), new BigDecimal("2500000"),
-                new Date(), new Date(System.currentTimeMillis() + 86400000L * 60),
-                "Đang diễn ra", "Hà Nội", "Ba Đình", "456 Đường B"
+                2,
+                "Xây trường học vùng cao",
+                "Giúp trẻ em vùng núi có trường học kiên cố.",
+                new BigDecimal("200000000"),
+                new BigDecimal("80000000"),
+                new Date(2025 - 1900, 9, 15),
+                new Date(2025 - 1900, 11, 30),
+                "dang_dien_ra",
+                "Lào Cai",
+                "Bát Xát",
+                "Thôn A, xã Bản Vược",
+                "https://example.com/school.jpg",
+                nd2,
+                dm2
         );
 
         ChienDich cd3 = new ChienDich(
-                3, nd1, dm1, "Chiến dịch 3", "Mô tả chiến dịch 3",
-                new BigDecimal("8000000"), new BigDecimal("3000000"),
-                new Date(), new Date(System.currentTimeMillis() + 86400000L * 45),
-                "Đang diễn ra", "Hồ Chí Minh", "Quận 1", "789 Đường C"
+                3,
+                "Trồng cây xanh đô thị",
+                "Chiến dịch phủ xanh thành phố với 10.000 cây mới.",
+                new BigDecimal("50000000"),
+                new BigDecimal("12000000"),
+                new Date(2025 - 1900, 8, 20),
+                new Date(2025 - 1900, 9, 20),
+                "hoan_thanh",
+                "Hà Nội",
+                "Cầu Giấy",
+                "456 Xuân Thủy",
+                "https://example.com/tree.jpg",
+                nd3,
+                dm3
+        );
+
+        ChienDich cd4 = new ChienDich(
+                4,
+                "Cứu trợ miền Trung sau bão",
+                "Hỗ trợ người dân bị ảnh hưởng bởi thiên tai bão lũ.",
+                new BigDecimal("300000000"),
+                new BigDecimal("290000000"),
+                new Date(2025 - 1900, 7, 10),
+                new Date(2025 - 1900, 8, 10),
+                "hoan_thanh",
+                "Quảng Nam",
+                "Tam Kỳ",
+                "Thôn Trung An",
+                "https://example.com/flood.jpg",
+                nd4,
+                dm4
         );
 
 

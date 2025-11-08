@@ -19,7 +19,20 @@ public class ChienDich {
     private NguoiDung nguoiToChuc; // khóa ngoại id_nguoi_to_chuc
     private DanhMuc danhMuc;       // khóa ngoại id_danh_muc
 
-    public ChienDich() {
+    public ChienDich(int idCd, String tenCd, String moTa, BigDecimal soTienMucTieu, BigDecimal soTienHienTai, Date ngayBatDau, Date ngayKetThuc, String trangThai, String tinhThanh, String quanHuyen, String diaChi, NguoiDung nguoiToChuc, DanhMuc danhMuc) {
+        this.idCd = idCd;
+        this.tenCd = tenCd;
+        this.moTa = moTa;
+        this.soTienMucTieu = soTienMucTieu;
+        this.soTienHienTai = soTienHienTai;
+        this.ngayBatDau = ngayBatDau;
+        this.ngayKetThuc = ngayKetThuc;
+        this.trangThai = trangThai;
+        this.tinhThanh = tinhThanh;
+        this.quanHuyen = quanHuyen;
+        this.diaChi = diaChi;
+        this.nguoiToChuc = nguoiToChuc;
+        this.danhMuc = danhMuc;
     }
 
     public ChienDich(int idCd, String tenCd, String moTa, BigDecimal soTienMucTieu, BigDecimal soTienHienTai, Date ngayBatDau, Date ngayKetThuc, String trangThai, String tinhThanh, String quanHuyen, String diaChi, String hinhAnh, NguoiDung nguoiToChuc, DanhMuc danhMuc) {
@@ -37,39 +50,6 @@ public class ChienDich {
         this.hinhAnh = hinhAnh;
         this.nguoiToChuc = nguoiToChuc;
         this.danhMuc = danhMuc;
-    }
-
-    public String getHinhAnh() {
-        return hinhAnh;
-    }
-
-    public void setHinhAnh(String hinhAnh) {
-        this.hinhAnh = hinhAnh;
-    }
-
-    public ChienDich(int idCd, String tenCd, String moTa, BigDecimal soTienMucTieu, BigDecimal soTienHienTai, Date ngayBatDau, Date ngayKetThuc, String trangThai, String tinhThanh, String quanHuyen, String diaChi, String hinhAnh, NguoiDung nguoiToChuc, DanhMuc danhMuc) {
-        this.idCd = idCd;
-        this.tenCd = tenCd;
-        this.moTa = moTa;
-        this.soTienMucTieu = soTienMucTieu;
-        this.soTienHienTai = soTienHienTai;
-        this.ngayBatDau = ngayBatDau;
-        this.ngayKetThuc = ngayKetThuc;
-        this.trangThai = trangThai;
-        this.tinhThanh = tinhThanh;
-        this.quanHuyen = quanHuyen;
-        this.diaChi = diaChi;
-        this.hinhAnh = hinhAnh;
-        this.nguoiToChuc = nguoiToChuc;
-        this.danhMuc = danhMuc;
-    }
-
-    public String getHinhAnh() {
-        return hinhAnh;
-    }
-
-    public void setHinhAnh(String hinhAnh) {
-        this.hinhAnh = hinhAnh;
     }
 
     public int getIdCd() {
@@ -78,22 +58,6 @@ public class ChienDich {
 
     public void setIdCd(int idCd) {
         this.idCd = idCd;
-    }
-
-    public NguoiDung getNguoiToChuc() {
-        return nguoiToChuc;
-    }
-
-    public void setNguoiToChuc(NguoiDung nguoiToChuc) {
-        this.nguoiToChuc = nguoiToChuc;
-    }
-
-    public DanhMuc getDanhMuc() {
-        return danhMuc;
-    }
-
-    public void setDanhMuc(DanhMuc danhMuc) {
-        this.danhMuc = danhMuc;
     }
 
     public String getTenCd() {
@@ -174,5 +138,29 @@ public class ChienDich {
 
     public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
+    }
+
+    public String getHinhAnh() {
+        return hinhAnh;
+    }
+
+    public void setHinhAnh(String hinhAnh) {
+        this.hinhAnh = hinhAnh;
+    }
+
+    public NguoiDung getNguoiToChuc() {
+        return nguoiToChuc;
+    }
+
+    public void setNguoiToChuc(NguoiDung nguoiToChuc) {
+        this.nguoiToChuc = nguoiToChuc;
+    }
+
+    public DanhMuc getDanhMuc() {
+        return danhMuc;
+    }
+
+    public void setDanhMuc(DanhMuc danhMuc) {
+        this.danhMuc = danhMuc;
     }
 }
