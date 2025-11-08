@@ -23,8 +23,9 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
     View view;
-    RecyclerView chiendichHomeRecycleid;
+    RecyclerView chiendichHomeRecycleid, danhmucHomeRecyleid;
     List<ChienDich> chienDichListHome;
+    List<DanhMuc> danhMuclistHome;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,10 +48,11 @@ public class HomeFragment extends Fragment {
                 "nguoi_ung_ho",             // vaiTro
                 "hoat_dong"                 // trangThai
         );
-        DanhMuc dm1 = new DanhMuc(
-                1,          // idDm
-                "Y tế"      // tenDm
-        );
+        DanhMuc dm1 = new DanhMuc(1, "Y tế");
+        DanhMuc dm2 = new DanhMuc(2, "Giáo dục");
+        DanhMuc dm3 = new DanhMuc(3, "Cứu trợ thiên tai");
+        DanhMuc dm4 = new DanhMuc(4, "Hỗ trợ người vô gia cư");
+
         // Tạo 4 đối tượng ChienDich
         ChienDich cd1 = new ChienDich(
                 1, nd1, dm1, "Chiến dịch 1", "Mô tả chiến dịch 1",
@@ -80,6 +82,12 @@ public class HomeFragment extends Fragment {
         chienDichListHome.add(cd2);
         chienDichListHome.add(cd3);
 
+        danhMuclistHome = new ArrayList<>();
+        danhMuclistHome.add(dm1);
+        danhMuclistHome.add(dm2);
+        danhMuclistHome.add(dm3);
+        danhMuclistHome.add(dm4);
+
     }
 
     private void initListener() {
@@ -87,11 +95,19 @@ public class HomeFragment extends Fragment {
     }
 
     private void initUI() {
+        //recycleView for chienDich
         chiendichHomeRecycleid = view.findViewById(R.id.chiendichHomeRecycleid);
         ChienDichHomeAdapter chienDichHomeAdapter = new ChienDichHomeAdapter(chienDichListHome);
         chiendichHomeRecycleid.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         chiendichHomeRecycleid.setAdapter(chienDichHomeAdapter);
+
+        //recycleView for danhMuc
+        danhmucHomeRecyleid = view.findViewById(R.id.danhmucHomeRecyleid);
+        DanhMuchHomeAdapter danhMuchHomeAdapter = new DanhMuchHomeAdapter(danhMuclistHome);
+        danhmucHomeRecyleid.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        danhmucHomeRecyleid.setAdapter(danhMuchHomeAdapter);
 
     }
 }
