@@ -26,6 +26,7 @@ public class HomeFragment extends Fragment {
     RecyclerView chiendichHomeRecycleid, danhmucHomeRecyleid;
     List<ChienDich> chienDichListHome;
     List<DanhMuc> danhMuclistHome;
+    List<NguoiDung> nguoiDungListHome;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,15 +40,11 @@ public class HomeFragment extends Fragment {
     }
 
     private void creatListChienDich() {
-        NguoiDung nd1 = new NguoiDung(
-                1,                          // idNd
-                "Nguyen Van A",             // hoTen
-                "nguyenvana@gmail.com",     // email
-                "0912345678",               // soDienThoai
-                "123456",                   // matKhau
-                "nguoi_ung_ho",             // vaiTro
-                "hoat_dong"                 // trangThai
-        );
+        NguoiDung nd1 = new NguoiDung(1, "Nguyễn Minh An", "an.nguyen@gmail.com", "0912345678", "123456", "nguoi_ung_ho", "hoat_dong", "/images/an.jpg");
+        NguoiDung nd2 = new NguoiDung(2, "Trần Thu Hà", "ha.tran@gmail.com", "0987654321", "123456", "nguoi_van_dong", "hoat_dong", "/images/ha.jpg");
+        NguoiDung nd3 = new NguoiDung(3, "Lê Quang Vũ", "vu.le@gmail.com", "0905123456", "123456", "admin", "hoat_dong", "/images/vu.jpg");
+        NguoiDung nd4 = new NguoiDung(4, "Phạm Thảo Nhi", "nhi.pham@gmail.com", "0977888999", "123456", "nguoi_ung_ho", "hoat_dong", "/images/nhi.jpg");
+
         DanhMuc dm1 = new DanhMuc(1, "Y tế");
         DanhMuc dm2 = new DanhMuc(2, "Giáo dục");
         DanhMuc dm3 = new DanhMuc(3, "Cứu trợ thiên tai");
