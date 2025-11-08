@@ -22,12 +22,8 @@ public class ChienDich {
     public ChienDich() {
     }
 
-    public ChienDich(int idCd, NguoiDung nguoiToChuc, DanhMuc danhMuc, String tenCd, String moTa,
-                     BigDecimal soTienMucTieu, BigDecimal soTienHienTai, Date ngayBatDau, Date ngayKetThuc,
-                     String trangThai, String tinhThanh, String quanHuyen, String diaChi) {
+    public ChienDich(int idCd, String tenCd, String moTa, BigDecimal soTienMucTieu, BigDecimal soTienHienTai, Date ngayBatDau, Date ngayKetThuc, String trangThai, String tinhThanh, String quanHuyen, String diaChi, String hinhAnh, NguoiDung nguoiToChuc, DanhMuc danhMuc) {
         this.idCd = idCd;
-        this.nguoiToChuc = nguoiToChuc;
-        this.danhMuc = danhMuc;
         this.tenCd = tenCd;
         this.moTa = moTa;
         this.soTienMucTieu = soTienMucTieu;
@@ -38,6 +34,17 @@ public class ChienDich {
         this.tinhThanh = tinhThanh;
         this.quanHuyen = quanHuyen;
         this.diaChi = diaChi;
+        this.hinhAnh = hinhAnh;
+        this.nguoiToChuc = nguoiToChuc;
+        this.danhMuc = danhMuc;
+    }
+
+    public String getHinhAnh() {
+        return hinhAnh;
+    }
+
+    public void setHinhAnh(String hinhAnh) {
+        this.hinhAnh = hinhAnh;
     }
 
     public ChienDich(int idCd, String tenCd, String moTa, BigDecimal soTienMucTieu, BigDecimal soTienHienTai, Date ngayBatDau, Date ngayKetThuc, String trangThai, String tinhThanh, String quanHuyen, String diaChi, String hinhAnh, NguoiDung nguoiToChuc, DanhMuc danhMuc) {

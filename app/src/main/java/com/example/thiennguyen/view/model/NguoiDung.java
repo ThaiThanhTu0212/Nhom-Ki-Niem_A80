@@ -8,12 +8,12 @@ public class NguoiDung {
     private String matKhau;
     private String vaiTro;     // nguoi_ung_ho, nguoi_van_dong, admin
     private String trangThai;  // mặc định: "hoat_dong"
-    private String hinhAnh;
+    private String avatar;
 
     public NguoiDung() {
     }
 
-    public NguoiDung(int idNd, String hoTen, String email, String soDienThoai, String matKhau, String vaiTro, String trangThai) {
+    public NguoiDung(int idNd, String hoTen, String email, String soDienThoai, String matKhau, String vaiTro, String trangThai, String avatar) {
         this.idNd = idNd;
         this.hoTen = hoTen;
         this.email = email;
@@ -21,25 +21,15 @@ public class NguoiDung {
         this.matKhau = matKhau;
         this.vaiTro = vaiTro;
         this.trangThai = trangThai;
+        this.avatar = avatar;
     }
 
-    public NguoiDung(int idNd, String hoTen, String email, String soDienThoai, String matKhau, String vaiTro, String trangThai, String hinhAnh) {
-        this.idNd = idNd;
-        this.hoTen = hoTen;
-        this.email = email;
-        this.soDienThoai = soDienThoai;
-        this.matKhau = matKhau;
-        this.vaiTro = vaiTro;
-        this.trangThai = trangThai;
-        this.hinhAnh = hinhAnh;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public String getHinhAnh() {
-        return hinhAnh;
-    }
-
-    public void setHinhAnh(String hinhAnh) {
-        this.hinhAnh = hinhAnh;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public int getIdNd() {

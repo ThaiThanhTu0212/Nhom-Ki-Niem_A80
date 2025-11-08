@@ -22,21 +22,26 @@ import java.util.List;
 
 
 public class HomeFragment extends Fragment {
+
     View view;
     RecyclerView chiendichHomeRecycleid, danhmucHomeRecyleid;
     List<ChienDich> chienDichListHome;
     List<DanhMuc> danhMuclistHome;
     List<NguoiDung> nguoiDungListHome;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         view = inflater.inflate(R.layout.fragment_home, container, false);
         creatListChienDich();
         initUI();
         initListener();
         return view;
+
+
     }
 
     private void creatListChienDich() {
