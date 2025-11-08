@@ -7,17 +7,20 @@
     android:orientation="vertical">
 
 
-    <ImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/imageViewCDhome"
         android:layout_width="match_parent"
         android:layout_height="170dp"
         android:layout_margin="10dp"
-        android:adjustViewBounds="true"
-        android:background="@drawable/home_round_image"
-
-        android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
-        tools:src="@drawable/chiendich_image" />
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        app:riv_corner_radius="17dp"
+        app:riv_border_width="1dp"
+        app:riv_border_color="#66B40000"
+        app:riv_mutate_background="true"
+        android:src="@drawable/chiendich_image" />
+
 
     <TextView
         android:id="@+id/tvtenCdHome"

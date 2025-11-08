@@ -38,7 +38,8 @@ android {
 dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0") //cho imageView lấy nguồn là Link
+    implementation("com.makeramen:roundedimageview:2.3.0") //thư viện bo góc ImageView
 
     implementation(libs.appcompat)
     implementation(libs.material)
