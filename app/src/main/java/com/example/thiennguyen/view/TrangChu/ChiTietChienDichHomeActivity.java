@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ChiTietChienDichHomeActivity extends AppCompatActivity {
-    ImageView imageViewhinhAnhctcd;
+    ImageView imageViewhinhAnhctcd, img_back_tohome;
     TextView tvdm_ctcd, tvtencdctcd_home, tvsoTienMucTieu_ctcd_home, tvsongayconlai_ctcd_home, tvsoTienHienTai_ctcd_home, tvmoTa_ctcd_home;
     List<ChienDich> chienDichListHome;
     List<DanhMuc> danhMuclistHome;
@@ -42,10 +42,17 @@ public class ChiTietChienDichHomeActivity extends AppCompatActivity {
         });
         initListData();
         initUI();
+        postInfochiendich();
         initListener();
     }
 
     private void initListener() {
+        img_back_tohome.setOnClickListener(v -> {
+            finish();
+        });
+    }
+
+    private void postInfochiendich() {
         Intent intent = getIntent();
         int idChienDich = Integer.parseInt(intent.getStringExtra("ID_CHIEN_DICH"));
 
@@ -184,5 +191,6 @@ public class ChiTietChienDichHomeActivity extends AppCompatActivity {
         tvsongayconlai_ctcd_home = findViewById(R.id.tvsongayconlai_ctcd_home);
         tvsoTienHienTai_ctcd_home = findViewById(R.id.tvsoTienHienTai_ctcd_home);
         tvmoTa_ctcd_home = findViewById(R.id.tvmoTa_ctcd_home);
+        img_back_tohome = findViewById(R.id.img_back_tohome);
     }
 }

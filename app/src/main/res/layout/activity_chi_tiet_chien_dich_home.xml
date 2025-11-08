@@ -19,14 +19,36 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- ẢNH CHIẾN DỊCH -->
-            <ImageView
-                android:id="@+id/imageViewhinhAnhctcd"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="230dp"
-                android:scaleType="centerCrop"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/chiendich_image" />
+                android:layout_height="250dp">
+
+                <!-- Ảnh chiến dịch -->
+                <ImageView
+                    android:id="@+id/imageViewhinhAnhctcd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/chiendich_image" />
+
+                <!-- Nút Back tròn trong suốt -->
+                <ImageView
+                    android:id="@+id/img_back_tohome"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="16dp"
+                    android:padding="8dp"
+                    android:src="@drawable/home_back"
+                    android:contentDescription="Quay lại"
+
+                    android:elevation="6dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <!-- DANH MỤC -->
             <TextView
@@ -34,7 +56,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
-
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="4dp"
                 android:text="Thiên tai"
@@ -120,10 +141,18 @@
                 android:layout_marginTop="12dp"
                 android:max="100"
                 android:progress="50"
-                android:progressTint="#27D92E"
+                android:progressTint="#A6C193"
                 android:indeterminate="false" />
 
             <!-- SỐ TIỀN ĐÃ ĐẠT -->
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="6dp"
+                android:text="Đã đạt được:" />
+
             <TextView
                 android:id="@+id/tvsoTienHienTai_ctcd_home"
                 android:layout_width="match_parent"
