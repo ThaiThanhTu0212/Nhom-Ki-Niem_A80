@@ -27,7 +27,7 @@ public class HomeFragment extends Fragment {
     TextView btnXemTatCa_ct_home;
 
     View view;
-    RecyclerView chiendichHomeRecycleid, danhmucHomeRecyleid, nguoiDungHomeRecycleid;
+    RecyclerView chiendichHomeRecycleid, danhmucHomeRecyleid, nguoiDungHomeRecycleid, ToChuchomeRecycleId;
     List<ChienDich> chienDichListHome;
     List<DanhMuc> danhMuclistHome;
     List<NguoiDung> nguoiDungListHome;
@@ -181,8 +181,8 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
 
-
         danhmucHomeRecyleid.setAdapter(danhMuchHomeAdapter);
+
         //recycleView for nguoi dung
         nguoiDungHomeRecycleid = view.findViewById(R.id.nguoiDungHomeRecycleid);
         NguoiDungHomeAdapter nguoiDungHomeAdapter = new NguoiDungHomeAdapter(nguoiDungListHome);
@@ -191,6 +191,14 @@ public class HomeFragment extends Fragment {
         nguoiDungHomeRecycleid.setAdapter(nguoiDungHomeAdapter);
 
         btnXemTatCa_ct_home = view.findViewById(R.id.btnXemTatCa_ct_home);
+
+        //recycleView người dùng vai trò tổ chức
+        ToChuchomeRecycleId = view.findViewById(R.id.ToChuchomeRecycleId);
+        ToChuchomeRecycleId.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        ToChucHomeAdapter toChucHomeAdapter = new ToChucHomeAdapter(nguoiDungListHome);
+        ToChuchomeRecycleId.setAdapter(toChucHomeAdapter);
+
 
     }
 }
