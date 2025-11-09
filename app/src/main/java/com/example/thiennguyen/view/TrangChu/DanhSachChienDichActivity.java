@@ -1,16 +1,14 @@
 package com.example.thiennguyen.view.TrangChu;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.thiennguyen.R;
 import com.example.thiennguyen.view.model.ChienDich;
@@ -22,31 +20,37 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
-public class HomeFragment extends Fragment {
-    TextView btnXemTatCa_ct_home;
-
-    View view;
-    RecyclerView chiendichHomeRecycleid, danhmucHomeRecyleid, nguoiDungHomeRecycleid;
+public class DanhSachChienDichActivity extends AppCompatActivity {
+    RecyclerView listcd_homeRecycleid;
     List<ChienDich> chienDichListHome;
     List<DanhMuc> danhMuclistHome;
     List<NguoiDung> nguoiDungListHome;
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-        view = inflater.inflate(R.layout.fragment_home, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_danh_sach_chien_dich);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
         creatListChienDich();
         initUI();
         initListener();
-        return view;
-
-
     }
 
+    private void initListener() {
+    }
+
+    private void initUI() {
+        listcd_homeRecycleid = findViewById(R.id.listcd_homeRecycleid);
+        ListChienDichHomeAdapter listChienDichHomeAdapter = new ListChienDichHomeAdapter(chienDichListHome);
+        listcd_homeRecycleid.setLayoutManager(new LinearLayoutManager(this));
+        listcd_homeRecycleid.setAdapter(listChienDichHomeAdapter);
+
+    }
     private void creatListChienDich() {
         NguoiDung nd1 = new NguoiDung(1, "Sơn Tùng", "tungnguyen@gmail.com", "0912345678", "123456", "nguoi_ung_ho", "hoat_dong", "https://i.scdn.co/image/ab6761610000e5eb5a79a6ca8c60e4ec1440be53");
         NguoiDung nd2 = new NguoiDung(2, "Double 2T", "ha.tran@gmail.com", "0987654321", "123456", "nguoi_van_dong", "hoat_dong", "https://cdn2.tuoitre.vn/zoom/700_525/471584752817336320/2025/3/21/vt-double-2t-1-1742527225983542614988-112-0-1102-1890-crop-17425286630251174539582.jpg");
@@ -134,6 +138,7 @@ public class HomeFragment extends Fragment {
         chienDichListHome.add(cd1);
         chienDichListHome.add(cd2);
         chienDichListHome.add(cd3);
+        chienDichListHome.add(cd4);
 
         danhMuclistHome = new ArrayList<>();
         danhMuclistHome.add(dm1);
@@ -147,44 +152,6 @@ public class HomeFragment extends Fragment {
         nguoiDungListHome.add(nd3);
         nguoiDungListHome.add(nd4);
         nguoiDungListHome.add(nd5);
-
-    }
-
-    private void initListener() {
-        btnXemTatCa_ct_home.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(),DanhSachChienDichActivity.class);
-
-            startActivity(intent);
-        });
-    }
-
-    private void initUI() {
-        //recycleView for chienDich
-        chiendichHomeRecycleid = view.findViewById(R.id.chiendichHomeRecycleid);
-        ChienDichHomeAdapter chienDichHomeAdapter = new ChienDichHomeAdapter(chienDichListHome);
-        chiendichHomeRecycleid.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        chienDichHomeAdapter.setListener(chienDich -> {
-            Intent intent = new Intent(getContext(),ChiTietChienDichHomeActivity.class);
-            intent.putExtra("ID_CHIEN_DICH", String.valueOf(chienDich.getIdCd()));
-            startActivity(intent);
-        });
-
-        chiendichHomeRecycleid.setAdapter(chienDichHomeAdapter);
-
-        //recycleView for danhMuc
-        danhmucHomeRecyleid = view.findViewById(R.id.danhmucHomeRecyleid);
-        DanhMuchHomeAdapter danhMuchHomeAdapter = new DanhMuchHomeAdapter(danhMuclistHome);
-        danhmucHomeRecyleid.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        danhmucHomeRecyleid.setAdapter(danhMuchHomeAdapter);
-        //recycleView for nguoi dung
-        nguoiDungHomeRecycleid = view.findViewById(R.id.nguoiDungHomeRecycleid);
-        NguoiDungHomeAdapter nguoiDungHomeAdapter = new NguoiDungHomeAdapter(nguoiDungListHome);
-        nguoiDungHomeRecycleid.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        nguoiDungHomeRecycleid.setAdapter(nguoiDungHomeAdapter);
-
-        btnXemTatCa_ct_home = view.findViewById(R.id.btnXemTatCa_ct_home);
 
     }
 }
