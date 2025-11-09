@@ -191,6 +191,6 @@ public class ChiTietChienDichHomeActivity extends AppCompatActivity {
         tvsongayconlai_ctcd_home = findViewById(R.id.tvsongayconlai_ctcd_home);
         tvsoTienHienTai_ctcd_home = findViewById(R.id.tvsoTienHienTai_ctcd_home);
         tvmoTa_ctcd_home = findViewById(R.id.tvmoTa_ctcd_home);
-        img_back_tohome = findViewById(R.id.img_back_tohome);
+        img_back_tohome = findViewById(R.id.image_back_listcd_list_home);
     }
 }

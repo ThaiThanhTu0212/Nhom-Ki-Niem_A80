@@ -34,7 +34,7 @@
 
                 <!-- Nút Back tròn trong suốt -->
                 <ImageView
-                    android:id="@+id/img_back_tohome"
+                    android:id="@+id/image_back_listcd_list_home"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="16dp"

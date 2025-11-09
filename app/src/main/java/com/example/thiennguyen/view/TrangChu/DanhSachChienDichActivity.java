@@ -1,6 +1,9 @@
 package com.example.thiennguyen.view.TrangChu;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +28,7 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
     List<ChienDich> chienDichListHome;
     List<DanhMuc> danhMuclistHome;
     List<NguoiDung> nguoiDungListHome;
+    ImageView image_back_tolist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +46,27 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
     }
 
     private void initListener() {
+        image_back_tolist.setOnClickListener(v -> {
+            finish();
+        });
     }
 
     private void initUI() {
+        image_back_tolist = findViewById(R.id.image_back_tolist);
+
         listcd_homeRecycleid = findViewById(R.id.listcd_homeRecycleid);
         ListChienDichHomeAdapter listChienDichHomeAdapter = new ListChienDichHomeAdapter(chienDichListHome);
         listcd_homeRecycleid.setLayoutManager(new LinearLayoutManager(this));
+        listChienDichHomeAdapter.setListener(chienDich -> {
+            Intent intent = new Intent(DanhSachChienDichActivity.this,ChiTietChienDichHomeActivity.class);
+            intent.putExtra("ID_CHIEN_DICH",String.valueOf(chienDich.getIdCd()));
+            startActivity(intent);
+        });
         listcd_homeRecycleid.setAdapter(listChienDichHomeAdapter);
+
+
+
+
 
     }
     private void creatListChienDich() {
