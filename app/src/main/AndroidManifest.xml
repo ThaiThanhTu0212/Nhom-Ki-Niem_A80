@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ThienNguyen">
         <activity
+            android:name=".view.TrangChu.ProfileHomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.TrangChu.DanhSachChienDichActivity"
             android:exported="false" />
         <activity

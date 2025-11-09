@@ -15,7 +15,7 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:textStyle="bold"
             android:text="Danh mục" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/danhmucHomeRecyleid"
@@ -80,12 +80,13 @@
         android:layout_height="wrap_content" />
 
 
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:text="Tổ chức" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ToChuchomeRecycleId"

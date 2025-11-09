@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#43E7E3CC"
+    android:background="#43EDE7C8"
     android:paddingTop="5dp"
     android:paddingBottom="10dp"
+    android:layout_margin="7dp"
     android:orientation="vertical">
 
 

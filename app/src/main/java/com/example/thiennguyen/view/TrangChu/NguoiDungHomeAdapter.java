@@ -11,12 +11,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
+import com.example.thiennguyen.view.model.ChienDich;
 import com.example.thiennguyen.view.model.NguoiDung;
 
 import java.util.List;
 import java.util.zip.Inflater;
 
 public class NguoiDungHomeAdapter extends RecyclerView.Adapter<NguoiDungHomeAdapter.NguoiDungHolder> {
+    public interface OnItemClickListener {
+        void onItemClick(NguoiDung nguoiDung);
+    }
+    OnItemClickListener listener;
+
+    public void setListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
     List<NguoiDung> nguoiDungList;
 
     public NguoiDungHomeAdapter(List<NguoiDung> nguoiDungList) {
@@ -42,6 +52,11 @@ public class NguoiDungHomeAdapter extends RecyclerView.Adapter<NguoiDungHomeAdap
                 .placeholder(R.drawable.nguoidung) // ảnh hiển thị tạm khi đang tải
                 .error(R.drawable.nguoidung)         // ảnh lỗi fallback (có thể dùng lại ảnh trong drawable)
                 .into(holder.imageViewNguoiDungHome);
+        holder.itemView.setOnClickListener(v -> {
+            if (listener!=null){
+                listener.onItemClick(nguoiDung);
+            }
+        });
 
     }
 
