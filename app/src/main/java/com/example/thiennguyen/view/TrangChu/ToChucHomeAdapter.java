@@ -17,6 +17,14 @@ import com.example.thiennguyen.view.model.NguoiDung;
 import java.util.List;
 
 public class ToChucHomeAdapter extends RecyclerView.Adapter<ToChucHomeAdapter.ToChucHomeHolder> {
+    public interface OnItemClickListener {
+        void onItemClick(NguoiDung nguoiDung);
+    }
+    NguoiDungHomeAdapter.OnItemClickListener listener;
+
+    public void setListener(NguoiDungHomeAdapter.OnItemClickListener listener) {
+        this.listener = listener;
+    }
     List<NguoiDung> nguoiDungList;
 
     public ToChucHomeAdapter(List<NguoiDung> nguoiDungList) {
@@ -40,6 +48,11 @@ public class ToChucHomeAdapter extends RecyclerView.Adapter<ToChucHomeAdapter.To
                 .placeholder(R.drawable.tai_khoan)
                 .error(R.drawable.tai_khoan)
                 .into(holder.imgviewTochucHome);
+        holder.itemView.setOnClickListener(v -> {
+            if (listener!=null){
+                listener.onItemClick(nguoiDung);
+            }
+        });
     }
 
     @Override

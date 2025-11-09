@@ -203,6 +203,11 @@ public class HomeFragment extends Fragment {
         ToChuchomeRecycleId.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         ToChucHomeAdapter toChucHomeAdapter = new ToChucHomeAdapter(nguoiDungListHome);
+        toChucHomeAdapter.setListener(nguoiDung -> {
+            Intent intent = new Intent(getContext(),ProfileHomeActivity.class);
+            intent.putExtra("ID_NGUOI_DUNG",nguoiDung.getIdNd());
+            startActivity(intent);
+        });
         ToChuchomeRecycleId.setAdapter(toChucHomeAdapter);
 
 
