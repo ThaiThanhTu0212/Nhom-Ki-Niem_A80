@@ -48,6 +48,7 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
         });
         creatListChienDich();
         initUI();
+
         initListener();
     }
 
@@ -59,6 +60,18 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
 
     private void initUI() {
         image_back_tolist = findViewById(R.id.image_back_tolist);
+
+        //lấy danh sách từ danh mục ở trang chủ
+        int idDanhMuc = getIntent().getIntExtra("ID_DANH_MUC", -1);
+        if (idDanhMuc != -1){
+            chienDichListChildHome.clear();
+            for (ChienDich cd : chienDichListHome) {
+                if (cd.getDanhMuc() != null && cd.getDanhMuc().getIdDm() == idDanhMuc) {
+                    chienDichListChildHome.add(cd);
+                }
+            }
+        }
+
         //danh sach chien dich
         listcd_homeRecycleid = findViewById(R.id.listcd_homeRecycleid);
         listChienDichHomeAdapter = new ListChienDichHomeAdapter(chienDichListChildHome);
@@ -74,6 +87,7 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
         loaiCd_ctcd_home = findViewById(R.id.loaiCd_ctcd_home);
         danhMuchHomeAdapter = new DanhMuchHomeAdapter(danhMuclistHome);
         loaiCd_ctcd_home.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
 
         danhMuchHomeAdapter.setListener(danhMuc -> {
             chienDichListChildHome.clear();

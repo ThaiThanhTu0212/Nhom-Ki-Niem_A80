@@ -175,6 +175,12 @@ public class HomeFragment extends Fragment {
         danhmucHomeRecyleid = view.findViewById(R.id.danhmucHomeRecyleid);
         DanhMuchHomeAdapter danhMuchHomeAdapter = new DanhMuchHomeAdapter(danhMuclistHome);
         danhmucHomeRecyleid.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        danhMuchHomeAdapter.setListener(danhMuc -> {
+            Intent intent = new Intent(getContext(),DanhSachChienDichActivity.class);
+            intent.putExtra("ID_DANH_MUC", danhMuc.getIdDm());
+            startActivity(intent);
+        });
+
 
         danhmucHomeRecyleid.setAdapter(danhMuchHomeAdapter);
         //recycleView for nguoi dung
