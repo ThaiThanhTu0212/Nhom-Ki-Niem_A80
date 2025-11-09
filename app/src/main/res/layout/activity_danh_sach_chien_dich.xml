@@ -38,6 +38,17 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/loaiCd_ctcd_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listcd_homeRecycleid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

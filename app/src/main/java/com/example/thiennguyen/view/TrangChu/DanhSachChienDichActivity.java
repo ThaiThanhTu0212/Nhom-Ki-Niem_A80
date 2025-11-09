@@ -2,8 +2,10 @@ package com.example.thiennguyen.view.TrangChu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,11 +26,15 @@ import java.util.Date;
 import java.util.List;
 
 public class DanhSachChienDichActivity extends AppCompatActivity {
-    RecyclerView listcd_homeRecycleid;
+    RecyclerView listcd_homeRecycleid, loaiCd_ctcd_home;
     List<ChienDich> chienDichListHome;
+    List<ChienDich> chienDichListChildHome;
     List<DanhMuc> danhMuclistHome;
     List<NguoiDung> nguoiDungListHome;
     ImageView image_back_tolist;
+    ListChienDichHomeAdapter listChienDichHomeAdapter;
+    DanhMuchHomeAdapter danhMuchHomeAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +59,9 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
 
     private void initUI() {
         image_back_tolist = findViewById(R.id.image_back_tolist);
-
+        //danh sach chien dich
         listcd_homeRecycleid = findViewById(R.id.listcd_homeRecycleid);
-        ListChienDichHomeAdapter listChienDichHomeAdapter = new ListChienDichHomeAdapter(chienDichListHome);
+        listChienDichHomeAdapter = new ListChienDichHomeAdapter(chienDichListChildHome);
         listcd_homeRecycleid.setLayoutManager(new LinearLayoutManager(this));
         listChienDichHomeAdapter.setListener(chienDich -> {
             Intent intent = new Intent(DanhSachChienDichActivity.this,ChiTietChienDichHomeActivity.class);
@@ -64,6 +70,22 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
         });
         listcd_homeRecycleid.setAdapter(listChienDichHomeAdapter);
 
+        //danh sach loai chien dich
+        loaiCd_ctcd_home = findViewById(R.id.loaiCd_ctcd_home);
+        danhMuchHomeAdapter = new DanhMuchHomeAdapter(danhMuclistHome);
+        loaiCd_ctcd_home.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        danhMuchHomeAdapter.setListener(danhMuc -> {
+            chienDichListChildHome.clear();
+            for (ChienDich cd : chienDichListHome){
+                if (cd.getDanhMuc() != null && cd.getDanhMuc().getIdDm() == danhMuc.getIdDm()){
+                    chienDichListChildHome.add(cd);
+                }
+            }
+            listChienDichHomeAdapter.notifyDataSetChanged();
+        });
+
+        loaiCd_ctcd_home.setAdapter(danhMuchHomeAdapter);
 
 
 
@@ -157,6 +179,9 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
         chienDichListHome.add(cd2);
         chienDichListHome.add(cd3);
         chienDichListHome.add(cd4);
+
+        chienDichListChildHome = new ArrayList<>(chienDichListHome);
+
 
         danhMuclistHome = new ArrayList<>();
         danhMuclistHome.add(dm1);
