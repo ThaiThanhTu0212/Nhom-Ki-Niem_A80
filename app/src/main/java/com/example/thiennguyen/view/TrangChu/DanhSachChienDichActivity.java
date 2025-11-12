@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
     ImageView image_back_tolist;
     ListChienDichHomeAdapter listChienDichHomeAdapter;
     DanhMuchHomeAdapter danhMuchHomeAdapter;
+    SearchView searchBarHomeId;
 
 
     @Override
@@ -101,6 +103,20 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
 
         loaiCd_ctcd_home.setAdapter(danhMuchHomeAdapter);
 
+
+
+        searchBarHomeId = findViewById(R.id.searchBarHomeId);
+        searchBarHomeId.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+        });
 
 
 
