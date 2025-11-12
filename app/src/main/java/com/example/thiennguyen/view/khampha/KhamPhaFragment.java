@@ -6,8 +6,6 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,35 +16,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.thiennguyen.R;
+import com.example.thiennguyen.databinding.FragmentKhamPhaBinding;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class KhamPhaFragment extends Fragment {
 
-    private ViewPager2 viewPagerBanner;
-    private RecyclerView rvChienDich, rvSuKien, rvHoanCanh;
-    private LinearLayout btnHoanCanh, btnDongHanh, btnSuKien, btnBanDo;
-    private ImageView ivSearch, ivBell;
-    private Handler handler = new Handler();
+    private FragmentKhamPhaBinding binding;
+    private final Handler handler = new Handler();
     private int currentBanner = 0;
-    private List<Integer> banners = new ArrayList<>();
+    private List<BannerItem> banners = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_kham_pha, container, false);
 
-        viewPagerBanner = view.findViewById(R.id.viewPagerBanner);
-        rvChienDich = view.findViewById(R.id.rvChienDich);
-        rvSuKien = view.findViewById(R.id.rvSuKien);
-        rvHoanCanh = view.findViewById(R.id.rvHoanCanh);
-        btnHoanCanh = view.findViewById(R.id.btnHoanCanh);
-        btnDongHanh = view.findViewById(R.id.btnDongHanh);
-        btnSuKien = view.findViewById(R.id.btnSuKien);
-        btnBanDo = view.findViewById(R.id.btnBanDo);
-        ivSearch = view.findViewById(R.id.ivSearch);
-        ivBell = view.findViewById(R.id.ivBell);
+        // ✅ Dùng ViewBinding thay vì inflate thủ công
+        binding = FragmentKhamPhaBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
         setupBanner();
         setupRecyclerViews();
@@ -56,47 +45,79 @@ public class KhamPhaFragment extends Fragment {
     }
 
     private void setupBanner() {
-        banners.add(R.drawable.banner1);
-        banners.add(R.drawable.banner2);
-        banners.add(R.drawable.banner3);
+        banners = new ArrayList<>();
+
+        banners.add(new BannerItem(
+                "CHUNG TAY CỨU TRỢ KHẨN CẤP ĐỒNG BÀO BỊ ẢNH HƯỞNG BỞI LŨ LỤT",
+                "Trên nền tảng VNeID năm 2025",
+                0xFFD32F2F, 0xFFF57C00,
+                R.drawable.khampha_ic_flood));
+
+        banners.add(new BannerItem(
+                "Thử thách chạy bộ #HiGreen",
+                "Vì Trường Sa xanh",
+                0xFF00BFA5, 0xFF42A5F5,
+                R.drawable.khampha_ic_leaf));
+
+        banners.add(new BannerItem(
+                "FUN FIT FEST – KHỞI ĐỘNG MÙA MỚI",
+                "Cùng Standard Chartered đồng hành",
+                0xFF81D4FA, 0xFF0288D1,
+                R.drawable.khampha_ic_runner));
 
         BannerAdapter adapter = new BannerAdapter(banners);
-        viewPagerBanner.setAdapter(adapter);
+        binding.viewPagerBanner.setAdapter(adapter);
 
+        // Hiệu ứng chuyển mượt
+        binding.viewPagerBanner.setPageTransformer((page, position) -> {
+            page.setAlpha(0.5f + (1 - Math.abs(position)));
+            page.setScaleY(0.9f + (1 - Math.abs(position)) * 0.1f);
+        });
+
+        // Tự động cuộn
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                currentBanner = (currentBanner + 1) % banners.size();
-                viewPagerBanner.setCurrentItem(currentBanner, true);
-                handler.postDelayed(this, 3000);
+                if (binding.viewPagerBanner.getAdapter() != null && banners.size() > 0) {
+                    currentBanner = (currentBanner + 1) % banners.size();
+                    binding.viewPagerBanner.setCurrentItem(currentBanner, true);
+                    handler.postDelayed(this, 3000);
+                }
             }
         }, 3000);
     }
 
     private void setupRecyclerViews() {
-        rvChienDich.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-        rvSuKien.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-        rvHoanCanh.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvChienDich.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        binding.rvSuKien.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        binding.rvHoanCanh.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        rvChienDich.setAdapter(new DemoAdapter("Chiến dịch"));
-        rvSuKien.setAdapter(new DemoAdapter("Sự kiện"));
-        rvHoanCanh.setAdapter(new DemoAdapter("Hoàn cảnh"));
+        binding.rvChienDich.setAdapter(new DemoAdapter("Chiến dịch"));
+        binding.rvSuKien.setAdapter(new DemoAdapter("Sự kiện"));
+        binding.rvHoanCanh.setAdapter(new DemoAdapter("Hoàn cảnh"));
     }
 
     private void setupEvents() {
-        ivSearch.setOnClickListener(v -> Toast.makeText(getContext(), "Tìm kiếm", Toast.LENGTH_SHORT).show());
-        ivBell.setOnClickListener(v -> Toast.makeText(getContext(), "Thông báo", Toast.LENGTH_SHORT).show());
+        binding.ivSearch.setOnClickListener(v -> Toast.makeText(getContext(), "Tìm kiếm", Toast.LENGTH_SHORT).show());
+        binding.ivBell.setOnClickListener(v -> Toast.makeText(getContext(), "Thông báo", Toast.LENGTH_SHORT).show());
 
-        btnHoanCanh.setOnClickListener(v ->
+        binding.btnHoanCanh.setOnClickListener(v ->
                 startActivity(new Intent(getContext(), HoanCanhActivity.class)));
 
-        btnDongHanh.setOnClickListener(v ->
+        binding.btnDongHanh.setOnClickListener(v ->
                 startActivity(new Intent(getContext(), DongHanhActivity.class)));
 
-        btnSuKien.setOnClickListener(v ->
+        binding.btnSuKien.setOnClickListener(v ->
                 startActivity(new Intent(getContext(), SuKienActivity.class)));
 
-        btnBanDo.setOnClickListener(v ->
+        binding.btnBanDo.setOnClickListener(v ->
                 startActivity(new Intent(getContext(), BanDoActivity.class)));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        handler.removeCallbacksAndMessages(null);
+        binding = null;
     }
 }
