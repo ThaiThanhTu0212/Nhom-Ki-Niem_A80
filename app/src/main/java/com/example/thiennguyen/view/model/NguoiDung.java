@@ -77,4 +77,17 @@ public class NguoiDung {
     public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
     }
+
+    @Override
+    public String toString() {
+        return "NguoiDung{" +
+                "idNd=" + idNd +
+                ", hoTen='" + hoTen + '\'' +
+                ", email='" + email + '\'' +
+                ", soDienThoai='" + soDienThoai + '\'' +
+                ", matKhau='" + matKhau + '\'' +
+                ", vaiTro='" + vaiTro + '\'' +
+                ", trangThai='" + trangThai + '\'' +
+                '}';
+    }
 }
