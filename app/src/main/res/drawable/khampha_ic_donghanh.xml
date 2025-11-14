@@ -1,17 +1,23 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp"
-    android:height="24dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24"
-    android:tint="#FFA726">
+    android:width="64dp"
+    android:height="64dp"
+    android:viewportWidth="64"
+    android:viewportHeight="64">
+
+    <!-- Envelope -->
     <path
-        android:fillColor="@android:color/white"
-        android:pathData="M13.35,20.13c-0.23,0.23 -0.51,0.37 -0.82,0.37
-            -0.31,0 -0.59,-0.14 -0.82,-0.37L4.92,13.3
-            C4.34,12.73 4,11.95 4,11.11
-            c0,-1.6 1.3,-2.9 2.9,-2.9
-            0.73,0 1.41,0.27 1.93,0.77L12,11.11l3.17,-2.13
-            c0.52,-0.5 1.2,-0.77 1.93,-0.77
-            1.6,0 2.9,1.3 2.9,2.9
-            0,0.84 -0.34,1.62 -0.92,2.19l-7.73,6.83z" />
+        android:fillColor="#FFB74D"
+        android:pathData="M8,20h48v28h-48z" />
+
+    <path
+        android:fillColor="#FFA726"
+        android:pathData="M8,20l24,18l24,-18z" />
+
+    <!-- 2 hearts -->
+    <path
+        android:fillColor="#FF7043"
+        android:pathData="M38,14c-3,-4 -10,-2 -10,4c0,5 10,10 10,10s10,-5 10,-10c0,-6 -7,-8 -10,-4z"/>
+    <path
+        android:fillColor="#FF8A65"
+        android:pathData="M50,10c-2,-3 -7,-2 -7,3c0,4 7,8 7,8s7,-4 7,-8c0,-5 -5,-6 -7,-3z"/>
 </vector>

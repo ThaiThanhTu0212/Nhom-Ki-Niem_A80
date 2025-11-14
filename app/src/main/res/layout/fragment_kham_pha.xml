@@ -67,92 +67,122 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginBottom="10dp"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/black" />
 
-        <GridLayout
-            android:id="@+id/gridDanhMuc"
+        <LinearLayout
+            android:id="@+id/layoutDanhMuc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="4"
-            android:alignmentMode="alignMargins"
-            android:useDefaultMargins="true">
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="4"
+            android:layout_marginBottom="8dp">
 
+            <!-- Hoàn cảnh -->
             <LinearLayout
                 android:id="@+id/btnHoanCanh"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:paddingVertical="8dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
                     android:src="@drawable/khampha_ic_hoancanh"
-                    android:contentDescription="Hoàn cảnh"/>
+                    app:tint="#FFA000"
+                    android:contentDescription="Hoàn cảnh" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hoàn cảnh"
-                    android:textSize="14sp"/>
+                    android:textColor="#555555"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp" />
             </LinearLayout>
 
+            <!-- Đồng hành -->
             <LinearLayout
                 android:id="@+id/btnDongHanh"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:paddingVertical="8dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
                     android:src="@drawable/khampha_ic_donghanh"
-                    android:contentDescription="Đồng hành"/>
+                    app:tint="#FFA000"
+                    android:contentDescription="Đồng hành" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Đồng hành"
-                    android:textSize="14sp"/>
+                    android:textColor="#555555"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp" />
             </LinearLayout>
 
+            <!-- Sự kiện -->
             <LinearLayout
                 android:id="@+id/btnSuKien"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:paddingVertical="8dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
                     android:src="@drawable/khampha_ic_sukien"
-                    android:contentDescription="Sự kiện"/>
+                    app:tint="#FFA000"
+                    android:contentDescription="Sự kiện" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sự kiện"
-                    android:textSize="14sp"/>
+                    android:textColor="#555555"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp" />
             </LinearLayout>
 
+            <!-- Bản đồ -->
             <LinearLayout
                 android:id="@+id/btnBanDo"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:paddingVertical="8dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
                     android:src="@drawable/khampha_ic_bando"
-                    android:contentDescription="Bản đồ"/>
+                    app:tint="#FFA000"
+                    android:contentDescription="Bản đồ" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bản đồ"
-                    android:textSize="14sp"/>
+                    android:textColor="#555555"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp" />
             </LinearLayout>
-        </GridLayout>
+        </LinearLayout>
+
 
         <!-- Chiến dịch đồng hành -->
         <TextView
