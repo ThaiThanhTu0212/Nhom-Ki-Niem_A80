@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingRight="10dp">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/imageViewNguoiDungHome"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_margin="10dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@drawable/nguoidung"
+        app:riv_border_color="#00D3CCCC"
+        app:riv_border_width="1dp"
+        app:riv_corner_radius="50dp"
+        app:riv_mutate_background="true" />
+
+    <TextView
+        android:id="@+id/tvTenNDHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Tên"
+        android:textAlignment="center"
+        android:textColor="@android:color/black" />
+
+</LinearLayout>

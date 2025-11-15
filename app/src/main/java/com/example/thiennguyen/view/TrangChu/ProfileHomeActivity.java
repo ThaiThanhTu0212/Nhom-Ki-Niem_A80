@@ -2,16 +2,17 @@ package com.example.thiennguyen.view.TrangChu;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
 import com.example.thiennguyen.view.model.ChienDich;
 import com.example.thiennguyen.view.model.DanhMuc;
@@ -22,31 +23,54 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+public class ProfileHomeActivity extends AppCompatActivity {
+    ImageView imageAvatarProfileHome, imageViewBackgroundProfileHme;
+    TextView tvNameProfile;
+    Button btnFollowProfileHome;
 
-public class HomeFragment extends Fragment {
-    TextView btnXemTatCa_ct_home;
-
-    View view;
-    RecyclerView chiendichHomeRecycleid, danhmucHomeRecyleid, nguoiDungHomeRecycleid, ToChuchomeRecycleId;
     List<ChienDich> chienDichListHome;
     List<DanhMuc> danhMuclistHome;
     List<NguoiDung> nguoiDungListHome;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-        view = inflater.inflate(R.layout.fragment_home, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_profile_home);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
         creatListChienDich();
         initUI();
         initListener();
-        return view;
-
-
     }
 
+    private void initListener() {
+        Intent intent =getIntent();
+        int idND = intent.getIntExtra("ID_NGUOI_DUNG",-1);
+        if (idND != -1){
+            for (NguoiDung nd : nguoiDungListHome){
+                if (nd.getIdNd() ==idND){
+                    tvNameProfile.setText(nd.getHoTen());
+                    Glide.with(this)
+                            .load(nd.getAvatar())
+                            .placeholder(R.drawable.nguoidung)
+                            .error(R.drawable.nguoidung)
+                            .into(imageAvatarProfileHome);
+                }
+            }
+        }
+    }
+
+    private void initUI() {
+        tvNameProfile = findViewById(R.id.tvNameProfile);
+        imageAvatarProfileHome = findViewById(R.id.imageAvatarProfileHome);
+        btnFollowProfileHome = findViewById(R.id.btnFollowProfileHome);
+        imageViewBackgroundProfileHme = findViewById(R.id.imageViewBackgroundProfileHme);
+    }
     private void creatListChienDich() {
         NguoiDung nd1 = new NguoiDung(1, "Sơn Tùng", "tungnguyen@gmail.com", "0912345678", "123456", "nguoi_ung_ho", "hoat_dong", "https://i.scdn.co/image/ab6761610000e5eb5a79a6ca8c60e4ec1440be53");
         NguoiDung nd2 = new NguoiDung(2, "Double 2T", "ha.tran@gmail.com", "0987654321", "123456", "nguoi_van_dong", "hoat_dong", "https://cdn2.tuoitre.vn/zoom/700_525/471584752817336320/2025/3/21/vt-double-2t-1-1742527225983542614988-112-0-1102-1890-crop-17425286630251174539582.jpg");
@@ -148,68 +172,6 @@ public class HomeFragment extends Fragment {
         nguoiDungListHome.add(nd3);
         nguoiDungListHome.add(nd4);
         nguoiDungListHome.add(nd5);
-
-    }
-
-    private void initListener() {
-        btnXemTatCa_ct_home.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(),DanhSachChienDichActivity.class);
-
-            startActivity(intent);
-        });
-    }
-
-    private void initUI() {
-        //recycleView for chienDich
-        chiendichHomeRecycleid = view.findViewById(R.id.chiendichHomeRecycleid);
-        ChienDichHomeAdapter chienDichHomeAdapter = new ChienDichHomeAdapter(chienDichListHome);
-        chiendichHomeRecycleid.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        chienDichHomeAdapter.setListener(chienDich -> {
-            Intent intent = new Intent(getContext(),ChiTietChienDichHomeActivity.class);
-            intent.putExtra("ID_CHIEN_DICH", String.valueOf(chienDich.getIdCd()));
-            startActivity(intent);
-        });
-
-        chiendichHomeRecycleid.setAdapter(chienDichHomeAdapter);
-
-        //recycleView for danhMuc
-        danhmucHomeRecyleid = view.findViewById(R.id.danhmucHomeRecyleid);
-        DanhMuchHomeAdapter danhMuchHomeAdapter = new DanhMuchHomeAdapter(danhMuclistHome);
-        danhmucHomeRecyleid.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        danhMuchHomeAdapter.setListener(danhMuc -> {
-            Intent intent = new Intent(getContext(),DanhSachChienDichActivity.class);
-            intent.putExtra("ID_DANH_MUC", danhMuc.getIdDm());
-            startActivity(intent);
-        });
-
-        danhmucHomeRecyleid.setAdapter(danhMuchHomeAdapter);
-
-        //recycleView for nguoi dung
-        nguoiDungHomeRecycleid = view.findViewById(R.id.nguoiDungHomeRecycleid);
-        NguoiDungHomeAdapter nguoiDungHomeAdapter = new NguoiDungHomeAdapter(nguoiDungListHome);
-        nguoiDungHomeRecycleid.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        nguoiDungHomeAdapter.setListener(nguoiDung -> {
-            Intent intent = new Intent(getContext(),ProfileHomeActivity.class);
-            intent.putExtra("ID_NGUOI_DUNG",nguoiDung.getIdNd());
-            startActivity(intent);
-        });
-        nguoiDungHomeRecycleid.setAdapter(nguoiDungHomeAdapter);
-
-        btnXemTatCa_ct_home = view.findViewById(R.id.btnXemTatCa_ct_home);
-
-        //recycleView người dùng vai trò tổ chức
-        ToChuchomeRecycleId = view.findViewById(R.id.ToChuchomeRecycleId);
-        ToChuchomeRecycleId.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        ToChucHomeAdapter toChucHomeAdapter = new ToChucHomeAdapter(nguoiDungListHome);
-        toChucHomeAdapter.setListener(nguoiDung -> {
-            Intent intent = new Intent(getContext(),ProfileHomeActivity.class);
-            intent.putExtra("ID_NGUOI_DUNG",nguoiDung.getIdNd());
-            startActivity(intent);
-        });
-        ToChuchomeRecycleId.setAdapter(toChucHomeAdapter);
-
 
     }
 }
