@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.thiennguyen.R;
 import com.example.thiennguyen.databinding.FragmentKhamPhaBinding;
@@ -92,9 +91,9 @@ public class KhamPhaFragment extends Fragment {
         binding.rvSuKien.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         binding.rvHoanCanh.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        binding.rvChienDich.setAdapter(new DemoAdapter("Chiến dịch"));
-        binding.rvSuKien.setAdapter(new DemoAdapter("Sự kiện"));
-        binding.rvHoanCanh.setAdapter(new DemoAdapter("Hoàn cảnh"));
+        binding.rvChienDich.setAdapter(new Adapter("Chiến dịch"));
+        binding.rvSuKien.setAdapter(new Adapter("Sự kiện"));
+        binding.rvHoanCanh.setAdapter(new Adapter("Hoàn cảnh"));
     }
 
     private void setupEvents() {
