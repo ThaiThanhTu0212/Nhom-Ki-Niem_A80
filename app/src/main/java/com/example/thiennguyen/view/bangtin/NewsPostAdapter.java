@@ -29,12 +29,36 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.PostVi
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         NewsPost post = posts.get(position);
+
         holder.tvUsername.setText(post.username);
         holder.tvTime.setText(post.time);
         holder.tvContent.setText(post.content);
         holder.imgMain.setImageResource(post.imgMain);
         holder.imgSmall1.setImageResource(post.imgSmall1);
         holder.imgSmall2.setImageResource(post.imgSmall2);
+
+        // Cập nhật số lượt thích
+        holder.tvLikeCount.setText(post.likeCount + " lượt thích");
+
+        // Cập nhật icon trái tim
+        if (post.isLiked) {
+            holder.btnLike.setImageResource(R.drawable.bangtin_heart_filled);
+        } else {
+            holder.btnLike.setImageResource(R.drawable.bangtin_heart_outline);
+        }
+
+        // Xử lý nhấn thích / bỏ thích
+        holder.btnLike.setOnClickListener(v -> {
+            if (post.isLiked) {
+                post.likeCount--;
+                post.isLiked = false;
+            } else {
+                post.likeCount++;
+                post.isLiked = true;
+            }
+            // Cập nhật lại chính item này (mượt, không lag)
+            notifyItemChanged(position);
+        });
     }
 
     @Override
@@ -44,16 +68,22 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.PostVi
 
     static class PostViewHolder extends RecyclerView.ViewHolder {
         TextView tvUsername, tvTime, tvContent, tvLikeCount, tvCommentCount;
-        ImageView imgAvatar, imgMain, imgSmall1, imgSmall2;
+        ImageView imgAvatar, imgMain, imgSmall1, imgSmall2, btnLike;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUsername = itemView.findViewById(R.id.tvUsername);
             tvTime = itemView.findViewById(R.id.tvTime);
             tvContent = itemView.findViewById(R.id.tvContent);
+            tvLikeCount = itemView.findViewById(R.id.tvLikeCount);
+            tvCommentCount = itemView.findViewById(R.id.tvCommentCount);
+
             imgMain = itemView.findViewById(R.id.imgMain);
-            imgSmall1 = itemView.findViewById(R.id.imgSmall1); // cần thêm ID
-            imgSmall2 = itemView.findViewById(R.id.imgSmall2); // cần thêm ID
+            imgSmall1 = itemView.findViewById(R.id.imgSmall1);
+            imgSmall2 = itemView.findViewById(R.id.imgSmall2);
+
+            // NÚT TRÁI TIM
+            btnLike = itemView.findViewById(R.id.btnLike);
         }
     }
 }

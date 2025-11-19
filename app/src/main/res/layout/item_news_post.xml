@@ -142,10 +142,14 @@
             android:gravity="center_vertical">
 
             <!-- Like -->
+            <!-- Like - CÓ ID ĐỂ CLICK -->
             <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:id="@+id/btnLike"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:src="@drawable/bangtin_heart_outline"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:padding="6dp"
                 app:tint="#FF5722" />
 
             <TextView
