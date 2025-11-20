@@ -1,6 +1,9 @@
 package com.example.thiennguyen.view.bangtin;
 
+import android.app.Activity;                    // THÊM DÒNG NÀY
+import android.content.Intent;                 // ĐÃ CÓ
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,19 +11,29 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.view.View;
-import android.content.Intent;
 import com.example.thiennguyen.R;
 import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
-import java.util.List;
 
 public class BangTinFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private NewsPostAdapter adapter;
-    private List<NewsPost> postList;
+    private ArrayList<NewsPost> postList;   // ĐÃ SỬA: dùng ArrayList thay List
+
+    // NHẬN KẾT QUẢ TỪ COMMENT ACTIVITY
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && data != null) {  // ĐÃ FIX: dùng Activity.RESULT_OK
+            int position = data.getIntExtra("post_position", -1);
+            int newCount = data.getIntExtra("new_comment_count", 0);
+            if (position != -1 && position < postList.size()) {
+                postList.get(position).commentCount = newCount;
+                adapter.notifyItemChanged(position);
+            }
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,7 +43,7 @@ public class BangTinFragment extends Fragment {
         recyclerView = view.findViewById(R.id.bangtin_recyclerViewNews);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Dữ liệu mẫu (giữ nguyên)
+        // Dữ liệu mẫu
         postList = new ArrayList<>();
         postList.add(new NewsPost(
                 "CLB Tình Nguyện Yêu Hoá Vang",
@@ -55,26 +68,23 @@ public class BangTinFragment extends Fragment {
         // TabLayout
         TabLayout tabLayout = view.findViewById(R.id.bangtin_tabLayout);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override public void onTabSelected(TabLayout.Tab tab) {
-                // Sau này lọc dữ liệu theo tab
-            }
+            @Override public void onTabSelected(TabLayout.Tab tab) {}
             @Override public void onTabUnselected(TabLayout.Tab tab) {}
             @Override public void onTabReselected(TabLayout.Tab tab) {}
         });
 
-    // Thay vì FloatingActionButton → dùng ImageView (vẫn click ngon)
+        // Nút tạo bài viết
         ImageView fabCreatePost = view.findViewById(R.id.bangtin_fab_create_post);
-        fabCreatePost.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Sắp mở form tạo bài viết...", Toast.LENGTH_SHORT).show();
-            // Sau này mở dialog ở đây
-        });
-        // Nút chuông thông báo
-        // Nút chuông thông báo – PHIÊN BẢN CHẮC CHẮN 100% RA TRANG
+        fabCreatePost.setOnClickListener(v ->
+                Toast.makeText(getContext(), "Sắp mở form tạo bài viết...", Toast.LENGTH_SHORT).show());
+
+        // Nút thông báo
         ImageView btnNotification = view.findViewById(R.id.bangtin_btn_notification);
         btnNotification.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), ThongBaoActivity.class);
             startActivity(intent);
         });
+
         return view;
     }
 }

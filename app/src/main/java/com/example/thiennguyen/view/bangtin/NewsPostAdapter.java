@@ -1,11 +1,14 @@
 package com.example.thiennguyen.view.bangtin;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import java.util.ArrayList;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.thiennguyen.R;
 import java.util.List;
@@ -37,17 +40,13 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.PostVi
         holder.imgSmall1.setImageResource(post.imgSmall1);
         holder.imgSmall2.setImageResource(post.imgSmall2);
 
-        // Cập nhật số lượt thích
+        // Cập nhật lượt thích
         holder.tvLikeCount.setText(post.likeCount + " lượt thích");
+        holder.btnLike.setImageResource(post.isLiked
+                ? R.drawable.bangtin_heart_filled
+                : R.drawable.bangtin_heart_outline);
 
-        // Cập nhật icon trái tim
-        if (post.isLiked) {
-            holder.btnLike.setImageResource(R.drawable.bangtin_heart_filled);
-        } else {
-            holder.btnLike.setImageResource(R.drawable.bangtin_heart_outline);
-        }
-
-        // Xử lý nhấn thích / bỏ thích
+        // Xử lý nhấn thích (giữ nguyên như cũ)
         holder.btnLike.setOnClickListener(v -> {
             if (post.isLiked) {
                 post.likeCount--;
@@ -56,8 +55,35 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.PostVi
                 post.likeCount++;
                 post.isLiked = true;
             }
-            // Cập nhật lại chính item này (mượt, không lag)
-            notifyItemChanged(position);
+            notifyItemChanged(position); // ĐÃ SỬA: bỏ chữ "gems" thừa
+        });
+
+        // Cập nhật số bình luận
+        if (post.commentCount == 0) {
+            holder.tvCommentCount.setText("Bình luận");
+        } else {
+            holder.tvCommentCount.setText(post.commentCount + " bình luận");
+        }
+
+        // THÊM MỚI: Click vào vùng bình luận → mở màn hình comment
+        holder.itemView.findViewById(R.id.bangtin_layout_comment_area).setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), BangTinCommentActivity.class);
+            intent.putExtra("post_position", position);
+            intent.putExtra("post_username", post.username);
+            intent.putExtra("post_time", post.time);
+            intent.putExtra("post_content", post.content);
+            intent.putExtra("comment_count", post.commentCount);
+
+            // Thay đoạn cũ bằng đoạn này (chỉ thêm 1 dòng kiểm tra)
+            if (post.comments == null) {
+                post.comments = new ArrayList<>();
+            }
+            intent.putParcelableArrayListExtra("post_comments", post.comments);
+
+            // Mở activity và chờ kết quả
+            if (v.getContext() instanceof AppCompatActivity) {
+                ((AppCompatActivity) v.getContext()).startActivityForResult(intent, 1000 + position);
+            }
         });
     }
 
@@ -68,7 +94,7 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.PostVi
 
     static class PostViewHolder extends RecyclerView.ViewHolder {
         TextView tvUsername, tvTime, tvContent, tvLikeCount, tvCommentCount;
-        ImageView imgAvatar, imgMain, imgSmall1, imgSmall2, btnLike;
+        ImageView imgMain, imgSmall1, imgSmall2, btnLike;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,12 +103,9 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.PostVi
             tvContent = itemView.findViewById(R.id.tvContent);
             tvLikeCount = itemView.findViewById(R.id.tvLikeCount);
             tvCommentCount = itemView.findViewById(R.id.tvCommentCount);
-
             imgMain = itemView.findViewById(R.id.imgMain);
             imgSmall1 = itemView.findViewById(R.id.imgSmall1);
             imgSmall2 = itemView.findViewById(R.id.imgSmall2);
-
-            // NÚT TRÁI TIM
             btnLike = itemView.findViewById(R.id.btnLike);
         }
     }

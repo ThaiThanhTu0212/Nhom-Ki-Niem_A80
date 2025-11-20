@@ -1,4 +1,7 @@
+// File: NewsPost.java
 package com.example.thiennguyen.view.bangtin;
+
+import java.util.ArrayList;
 
 public class NewsPost {
     public String username;
@@ -8,11 +11,15 @@ public class NewsPost {
     public int imgSmall1;
     public int imgSmall2;
 
-    // THÊM 2 FIELD MỚI
-    public int likeCount = 0;        // số lượt thích
-    public boolean isLiked = false;  // đã thích chưa
+    public int likeCount = 0;
+    public boolean isLiked = false;
+    public int commentCount = 0;
 
-    public NewsPost(String username, String time, String content, int imgMain, int imgSmall1, int imgSmall2) {
+    // QUAN TRỌNG: KHỞI TẠO LUÔN ĐỂ TRÁNH NULL POINTER
+    public ArrayList<Comment> comments = new ArrayList<>();
+
+    public NewsPost(String username, String time, String content,
+                    int imgMain, int imgSmall1, int imgSmall2) {
         this.username = username;
         this.time = time;
         this.content = content;

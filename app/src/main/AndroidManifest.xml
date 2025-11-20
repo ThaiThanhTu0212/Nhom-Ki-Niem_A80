@@ -28,6 +28,6 @@
             android:name=".view.bangtin.ThongBaoActivity"
             android:parentActivityName=".view.MainActivity"
             android:label="Thông báo" />
-
+        <activity android:name=".view.bangtin.BangTinCommentActivity" />
     </application>
 </manifest>

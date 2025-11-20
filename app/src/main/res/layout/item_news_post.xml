@@ -133,7 +133,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Like & Comment -->
+        <!-- Thay thế hoàn toàn phần Like & Comment cũ bằng đoạn này -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -141,8 +141,7 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <!-- Like -->
-            <!-- Like - CÓ ID ĐỂ CLICK -->
+            <!-- NÚT THÍCH (giữ nguyên như cũ) -->
             <ImageView
                 android:id="@+id/btnLike"
                 android:layout_width="32dp"
@@ -166,21 +165,34 @@
                 android:layout_height="1dp"
                 android:layout_weight="1" />
 
-            <!-- Comment -->
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/bangtin_comment"
-                app:tint="#666666" />
-
-            <TextView
-                android:id="@+id/tvCommentCount"
+            <!-- VÙNG CLICK BÌNH LUẬN - THÊM MỚI TẠI ĐÂY -->
+            <LinearLayout
+                android:id="@+id/bangtin_layout_comment_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0 bình luận"
-                android:textColor="#666666"
-                android:textSize="13sp"
-                android:layout_marginStart="4dp" />
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/bangtin_comment"
+                    app:tint="#666666" />
+
+                <TextView
+                    android:id="@+id/tvCommentCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bình luận"
+                    android:textColor="#666666"
+                    android:textSize="13sp"
+                    android:layout_marginStart="4dp" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
