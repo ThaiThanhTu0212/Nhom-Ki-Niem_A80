@@ -11,11 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
-import com.example.thiennguyen.view.model.ChienDich;
 import com.example.thiennguyen.view.model.NguoiDung;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class NguoiDungHomeAdapter extends RecyclerView.Adapter<NguoiDungHomeAdapter.NguoiDungHolder> {
     public interface OnItemClickListener {
