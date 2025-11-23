@@ -44,6 +44,10 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0") //cho imageView lấy nguồn là Link
     implementation("com.makeramen:roundedimageview:2.3.0") //thư viện bo góc ImageView
 
+
+
+
+
     // AndroidX & Material
     implementation(libs.appcompat)
     implementation(libs.material)
