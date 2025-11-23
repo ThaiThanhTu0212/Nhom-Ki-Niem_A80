@@ -39,11 +39,11 @@ public class HomeFragment extends Fragment {
 
     View view;
     RecyclerView chiendichHomeRecycleid, danhmucHomeRecyleid, nguoiDungHomeRecycleid, ToChuchomeRecycleId;
-    List<ChienDich> chienDichListHome;
+
     List<ChienDichResponse> chienDichResponseList = new ArrayList<>();
     List<DanhMuc> danhMuclistHome = new ArrayList<>();
     List<NguoiDungResponse> nguoiDungResponseList = new ArrayList<>();
-    List<NguoiDung> nguoiDungListHome;
+
     ChienDichHomeAdapter chienDichHomeAdapter;
     DanhMuchHomeAdapter danhMuchHomeAdapter;
     NguoiDungHomeAdapter nguoiDungHomeAdapter;
@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
 
         view = inflater.inflate(R.layout.fragment_home, container, false);
-//        creatListChienDich();
+
         callApi();
         initUI();
         initListener();
@@ -152,8 +152,6 @@ public class HomeFragment extends Fragment {
     }
 
 
-
-
     private void initListener() {
         btnXemTatCa_ct_home.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(),DanhSachChienDichActivity.class);
@@ -169,7 +167,7 @@ public class HomeFragment extends Fragment {
         chiendichHomeRecycleid.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         chienDichHomeAdapter.setListener(chienDich -> {
             Intent intent = new Intent(getContext(),ChiTietChienDichHomeActivity.class);
-            intent.putExtra("ID_CHIEN_DICH", String.valueOf(chienDich.getIdCd()));
+            intent.putExtra("ID_CHIEN_DICH", chienDich.getIdCd());
             startActivity(intent);
         });
 
@@ -212,7 +210,5 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
         ToChuchomeRecycleId.setAdapter(toChucHomeAdapter);
-
-
     }
 }

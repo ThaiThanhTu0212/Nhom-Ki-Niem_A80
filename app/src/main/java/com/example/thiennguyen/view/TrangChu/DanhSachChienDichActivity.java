@@ -17,6 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thiennguyen.R;
+import com.example.thiennguyen.view.data.ApiClient;
+import com.example.thiennguyen.view.data.DTO.ApiResponse;
+import com.example.thiennguyen.view.data.DTO.Response.ChienDichResponse;
+import com.example.thiennguyen.view.data.api.ChienDichApi;
 import com.example.thiennguyen.view.model.ChienDich;
 import com.example.thiennguyen.view.model.DanhMuc;
 import com.example.thiennguyen.view.model.NguoiDung;
@@ -25,6 +29,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DanhSachChienDichActivity extends AppCompatActivity {
     RecyclerView listcd_homeRecycleid, loaiCd_ctcd_home;
@@ -36,6 +44,7 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
     ListChienDichHomeAdapter listChienDichHomeAdapter;
     DanhMuchHomeAdapter danhMuchHomeAdapter;
     SearchView searchBarHomeId;
+    List<ChienDichResponse> chienDichResponseList = new ArrayList<>();
 
 
     @Override
@@ -48,10 +57,31 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        creatListChienDich();
+//        creatListChienDich();
+        callApi();
         initUI();
 
         initListener();
+    }
+
+    private void callApi() {
+        ChienDichApi chienDichApi = ApiClient.getRetrofit().create(ChienDichApi.class);
+        Call<ApiResponse<List<ChienDichResponse>>> callGetChienDich = chienDichApi.getAllChienDichResponse();
+        callGetChienDich.enqueue(new Callback<ApiResponse<List<ChienDichResponse>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<ChienDichResponse>>> call, Response<ApiResponse<List<ChienDichResponse>>> response) {
+                if (response.isSuccessful() && response.body()!= null){
+                    chienDichResponseList.clear();
+                    chienDichResponseList.addAll(response.body().getResult());
+                    listChienDichHomeAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<ChienDichResponse>>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void initListener() {
@@ -76,11 +106,11 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
 
         //danh sach chien dich
         listcd_homeRecycleid = findViewById(R.id.listcd_homeRecycleid);
-        listChienDichHomeAdapter = new ListChienDichHomeAdapter(chienDichListChildHome);
+        listChienDichHomeAdapter = new ListChienDichHomeAdapter(chienDichResponseList);
         listcd_homeRecycleid.setLayoutManager(new LinearLayoutManager(this));
         listChienDichHomeAdapter.setListener(chienDich -> {
             Intent intent = new Intent(DanhSachChienDichActivity.this,ChiTietChienDichHomeActivity.class);
-            intent.putExtra("ID_CHIEN_DICH",String.valueOf(chienDich.getIdCd()));
+            intent.putExtra("ID_CHIEN_DICH",chienDich.getIdCd());
             startActivity(intent);
         });
         listcd_homeRecycleid.setAdapter(listChienDichHomeAdapter);

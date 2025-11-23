@@ -14,10 +14,6 @@ import retrofit2.http.Path;
 
 public interface ChienDichApi {
     @GET("campaign")
-    Call<ApiResponse<List<ChienDich>>> getAllChienDich();
-
-
-    @GET("campaign")
     Call<ApiResponse<List<ChienDichResponse>>> getAllChienDichResponse();
     @GET("campaign/{id}")
     Call<ApiResponse<ChienDichResponse>> getChienDichResponseById(@Path("id") Integer id);
