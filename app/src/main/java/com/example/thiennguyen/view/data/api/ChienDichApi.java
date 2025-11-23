@@ -23,4 +23,7 @@ public interface ChienDichApi {
 
     @GET("users")
     Call<ApiResponse<List<NguoiDungResponse>>> getAllNguoiDung();
+    @GET("campaign/category/{id}")
+    Call<ApiResponse<List<ChienDichResponse>>> getAllChienDichByIdDanhMuc(@Path("id") Integer idDm);
+
 }
