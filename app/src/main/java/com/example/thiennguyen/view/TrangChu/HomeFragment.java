@@ -56,9 +56,9 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
 
         view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        callApi();
         initUI();
+        callApi();
+
         initListener();
         return view;
 
@@ -70,31 +70,6 @@ public class HomeFragment extends Fragment {
         ChienDichApi chienDichApi = ApiClient.getRetrofit().create(ChienDichApi.class);
 
 
-        Call<ApiResponse<ChienDichResponse>> callChienDich = chienDichApi.getChienDichResponseById(6);
-        callChienDich.enqueue(new Callback<ApiResponse<ChienDichResponse>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<ChienDichResponse>> call, Response<ApiResponse<ChienDichResponse>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    ChienDichResponse chienDichResponse = response.body().getResult();
-                    if (chienDichResponse != null) {
-                        Log.d("API_SUCCESS", "Tên chiến dịch: " + chienDichResponse.getTenCd());
-                        Log.d("API_SUCCESS", "Mô tả: " + chienDichResponse.getMoTa());
-                        Log.d("API_SUCCESS", "Số tiền mục tiêu: " + chienDichResponse.getSoTienMucTieu());
-                        Log.d("API_SUCCESS", "Số tiền mục tiêu: " + chienDichResponse.toString());
-                        // và các trường khác...
-                    } else {
-                        Log.e("API_ERROR", "Result is null");
-                    }
-                } else {
-                    Log.e("API_ERROR", "Response not successful: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<ChienDichResponse>> call, Throwable t) {
-                Log.e("API_FAILURE", t.getMessage(), t);
-            }
-        });
 
         Call<ApiResponse<List<ChienDichResponse>>> callAllChienDichResponse = chienDichApi.getAllChienDichResponse();
         callAllChienDichResponse.enqueue(new Callback<ApiResponse<List<ChienDichResponse>>>() {
@@ -103,7 +78,6 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful() && response.body()!= null) {
                     chienDichResponseList.clear();
                     chienDichResponseList.addAll(response.body().getResult());
-                    nguoiDungHomeAdapter.notifyDataSetChanged();
                     chienDichHomeAdapter.notifyDataSetChanged();
 
                 }
@@ -139,6 +113,7 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful() && response.body()!= null){
                     nguoiDungResponseList.clear();
                     nguoiDungResponseList.addAll(response.body().getResult());
+                    nguoiDungHomeAdapter.notifyDataSetChanged();
                     toChucHomeAdapter.notifyDataSetChanged();
                 }
             }
