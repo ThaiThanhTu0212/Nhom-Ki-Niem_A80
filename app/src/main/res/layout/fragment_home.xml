@@ -11,6 +11,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
+        <Button
+            android:id="@+id/btnGotoLogin"
+            android:layout_width="127dp"
+            android:layout_height="wrap_content"
+            android:text="Login" />
+
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"

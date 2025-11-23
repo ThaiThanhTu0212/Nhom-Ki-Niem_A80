@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.example.thiennguyen.view.data.api.ChienDichApi;
 import com.example.thiennguyen.view.model.ChienDich;
 import com.example.thiennguyen.view.model.DanhMuc;
 import com.example.thiennguyen.view.model.NguoiDung;
+import com.example.thiennguyen.view.taikhoan.LoginActivity;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
     TextView btnXemTatCa_ct_home;
+    Button btnGotoLogin;
 
     View view;
     RecyclerView chiendichHomeRecycleid, danhmucHomeRecyleid, nguoiDungHomeRecycleid, ToChuchomeRecycleId;
@@ -133,6 +136,10 @@ public class HomeFragment extends Fragment {
 
             startActivity(intent);
         });
+        btnGotoLogin.setOnClickListener(v -> {
+            Intent intentlogin = new Intent(getContext(), LoginActivity.class);
+            startActivity(intentlogin);
+        });
     }
 
     private void initUI() {
@@ -185,5 +192,7 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
         ToChuchomeRecycleId.setAdapter(toChucHomeAdapter);
+
+        btnGotoLogin = view.findViewById(R.id.btnGotoLogin);
     }
 }
