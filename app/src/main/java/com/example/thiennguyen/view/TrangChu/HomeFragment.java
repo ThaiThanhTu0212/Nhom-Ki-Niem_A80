@@ -18,6 +18,7 @@ import com.example.thiennguyen.R;
 import com.example.thiennguyen.view.data.ApiClient;
 import com.example.thiennguyen.view.data.DTO.ApiResponse;
 import com.example.thiennguyen.view.data.DTO.Response.ChienDichResponse;
+import com.example.thiennguyen.view.data.DTO.Response.NguoiDungResponse;
 import com.example.thiennguyen.view.data.api.ChienDichApi;
 import com.example.thiennguyen.view.model.ChienDich;
 import com.example.thiennguyen.view.model.DanhMuc;
@@ -41,9 +42,12 @@ public class HomeFragment extends Fragment {
     List<ChienDich> chienDichListHome;
     List<ChienDichResponse> chienDichResponseList = new ArrayList<>();
     List<DanhMuc> danhMuclistHome = new ArrayList<>();
+    List<NguoiDungResponse> nguoiDungResponseList = new ArrayList<>();
     List<NguoiDung> nguoiDungListHome;
     ChienDichHomeAdapter chienDichHomeAdapter;
     DanhMuchHomeAdapter danhMuchHomeAdapter;
+    NguoiDungHomeAdapter nguoiDungHomeAdapter;
+    ToChucHomeAdapter toChucHomeAdapter;
 
 
     @Override
@@ -99,7 +103,9 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful() && response.body()!= null) {
                     chienDichResponseList.clear();
                     chienDichResponseList.addAll(response.body().getResult());
+                    nguoiDungHomeAdapter.notifyDataSetChanged();
                     chienDichHomeAdapter.notifyDataSetChanged();
+
                 }
             }
 
@@ -122,6 +128,23 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ApiResponse<List<DanhMuc>>> call, Throwable t) {
+
+            }
+        });
+
+        Call<ApiResponse<List<NguoiDungResponse>>> callNguoiDungList = chienDichApi.getAllNguoiDung();
+        callNguoiDungList.enqueue(new Callback<ApiResponse<List<NguoiDungResponse>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<NguoiDungResponse>>> call, Response<ApiResponse<List<NguoiDungResponse>>> response) {
+                if (response.isSuccessful() && response.body()!= null){
+                    nguoiDungResponseList.clear();
+                    nguoiDungResponseList.addAll(response.body().getResult());
+                    toChucHomeAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<NguoiDungResponse>>> call, Throwable t) {
 
             }
         });
@@ -166,7 +189,7 @@ public class HomeFragment extends Fragment {
 
         //recycleView for nguoi dung
         nguoiDungHomeRecycleid = view.findViewById(R.id.nguoiDungHomeRecycleid);
-        NguoiDungHomeAdapter nguoiDungHomeAdapter = new NguoiDungHomeAdapter(nguoiDungListHome);
+        nguoiDungHomeAdapter = new NguoiDungHomeAdapter(nguoiDungResponseList);
         nguoiDungHomeRecycleid.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         nguoiDungHomeAdapter.setListener(nguoiDung -> {
@@ -182,7 +205,7 @@ public class HomeFragment extends Fragment {
         ToChuchomeRecycleId = view.findViewById(R.id.ToChuchomeRecycleId);
         ToChuchomeRecycleId.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        ToChucHomeAdapter toChucHomeAdapter = new ToChucHomeAdapter(nguoiDungListHome);
+        toChucHomeAdapter = new ToChucHomeAdapter(nguoiDungResponseList);
         toChucHomeAdapter.setListener(nguoiDung -> {
             Intent intent = new Intent(getContext(),ProfileHomeActivity.class);
             intent.putExtra("ID_NGUOI_DUNG",nguoiDung.getIdNd());
