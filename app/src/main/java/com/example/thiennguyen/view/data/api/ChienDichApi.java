@@ -3,6 +3,7 @@ package com.example.thiennguyen.view.data.api;
 import com.example.thiennguyen.view.data.DTO.ApiResponse;
 import com.example.thiennguyen.view.data.DTO.Response.ChienDichResponse;
 import com.example.thiennguyen.view.model.ChienDich;
+import com.example.thiennguyen.view.model.DanhMuc;
 
 import java.util.List;
 
@@ -19,4 +20,7 @@ public interface ChienDichApi {
     Call<ApiResponse<List<ChienDichResponse>>> getAllChienDichResponse();
     @GET("campaign/{id}")
     Call<ApiResponse<ChienDichResponse>> getChienDichResponseById(@Path("id") Integer id);
+
+    @GET("category")
+    Call<ApiResponse<List<DanhMuc>>> getAllDanhMuc();
 }

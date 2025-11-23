@@ -40,9 +40,10 @@ public class HomeFragment extends Fragment {
     RecyclerView chiendichHomeRecycleid, danhmucHomeRecyleid, nguoiDungHomeRecycleid, ToChuchomeRecycleId;
     List<ChienDich> chienDichListHome;
     List<ChienDichResponse> chienDichResponseList = new ArrayList<>();
-    List<DanhMuc> danhMuclistHome;
+    List<DanhMuc> danhMuclistHome = new ArrayList<>();
     List<NguoiDung> nguoiDungListHome;
     ChienDichHomeAdapter chienDichHomeAdapter;
+    DanhMuchHomeAdapter danhMuchHomeAdapter;
 
 
     @Override
@@ -108,6 +109,23 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        Call<ApiResponse<List<DanhMuc>>> callDanhMuc = chienDichApi.getAllDanhMuc();
+        callDanhMuc.enqueue(new Callback<ApiResponse<List<DanhMuc>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<DanhMuc>>> call, Response<ApiResponse<List<DanhMuc>>> response) {
+                if(response.isSuccessful() && response.body()!= null){
+                    danhMuclistHome.clear();
+                    danhMuclistHome.addAll(response.body().getResult());
+                    danhMuchHomeAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<DanhMuc>>> call, Throwable t) {
+
+            }
+        });
+
     }
 
 
@@ -136,7 +154,7 @@ public class HomeFragment extends Fragment {
 
         //recycleView for danhMuc
         danhmucHomeRecyleid = view.findViewById(R.id.danhmucHomeRecyleid);
-        DanhMuchHomeAdapter danhMuchHomeAdapter = new DanhMuchHomeAdapter(danhMuclistHome);
+        danhMuchHomeAdapter = new DanhMuchHomeAdapter(danhMuclistHome);
         danhmucHomeRecyleid.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         danhMuchHomeAdapter.setListener(danhMuc -> {
             Intent intent = new Intent(getContext(),DanhSachChienDichActivity.class);
