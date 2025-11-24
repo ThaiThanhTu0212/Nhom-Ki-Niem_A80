@@ -60,10 +60,10 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finishAffinity();
+                }else {
+                    // ❌ Sai email hoặc mật khẩu
+                    Toast.makeText(LoginActivity.this, "Email hoặc mật khẩu không đúng!", Toast.LENGTH_SHORT).show();
                 }
-
-                // ❌ Sai email hoặc mật khẩu
-                Toast.makeText(LoginActivity.this, "Email hoặc mật khẩu không đúng!", Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,7 +70,7 @@ public class ChiTietChienDichHomeActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ApiResponse<ChienDichResponse>> call, Throwable t) {
-
+                    Toast.makeText(ChiTietChienDichHomeActivity.this, "Lỗi kết nối. Vui lòng thử lại!", Toast.LENGTH_SHORT).show();
                 }
         });
         }

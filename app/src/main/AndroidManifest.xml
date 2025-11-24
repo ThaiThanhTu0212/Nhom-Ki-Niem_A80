@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ThienNguyen">
         <activity
+            android:name=".view.TrangChu.ChienDich.CreateChienDichActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.taikhoan.LoginActivity"
             android:exported="false" />
         <activity

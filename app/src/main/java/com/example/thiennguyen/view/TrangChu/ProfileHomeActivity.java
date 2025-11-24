@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -75,7 +76,7 @@ public class ProfileHomeActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ApiResponse<NguoiDungResponse>> call, Throwable t) {
-                    Log.e("API_ERROR", "Lỗi API: " + t.getMessage());
+                    Toast.makeText(ProfileHomeActivity.this, "Lỗi kết nối. Vui lòng thử lại!", Toast.LENGTH_SHORT).show();
                 }
             });
         }else {

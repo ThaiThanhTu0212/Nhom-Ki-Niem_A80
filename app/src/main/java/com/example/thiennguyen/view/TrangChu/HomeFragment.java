@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.thiennguyen.R;
+import com.example.thiennguyen.view.TrangChu.ChienDich.CreateChienDichActivity;
 import com.example.thiennguyen.view.data.ApiClient;
 import com.example.thiennguyen.view.data.DTO.ApiResponse;
 import com.example.thiennguyen.view.data.DTO.Response.ChienDichResponse;
@@ -51,6 +52,7 @@ public class HomeFragment extends Fragment {
     DanhMuchHomeAdapter danhMuchHomeAdapter;
     NguoiDungHomeAdapter nguoiDungHomeAdapter;
     ToChucHomeAdapter toChucHomeAdapter;
+    Button btnCreateChienDich;
 
 
     @Override
@@ -88,7 +90,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ApiResponse<List<ChienDichResponse>>> call, Throwable t) {
-
+                Toast.makeText(getContext(), "Lỗi kết nối. Vui lòng thử lại!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -105,7 +107,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ApiResponse<List<DanhMuc>>> call, Throwable t) {
-
+                Toast.makeText(getContext(), "Lỗi kết nối. Vui lòng thử lại!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -123,7 +125,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ApiResponse<List<NguoiDungResponse>>> call, Throwable t) {
-
+                Toast.makeText(getContext(), "Lỗi kết nối. Vui lòng thử lại!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -136,9 +138,15 @@ public class HomeFragment extends Fragment {
 
             startActivity(intent);
         });
+        btnCreateChienDich.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), CreateChienDichActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void initUI() {
+        btnCreateChienDich = view.findViewById(R.id.btnCreateChienDich);
+
         //recycleView for chienDich
         chiendichHomeRecycleid = view.findViewById(R.id.chiendichHomeRecycleid);
         chienDichHomeAdapter = new ChienDichHomeAdapter(chienDichResponseList);

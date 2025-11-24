@@ -11,6 +11,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
+        <Button
+            android:id="@+id/btnCreateChienDich"
+            android:layout_width="242dp"
+            android:layout_height="wrap_content"
+            android:text="Tạo chiến dịch" />
+
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
