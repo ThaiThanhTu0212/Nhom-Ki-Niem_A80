@@ -1,5 +1,6 @@
 package com.example.thiennguyen.view.taikhoan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.thiennguyen.R;
+import com.example.thiennguyen.view.MainActivity;
 import com.example.thiennguyen.view.data.ApiClient;
 import com.example.thiennguyen.view.data.DTO.ApiResponse;
 import com.example.thiennguyen.view.data.DTO.Response.AuthenticationResponse;
@@ -55,7 +57,9 @@ public class LoginActivity extends AppCompatActivity {
                     // Đăng nhập thành công
                     DataLocalManager.setToken(response.body().getResult().getToken());
                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                    return;
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finishAffinity();
                 }
 
                 // ❌ Sai email hoặc mật khẩu

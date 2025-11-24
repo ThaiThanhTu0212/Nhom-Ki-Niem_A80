@@ -38,7 +38,7 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
     TextView btnXemTatCa_ct_home;
-    Button btnGotoLogin;
+
 
     View view;
     RecyclerView chiendichHomeRecycleid, danhmucHomeRecyleid, nguoiDungHomeRecycleid, ToChuchomeRecycleId;
@@ -136,10 +136,6 @@ public class HomeFragment extends Fragment {
 
             startActivity(intent);
         });
-        btnGotoLogin.setOnClickListener(v -> {
-            Intent intentlogin = new Intent(getContext(), LoginActivity.class);
-            startActivity(intentlogin);
-        });
     }
 
     private void initUI() {
@@ -193,6 +189,5 @@ public class HomeFragment extends Fragment {
         });
         ToChuchomeRecycleId.setAdapter(toChucHomeAdapter);
 
-        btnGotoLogin = view.findViewById(R.id.btnGotoLogin);
     }
 }
