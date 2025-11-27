@@ -82,7 +82,7 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.PostVi
 
             // Mở activity và chờ kết quả
             if (v.getContext() instanceof AppCompatActivity) {
-                ((AppCompatActivity) v.getContext()).startActivityForResult(intent, 1000 + position);
+                v.getContext().startActivity(intent);
             }
         });
     }
@@ -109,4 +109,15 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.PostVi
             btnLike = itemView.findViewById(R.id.btnLike);
         }
     }
+    // ================= THÊM TỪ ĐÂY TRỞ XUỐNG =================
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    private OnItemClickListener itemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.itemClickListener = listener;
+    }
+// =========================================================
 }
