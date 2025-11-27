@@ -8,9 +8,54 @@
     <EditText
         android:id="@+id/edt_create_post_content"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="120dp"
         android:gravity="top|start"
-        android:hint="Bạn đang nghĩ gì..."
-        android:inputType="textMultiLine|textCapSentences" />
+        android:hint="Bạn đang nghĩ gì?"
+        android:background="@drawable/edittext_rounded"
+        android:padding="12dp"
+        android:inputType="textCapSentences|textMultiLine" />
+
+    <!-- Khu vực hiển thị ảnh đã chọn -->
+    <ImageView
+        android:id="@+id/img_selected_photo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="centerCrop"
+        android:background="@drawable/border_image_preview"
+        android:visibility="gone"
+        android:contentDescription="Ảnh đã chọn" />
+
+    <!-- Nút xóa ảnh (hiển thị khi có ảnh) -->
+    <ImageView
+        android:id="@+id/btn_remove_photo"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="-30dp"
+        android:layout_marginEnd="80dp"
+        android:src="@drawable/ic_close_circle"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:visibility="gone" />
+
+    <!-- Nút chọn ảnh -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_marginTop="12dp">
+
+        <ImageView
+            android:id="@+id/btn_add_photo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_photo_camera"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:contentDescription="Thêm ảnh" />
+
+    </LinearLayout>
 
 </LinearLayout>

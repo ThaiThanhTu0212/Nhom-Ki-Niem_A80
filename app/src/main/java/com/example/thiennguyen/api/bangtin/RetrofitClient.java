@@ -8,10 +8,9 @@ public class RetrofitClient {
 
 
     // DÙNG CHO ĐIỆN THOẠI THẬT → bỏ comment dòng dưới và sửa IP máy tính của bạn
-    private static final String BASE_URL = "http://192.168.1.81:5089/";
+    private static final String BASE_URL = "http://192.168.1.15:5089/";
 
     private static Retrofit retrofit;
-
     public static ApiService getService() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
