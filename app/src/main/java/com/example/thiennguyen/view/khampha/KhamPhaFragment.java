@@ -37,7 +37,7 @@ public class KhamPhaFragment extends Fragment {
 
         setupBanner();
         setupRecyclerViews();
-        setupCampaignTop1();   // ⭐ chỉ hiển thị top 1
+        setupCampaignTop1();
         setupEvents();
         setupSuKien();
 
@@ -97,9 +97,6 @@ public class KhamPhaFragment extends Fragment {
         binding.rvHoanCanh.setAdapter(new Adapter("Hoàn cảnh"));
     }
 
-    // --------------------------
-    // HIỂN THỊ TOP 1 CHIẾN DỊCH
-    // --------------------------
     private void setupCampaignTop1() {
 
         List<DongHanhItem> list = new ArrayList<>();
@@ -113,7 +110,6 @@ public class KhamPhaFragment extends Fragment {
                 1
         ));
 
-        //  chỉ lấy top 1
         List<DongHanhItem> top1 = new ArrayList<>();
         top1.add(list.get(0));
 
@@ -175,7 +171,7 @@ public class KhamPhaFragment extends Fragment {
         ));
 
 
-        // Lấy chỉ sự kiện nổi bật nhất → phần tử 0
+        // Lấy chỉ sự kiện nổi bật nhất
         List<SuKienItem> suKienNoiBat = new ArrayList<>();
         suKienNoiBat.add(suKienList.get(0));
 

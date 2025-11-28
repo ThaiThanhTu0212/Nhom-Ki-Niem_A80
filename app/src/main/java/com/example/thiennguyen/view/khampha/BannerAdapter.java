@@ -35,7 +35,6 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
     public void onBindViewHolder(@NonNull BannerViewHolder holder, int position) {
         BannerItem banner = banners.get(position);
 
-        // Gradient nền
         GradientDrawable gradient = new GradientDrawable(
                 GradientDrawable.Orientation.LEFT_RIGHT,
                 new int[]{banner.getColorStart(), banner.getColorEnd()}
