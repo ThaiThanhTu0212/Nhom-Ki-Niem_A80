@@ -1,34 +1,24 @@
-package com.example.thiennguyen.view.bangtin;
+package com.example.thiennguyen.api.bangtin;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.Glide; // THÊM IMPORT GLIDE
 import com.example.thiennguyen.R;
-import com.example.thiennguyen.api.bangtin.NewsPost;
-import com.example.thiennguyen.api.bangtin.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPostViewHolder> {
 
-    private final List<NewsPost> postList;
+    private final ArrayList<NewsPost> postList;
     private OnItemClickListener listener;
 
     public interface OnItemClickListener {
@@ -41,7 +31,7 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
         this.listener = listener;
     }
 
-    public NewsPostAdapter(List<NewsPost> postList) {
+    public NewsPostAdapter(ArrayList<NewsPost> postList) {
         this.postList = postList;
     }
 
@@ -58,6 +48,7 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
         holder.bind(currentPost);
     }
 
+    // Tối ưu hóa việc cập nhật chỉ phần thay đổi
     @Override
     public void onBindViewHolder(@NonNull NewsPostViewHolder holder, int position, @NonNull List<Object> payloads) {
         if (payloads.isEmpty()) {
@@ -80,7 +71,7 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
         public TextView author;
         public TextView time;
         public TextView content;
-        public ImageView postImage; // Chỉ còn một ImageView
+        public ImageView postImage;
         public TextView commentCount;
         public TextView likeCount;
         public ImageView btnLike;
@@ -94,9 +85,9 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
             author = itemView.findViewById(R.id.tvUsername);
             time = itemView.findViewById(R.id.tvTime);
             content = itemView.findViewById(R.id.tvContent);
-            postImage = itemView.findViewById(R.id.imgMain); // Tham chiếu đến ImageView duy nhất
+            postImage = itemView.findViewById(R.id.imgMain);
             commentCount = itemView.findViewById(R.id.tvCommentCount);
-            likeCount = itemView.findViewById(R.id.tvLikeCount);
+            likeCount = itemView.findViewById(R.id.tvLikeCount); // ID của TextView số lượt thích
             btnLike = itemView.findViewById(R.id.btnLike);
             commentArea = itemView.findViewById(R.id.bangtin_layout_comment_area);
             btnMoreOptions = itemView.findViewById(R.id.btnMoreOptions);
@@ -129,31 +120,36 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
             });
         }
 
+        // Gán dữ liệu vào ViewHolder (ĐÃ SỬA ĐỂ DÙNG GLIDE)
         public void bind(NewsPost post) {
             author.setText(post.author);
             time.setText(post.time);
             content.setText(post.content);
             avatar.setImageResource(post.avatarResource);
 
-            // Sử dụng Glide để tải ảnh từ URL
+            // SỬ DỤNG GLIDE ĐỂ TẢI ẢNH TỪ URL
             if (post.imageUrl != null && !post.imageUrl.isEmpty()) {
                 postImage.setVisibility(View.VISIBLE);
                 Glide.with(itemView.getContext())
                      .load(post.imageUrl)
-                     .placeholder(R.drawable.placeholder_image)
-                     .error(R.drawable.bangtin_img_default_post)
+                     .placeholder(R.drawable.placeholder_image) // Ảnh hiển thị trong lúc tải
+                     .error(R.drawable.bangtin_img_default_post) // Ảnh hiển thị khi lỗi
                      .into(postImage);
             } else {
                 postImage.setVisibility(View.GONE);
             }
-
             updateLikeStatus(post);
             commentCount.setText(String.valueOf(post.commentCount) + " Bình luận");
         }
 
+        // Cập nhật trạng thái và số lượt thích
         public void updateLikeStatus(NewsPost post) {
             likeCount.setText(String.valueOf(post.likeCount) + " lượt thích");
-            btnLike.setImageResource(post.isLiked ? R.drawable.bangtin_heart_filled : R.drawable.bangtin_heart_outline);
+            if (post.isLiked) {
+                btnLike.setImageResource(R.drawable.bangtin_heart_filled); // Icon trái tim đã tô màu
+            } else {
+                btnLike.setImageResource(R.drawable.bangtin_heart_outline); // Icon trái tim rỗng
+            }
         }
     }
 }
