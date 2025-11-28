@@ -23,14 +23,33 @@ public class DongHanhActivity extends AppCompatActivity {
         rvCampaigns = findViewById(R.id.rvCampaigns);
 
         List<DongHanhItem> list = new ArrayList<>();
-        list.add(new DongHanhItem(R.drawable.h1, "Chương trình trồng 1 triệu cây xanh cho Trường Sa",
-                "5.981.152.110 đ", "24/04/2025", "MB - Khối CNTT", R.drawable.khampha_rank1));
 
-        list.add(new DongHanhItem(R.drawable.h2, "Chương trình trồng 1 triệu cây xanh cho Trường Sa",
-                "506.243.000 đ", "09/08/2025", "MB ĐÔNG SÀI GÒN", R.drawable.khampha_rank2));
+        list.add(new DongHanhItem(
+                R.drawable.h1,
+                "Chương trình trồng 1 triệu cây xanh cho Trường Sa",
+                "5.981.152.110 đ",
+                "24/04/2025",
+                "MB - Khối CNTT",
+                1   // TOP 1
+        ));
 
-        list.add(new DongHanhItem(R.drawable.h3, "Chương trình trồng 1 triệu cây xanh cho Trường Sa",
-                "343.863.336 đ", "05/08/2025", "MB MỸ ĐÌNH", R.drawable.khampha_rank3));
+        list.add(new DongHanhItem(
+                R.drawable.h2,
+                "Chương trình trồng 1 triệu cây xanh cho Trường Sa",
+                "506.243.000 đ",
+                "09/08/2025",
+                "MB ĐÔNG SÀI GÒN",
+                2   // TOP 2
+        ));
+
+        list.add(new DongHanhItem(
+                R.drawable.h3,
+                "Chương trình trồng 1 triệu cây xanh cho Trường Sa",
+                "343.863.336 đ",
+                "05/08/2025",
+                "MB MỸ ĐÌNH",
+                3   // TOP 3
+        ));
 
         rvCampaigns.setLayoutManager(new LinearLayoutManager(this));
         rvCampaigns.setAdapter(new DongHanhAdapter(list));

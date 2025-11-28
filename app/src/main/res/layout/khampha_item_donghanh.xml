@@ -36,7 +36,8 @@
             android:id="@+id/imgRank"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:layout_alignParentEnd="true"/>
+            android:layout_marginTop="35dp"
+            android:layout_alignParentEnd="true" />
             <!--android:src="@drawable/huychuong1" />
 
         <!- Đã kêu gọi -->

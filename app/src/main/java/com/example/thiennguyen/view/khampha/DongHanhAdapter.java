@@ -38,7 +38,16 @@ public class DongHanhAdapter extends RecyclerView.Adapter<DongHanhAdapter.ViewHo
         holder.txtAmount.setText(item.getAmount());
         holder.txtDate.setText(item.getStartDate());
         holder.txtSponsor.setText(item.getSponsor());
-        holder.imgRank.setImageResource(item.getRankIcon());
+        holder.imgRank.setImageResource(getRankIcon(item.getRank()));
+    }
+
+    private int getRankIcon(int rank) {
+        switch (rank) {
+            case 1: return R.drawable.khampha_rank1;
+            case 2: return R.drawable.khampha_rank2;
+            case 3: return R.drawable.khampha_rank3;
+            default: return R.drawable.khampha_rank1;
+        }
     }
 
     @Override

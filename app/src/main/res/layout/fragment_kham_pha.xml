@@ -185,21 +185,38 @@
 
 
         <!-- Chiến dịch đồng hành -->
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chiến dịch đồng hành"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            android:textColor="@android:color/black"/>
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/txtChienDichTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chiến dịch đồng hành"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
+
+            <TextView
+                android:id="@+id/btnXemTatCa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xem tất cả"
+                android:textSize="14sp"
+                android:textColor="#FF9800"
+                android:layout_alignParentEnd="true"
+                android:padding="4dp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvChienDich"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:overScrollMode="never"/>
+            android:paddingTop="10dp"
+            android:nestedScrollingEnabled="false"/>
 
         <!-- Khám phá sự kiện -->
         <TextView

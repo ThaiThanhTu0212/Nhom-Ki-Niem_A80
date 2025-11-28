@@ -7,16 +7,17 @@ public class DongHanhItem {
     private final String amount;
     private final String startDate;
     private final String sponsor;
-    private final int rankIcon;
+    private final int rank;  // dùng 1 biến rank DUY NHẤT
 
     public DongHanhItem(int imageRes, String title, String amount, String startDate,
-                        String sponsor, int rankIcon) {
+                        String sponsor, int rank) {
+
         this.imageRes = imageRes;
         this.title = title;
         this.amount = amount;
         this.startDate = startDate;
         this.sponsor = sponsor;
-        this.rankIcon = rankIcon;
+        this.rank = rank;
     }
 
     public int getImageRes() { return imageRes; }
@@ -24,5 +25,5 @@ public class DongHanhItem {
     public String getAmount() { return amount; }
     public String getStartDate() { return startDate; }
     public String getSponsor() { return sponsor; }
-    public int getRankIcon() { return rankIcon; }
+    public int getRank() { return rank; }
 }
