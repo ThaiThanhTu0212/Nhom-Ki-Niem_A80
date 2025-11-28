@@ -39,6 +39,8 @@ public class KhamPhaFragment extends Fragment {
         setupRecyclerViews();
         setupCampaignTop1();   // ⭐ chỉ hiển thị top 1
         setupEvents();
+        setupSuKien();
+
 
         return view;
     }
@@ -84,14 +86,14 @@ public class KhamPhaFragment extends Fragment {
     }
 
     private void setupRecyclerViews() {
-        binding.rvSuKien.setLayoutManager(
+        binding.rvSuKienNoiBat.setLayoutManager(
                 new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
 
         binding.rvHoanCanh.setLayoutManager(
                 new LinearLayoutManager(getContext()));
 
         // demo
-        binding.rvSuKien.setAdapter(new Adapter("Sự kiện"));
+        binding.rvSuKienNoiBat.setAdapter(new Adapter("Sự kiện"));
         binding.rvHoanCanh.setAdapter(new Adapter("Hoàn cảnh"));
     }
 
@@ -147,7 +149,42 @@ public class KhamPhaFragment extends Fragment {
                 startActivity(new Intent(getContext(), DongHanhActivity.class))
         );
 
+        binding.btnXemTatCaSuKien.setOnClickListener(v ->
+                startActivity(new Intent(getContext(), SuKienActivity.class)));
+
+
     }
+
+    private void setupSuKien() {
+        List<SuKienItem> suKienList = new ArrayList<>();
+
+        suKienList.add(new SuKienItem(
+                R.drawable.khampha_sukien1,
+                "GIẢI ĐẤU PICKLEBALL SMASH FOR SOUNDS",
+                "30/11/2025 - 30/11/2025",
+                "Trẻ em vùng cao",
+                "234 người quan tâm"
+        ));
+
+        suKienList.add(new SuKienItem(
+                R.drawable.khampha_sukien2,
+                "Kỷ niệm 20 năm thành lập PanNature",
+                "05/01/2026",
+                "Hoàn cảnh khó khăn",
+                "20 người quan tâm"
+        ));
+
+
+        // Lấy chỉ sự kiện nổi bật nhất → phần tử 0
+        List<SuKienItem> suKienNoiBat = new ArrayList<>();
+        suKienNoiBat.add(suKienList.get(0));
+
+        // Gắn adapter cho sự kiện nổi bật
+        SuKienAdapter adapter = new SuKienAdapter(suKienNoiBat);
+        binding.rvSuKienNoiBat.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvSuKienNoiBat.setAdapter(adapter);
+    }
+
 
     @Override
     public void onDestroyView() {
