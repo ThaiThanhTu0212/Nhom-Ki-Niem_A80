@@ -1,0 +1,6 @@
+@ThienNguyenAPI_HostAddress = http://localhost:5119
+
+GET {{ThienNguyenAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
