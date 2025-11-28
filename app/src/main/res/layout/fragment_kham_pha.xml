@@ -219,21 +219,39 @@
             android:nestedScrollingEnabled="false"/>
 
         <!-- Khám phá sự kiện -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Khám phá sự kiện"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            android:textColor="@android:color/black"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSuKien"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:overScrollMode="never"/>
+            android:gravity="center_vertical"
+            android:paddingTop="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Sự kiện"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/btnXemTatCaSuKien"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xem tất cả >"
+                android:textColor="#F5A623"
+                android:textSize="14sp"
+                android:padding="4dp" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSuKienNoiBat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"/>
+
 
         <!-- Hoàn cảnh khó khăn -->
         <TextView

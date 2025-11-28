@@ -18,7 +18,7 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     private final List<String> items;
-    private final String type; // để phân biệt loại
+    private final String type;
 
     public Adapter(String type) {
         this.type = type;

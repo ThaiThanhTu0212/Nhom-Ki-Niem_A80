@@ -7,7 +7,7 @@ public class DongHanhItem {
     private final String amount;
     private final String startDate;
     private final String sponsor;
-    private final int rank;  // dùng 1 biến rank DUY NHẤT
+    private final int rank;
 
     public DongHanhItem(int imageRes, String title, String amount, String startDate,
                         String sponsor, int rank) {
