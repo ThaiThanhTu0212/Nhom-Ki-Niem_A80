@@ -41,7 +41,7 @@
                     android:id="@+id/tvUsername"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="CLB Tình Nguyện Yêu Hoá Vang"
+                    android:text="Tên người dùng"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -50,13 +50,13 @@
                     android:id="@+id/tvTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Đã thêm 10 ảnh mới • khoảng 1 tiếng trước"
+                    android:text="Thời gian đăng"
                     android:textColor="#888888"
                     android:textSize="12sp" />
             </LinearLayout>
 
-            <!-- More vert icon -->
             <ImageView
+                android:id="@+id/btnMoreOptions" 
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/bangtin_more_vert"
@@ -69,71 +69,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Đồng hành cùng bà con về vùng cao Bắc Trà My, Nơi chịu thiệt hại nặng nề do sạt lở, bão số 12 vừa qua... Xem thêm"
+            android:text="Nội dung bài viết..."
             android:textColor="#333333"
             android:textSize="14sp"
             android:lineSpacingExtra="4dp" />
 
-        <!-- Grid ảnh: 1 lớn + 2 nhỏ + +7 -->
-        <LinearLayout
+        <!-- SỬA LỖI: Thay thế lưới ảnh phức tạp bằng một ImageView duy nhất -->
+        <ImageView
+            android:id="@+id/imgMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:visibility="gone" /> <!-- Mặc định sẽ ẩn đi -->
 
-            <!-- Ảnh lớn bên trái -->
-            <ImageView
-                android:id="@+id/imgMain"
-                android:layout_width="0dp"
-                android:layout_height="180dp"
-                android:layout_weight="2"
-                android:scaleType="centerCrop"
-                android:src="@drawable/placeholder_image"
-                android:layout_marginEnd="4dp" />
-
-            <!-- Cột bên phải: 2 ảnh + ô +7 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="180dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/imgSmall1"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/placeholder_image"
-                    android:layout_marginBottom="2dp" />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginTop="2dp">
-
-                    <ImageView
-                        android:id="@+id/imgSmall2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/placeholder_image"
-                        android:alpha="0.5" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="+7"
-                        android:textColor="#FFFFFF"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-                </FrameLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Thay thế hoàn toàn phần Like & Comment cũ bằng đoạn này -->
+        <!-- Like & Comment -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -141,7 +92,6 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <!-- NÚT THÍCH (giữ nguyên như cũ) -->
             <ImageView
                 android:id="@+id/btnLike"
                 android:layout_width="32dp"
@@ -165,7 +115,6 @@
                 android:layout_height="1dp"
                 android:layout_weight="1" />
 
-            <!-- VÙNG CLICK BÌNH LUẬN - THÊM MỚI TẠI ĐÂY -->
             <LinearLayout
                 android:id="@+id/bangtin_layout_comment_area"
                 android:layout_width="wrap_content"
@@ -192,8 +141,6 @@
                     android:textSize="13sp"
                     android:layout_marginStart="4dp" />
             </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>

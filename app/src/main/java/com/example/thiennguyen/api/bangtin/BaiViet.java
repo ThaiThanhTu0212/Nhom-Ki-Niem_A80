@@ -3,8 +3,9 @@ package com.example.thiennguyen.api.bangtin;
 import com.google.gson.annotations.SerializedName;
 
 public class BaiViet {
+    // SỬA LỖI 404: Đổi tên thuộc tính để khớp với JSON từ server
     @SerializedName("idBv")
-    public int idBv;
+    public int id;
 
     @SerializedName("idNguoiDang")
     public int idNguoiDang;
@@ -15,7 +16,6 @@ public class BaiViet {
     @SerializedName("hinhAnh")
     public String hinhAnh;
 
-    // QUAN TRỌNG: đổi từ String → Object để Gson không lỗi khi parse DateTime
     @SerializedName("ngayDang")
-    public Object ngayDang;  // Dùng Object hoặc String đều được, nhưng Object an toàn hơn
+    public String ngayDang;
 }

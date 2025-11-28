@@ -10,11 +10,13 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -24,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thiennguyen.R;
 import com.example.thiennguyen.api.bangtin.BaiViet;
+import com.example.thiennguyen.api.bangtin.CreatePostRequest;
 import com.example.thiennguyen.api.bangtin.NewsPost;
 import com.example.thiennguyen.api.bangtin.NewsPostAdapter;
 import com.example.thiennguyen.api.bangtin.RetrofitClient;
@@ -51,6 +54,9 @@ public class BangTinFragment extends Fragment {
     private Uri selectedImageUri;
     private ImageView dialogImgSelectedPhoto;
     private ImageView dialogBtnRemovePhoto;
+
+    // SỬA LỖI: Chỉ giữ lại địa chỉ server, không thêm /images/
+    private static final String IMAGE_BASE_URL = "http://192.168.1.5:5089";
 
 
     @Override
@@ -91,7 +97,7 @@ public class BangTinFragment extends Fragment {
         adapter = new NewsPostAdapter(postList);
         recyclerView.setAdapter(adapter);
 
-        // === SỬA LẠI LOGIC CLICK CHO ĐÚNG ===
+        // === LOGIC CLICK CHO CÁC NÚT ===
         adapter.setOnItemClickListener(new NewsPostAdapter.OnItemClickListener() {
             @Override
             public void onCommentClick(int position) {
@@ -105,9 +111,19 @@ public class BangTinFragment extends Fragment {
             @Override
             public void onLikeClick(int position) {
                 // Xử lý logic thích ở đây
-                Toast.makeText(getContext(), "Đã thích bài viết!", Toast.LENGTH_SHORT).show();
-                // Ví dụ: postList.get(position).isLiked = !postList.get(position).isLiked;
-                // adapter.notifyItemChanged(position);
+                NewsPost post = postList.get(position);
+                post.isLiked = !post.isLiked; // Đảo ngược trạng thái thích
+                if (post.isLiked) {
+                    post.likeCount++;
+                } else {
+                    post.likeCount--;
+                }
+                adapter.notifyItemChanged(position, "like_status_changed"); // Chỉ cập nhật item này
+            }
+
+            @Override
+            public void onMoreOptionsClick(int position, View anchorView) {
+                showPostOptionsMenu(position, anchorView);
             }
         });
 
@@ -136,7 +152,7 @@ public class BangTinFragment extends Fragment {
         return view;
 
     }
-    // LOAD BÀI VIẾT THẬT TỪ API
+    // LOAD BÀI VIẾT THẬT TỪ API (ĐÃ SỬA LỖI NGÀY THÁNG)
     private void loadPostsFromServer() {
         if (RetrofitClient.getService() == null) {
             Toast.makeText(getContext(), "Không khởi tạo được API", Toast.LENGTH_LONG).show();
@@ -151,31 +167,23 @@ public class BangTinFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     postList.clear();
                     for (BaiViet bv : response.body()) {
-                        String thoiGian = "Vừa xong";
-                        if (bv.ngayDang != null) {
-                            String raw = bv.ngayDang.toString();
-                            if (raw.contains("T")) {
-                                raw = raw.replace("T", " ").split("\\.")[0];
-                                try {
-                                    thoiGian = raw.substring(8, 10) + "/" +
-                                            raw.substring(5, 7) + "/" +
-                                            raw.substring(0, 4) + " " +
-                                            raw.substring(11, 16);
-                                } catch (Exception e) {
-                                    thoiGian = "Vừa xong";
-                                }
-                            }
-                        }
+                        // SỬA LỖI HIỂN THỊ NGÀY THÁNG TỪ SERVER
+                        String thoiGian = bv.ngayDang != null ? bv.ngayDang : "Vừa xong";
 
                         String noiDung = bv.noiDung != null ? bv.noiDung : "";
+                        String imageUrl = null;
+                        if (bv.hinhAnh != null && !bv.hinhAnh.isEmpty()) {
+                            // Ghép nối URL chính xác
+                            imageUrl = IMAGE_BASE_URL + bv.hinhAnh;
+                        }
 
                         NewsPost post = new NewsPost(
+                                bv.id,
                                 "Người dùng " + bv.idNguoiDang,
                                 thoiGian,
                                 noiDung,
-                                R.drawable.bangtin_img_default_post,
-                                R.drawable.bangtin_img_default_post,
-                                R.drawable.bangtin_img_default_post
+                                imageUrl,
+                                R.drawable.bangtin_avatar_default
                         );
                         postList.add(0, post);
                     }
@@ -233,13 +241,23 @@ public class BangTinFragment extends Fragment {
                 .show();
     }
 
-    // GỬI BÀI LÊN SERVER (ĐÃ SỬA)
+    // GỬI BÀI LÊN SERVER (ĐÃ SỬA LỖI 415)
     private void createPostOnServer(int idNguoiDang, String noiDung, @Nullable Uri imageUri) {
-        RequestBody idNguoiDangPart = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(idNguoiDang));
-        RequestBody noiDungPart = RequestBody.create(MediaType.parse("text/plain"), noiDung);
-        MultipartBody.Part filePart = null;
+        Call<Void> call;
 
-        if (imageUri != null && getContext() != null) {
+        // Nếu không có ảnh, gửi request dạng JSON
+        if (imageUri == null) {
+            CreatePostRequest request = new CreatePostRequest(idNguoiDang, noiDung);
+            call = RetrofitClient.getService().createBaiViet(request);
+        } 
+        // Nếu có ảnh, gửi request dạng Multipart
+        else {
+            if (getContext() == null) return;
+
+            RequestBody idNguoiDangPart = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(idNguoiDang));
+            RequestBody noiDungPart = RequestBody.create(MediaType.parse("text/plain"), noiDung);
+            MultipartBody.Part filePart = null;
+
             try {
                 InputStream inputStream = getContext().getContentResolver().openInputStream(imageUri);
                 if (inputStream != null) {
@@ -249,7 +267,8 @@ public class BangTinFragment extends Fragment {
 
                     if (mimeType != null && fileName != null) {
                         RequestBody fileBody = RequestBody.create(MediaType.parse(mimeType), fileBytes);
-                        filePart = MultipartBody.Part.createFormData("file", fileName, fileBody);
+                        // SỬA LỖI: Tên part "File" phải khớp với server
+                        filePart = MultipartBody.Part.createFormData("File", fileName, fileBody); 
                     } else {
                         Toast.makeText(getContext(), "Không thể lấy thông tin tệp tin.", Toast.LENGTH_SHORT).show();
                         return;
@@ -263,9 +282,11 @@ public class BangTinFragment extends Fragment {
                 Toast.makeText(getContext(), "Lỗi khi đọc tệp hình ảnh.", Toast.LENGTH_SHORT).show();
                 return;
             }
+            call = RetrofitClient.getService().createBaiViet(idNguoiDangPart, noiDungPart, filePart);
         }
 
-        RetrofitClient.getService().createBaiViet(idNguoiDangPart, noiDungPart, filePart).enqueue(new Callback<Void>() {
+        // Thực thi request
+        call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
@@ -283,7 +304,66 @@ public class BangTinFragment extends Fragment {
         });
     }
 
-    // Phương thức trợ giúp để đọc bytes từ InputStream
+    // HIỂN THỊ MENU LỰA CHỌN CHO BÀI VIẾT
+    private void showPostOptionsMenu(final int position, View anchorView) {
+        PopupMenu popup = new PopupMenu(getContext(), anchorView);
+        popup.getMenuInflater().inflate(R.menu.post_options_menu, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.action_delete_post) {
+                    // Hiển thị dialog xác nhận trước khi xóa
+                    new AlertDialog.Builder(getContext())
+                            .setTitle("Xác nhận xóa")
+                            .setMessage("Bạn có chắc chắn muốn xóa bài viết này?")
+                            .setPositiveButton("Xóa", (dialog, which) -> {
+                                deletePost(position);
+                            })
+                            .setNegativeButton("Hủy", null)
+                            .show();
+                    return true;
+                }
+                return false;
+            }
+        });
+        popup.show();
+    }
+
+    // GỌI API ĐỂ XÓA BÀI VIẾT
+    private void deletePost(final int position) {
+        if (position < 0 || position >= postList.size()) return;
+
+        NewsPost postToDelete = postList.get(position);
+        int postId = postToDelete.id;
+
+        Call<Void> call = RetrofitClient.getService().deleteBaiViet(postId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (!isAdded()) return;
+
+                if (response.isSuccessful()) {
+                    requireActivity().runOnUiThread(() -> {
+                        Toast.makeText(getContext(), "Đã xóa bài viết", Toast.LENGTH_SHORT).show();
+                        postList.remove(position);
+                        adapter.notifyItemRemoved(position);
+                        adapter.notifyItemRangeChanged(position, postList.size());
+                    });
+                } else {
+                    String errorDetails = "Lỗi " + response.code() + ": " + response.message() + "\nURL: " + call.request().url();
+                    Toast.makeText(getContext(), errorDetails, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                if (!isAdded()) return;
+                Toast.makeText(getContext(), "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    // === CÁC PHƯƠNG THỨC TRỢ GIÚP (GIỮ NGUYÊN) ===
     private byte[] getBytes(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
         int bufferSize = 1024;
@@ -295,7 +375,6 @@ public class BangTinFragment extends Fragment {
         return byteBuffer.toByteArray();
     }
 
-    // Phương thức trợ giúp để lấy tên tệp từ Uri
     private String getFileName(Uri uri) {
         if (getContext() == null) return null;
         String result = null;
@@ -319,11 +398,10 @@ public class BangTinFragment extends Fragment {
         return result;
     }
 
-
     private String getMimeType(Uri uri) {
         if (getContext() == null) return null;
         String mimeType;
-        if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme())) {
+        if (ContentResolver.SCHEME_CONTENT.equals("content")) {
             ContentResolver cr = getContext().getContentResolver();
             mimeType = cr.getType(uri);
         } else {
@@ -332,5 +410,4 @@ public class BangTinFragment extends Fragment {
         }
         return mimeType;
     }
-
 }

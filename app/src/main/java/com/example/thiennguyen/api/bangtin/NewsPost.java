@@ -2,24 +2,27 @@ package com.example.thiennguyen.api.bangtin;
 
 import java.io.Serializable;
 
-// Lớp này là một POJO (Plain Old Java Object) để đóng gói dữ liệu của một bài đăng.
-// Implement Serializable để có thể truyền đối tượng này giữa các Activity thông qua Intent.
 public class NewsPost implements Serializable {
+    public int id; // THÊM MỚI: ID của bài viết
     public String author;
     public String time;
     public String content;
-    public int imageResource;
+    public String imageUrl;
     public int avatarResource;
-    public int likeIconResource;
-    public int commentCount; // Thêm trường này để lưu số lượng bình luận
+    public int commentCount;
+    public int likeCount;
+    public boolean isLiked;
 
-    public NewsPost(String author, String time, String content, int imageResource, int avatarResource, int likeIconResource) {
+    // Constructor đã được cập nhật
+    public NewsPost(int id, String author, String time, String content, String imageUrl, int avatarResource) {
+        this.id = id;
         this.author = author;
         this.time = time;
         this.content = content;
-        this.imageResource = imageResource;
+        this.imageUrl = imageUrl;
         this.avatarResource = avatarResource;
-        this.likeIconResource = likeIconResource;
-        this.commentCount = 0; // Khởi tạo số bình luận là 0
+        this.commentCount = 0;
+        this.likeCount = 0;
+        this.isLiked = false;
     }
 }
