@@ -182,15 +182,58 @@ public class BangTinFragment extends Fragment {
             @Override
             public void onFailure(Call<List<BaiViet>> call, Throwable t) {
                 if (!isAdded()) return;
-                Toast.makeText(getContext(), "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "API không chạy. Hiển thị giao diện xem trước.", Toast.LENGTH_LONG).show();
+                loadDummyPosts();
             }
         });
+    }
+
+    private void loadDummyPosts() {
+        postList.clear();
+        postList.add(new NewsPost(
+                999,
+                "Quỹ Tấm Lòng Vàng",
+                "Vừa xong",
+                "Chung tay ủng hộ đồng bào miền Trung vượt qua bão lũ. Mỗi đóng góp của bạn đều là niềm hy vọng cho những gia đình đang gặp khó khăn.",
+                "https://images.unsplash.com/photo-1547928574-8812321516a0?q=80&w=1000&auto=format&fit=crop",
+                R.drawable.bangtin_avatar_default,
+                1502,
+                356
+        ));
+        postList.add(new NewsPost(
+                998,
+                "Hội Chữ Thập Đỏ",
+                "1 giờ trước",
+                "Kêu gọi quyên góp khẩn cấp cho các tỉnh bị ảnh hưởng bởi lũ lụt. Hiện chúng tôi đang cần quần áo, lương thực và nước uống sạch. Xin hãy cùng lan tỏa!",
+                null,
+                R.drawable.bangtin_avatar_default,
+                875,
+                128
+        ));
+         postList.add(new NewsPost(
+                997,
+                "Tình nguyện viên An",
+                "Hôm qua",
+                "Hôm nay đoàn chúng mình đã trao tận tay 100 phần quà cho các hộ dân tại xã X, huyện Y. Cảm ơn sự đóng góp của tất cả mọi người!",
+                "https://images.unsplash.com/photo-1618423412361-e6c2a85acb18?q=80&w=1000&auto=format&fit=crop",
+                R.drawable.bangtin_avatar_default,
+                420,
+                95
+        ));
+        adapter.notifyDataSetChanged();
     }
 
     private void handleLikeClick(int position) {
         if (position < 0 || position >= postList.size()) return;
 
         NewsPost post = postList.get(position);
+
+        if (post.id >= 990) { 
+             post.isLiked = !post.isLiked;
+             if(post.isLiked) post.likeCount++; else post.likeCount--;
+             adapter.notifyItemChanged(position, "like_status_changed");
+             return;
+        }
         
         post.isLiked = !post.isLiked;
         if(post.isLiked) {
@@ -229,7 +272,7 @@ public class BangTinFragment extends Fragment {
         });
     }
 
-    // SỬA LẠI: Mở màn hình comment thay vì gọi API trực tiếp
+    // SỬA LỖI: Xóa bỏ kiểm tra bài viết giả để luôn mở màn hình bình luận
     private void handleCommentClick(int position) {
         if (position < 0 || position >= postList.size()) return;
 
@@ -366,6 +409,10 @@ public class BangTinFragment extends Fragment {
 
         popup.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_delete_post) {
+                 if (postList.get(position).id >= 990) { 
+                    Toast.makeText(getContext(), "Không thể xóa bài viết xem trước.", Toast.LENGTH_SHORT).show();
+                    return true;
+                 }
                 new AlertDialog.Builder(getContext())
                         .setTitle("Xác nhận xóa")
                         .setMessage("Bạn có chắc chắn muốn xóa bài viết này?")

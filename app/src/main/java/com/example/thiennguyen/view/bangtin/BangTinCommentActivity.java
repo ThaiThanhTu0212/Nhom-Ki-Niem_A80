@@ -62,7 +62,11 @@ public class BangTinCommentActivity extends AppCompatActivity {
         postPosition = intent.getIntExtra("post_position", -1);
 
         if (currentPost != null) {
-            loadComments();
+            if (currentPost.id >= 990) {
+                loadDummyComments();
+            } else {
+                loadComments();
+            }
         } else {
             Toast.makeText(this, "Lỗi: Không có dữ liệu bài viết", Toast.LENGTH_SHORT).show();
             finish();
@@ -91,13 +95,44 @@ public class BangTinCommentActivity extends AppCompatActivity {
         });
     }
 
+    // THAY ĐỔI: Cập nhật lại bình luận giả theo gợi ý
+    private void loadDummyComments() {
+        commentList.clear();
+        
+        BinhLuan c1 = new BinhLuan();
+        c1.id = 1001;
+        c1.idNguoiBinhLuan = 15;
+        c1.noiDung = "Hành động thật ý nghĩa và đẹp đẽ. Cảm ơn các bạn rất nhiều!";
+        commentList.add(c1);
+
+        BinhLuan c2 = new BinhLuan();
+        c2.id = 1002;
+        c2.idNguoiBinhLuan = 25;
+        c2.noiDung = "Mình có thể đóng góp qua đâu vậy ạ? Cho mình xin thông tin với.";
+        commentList.add(c2);
+
+        adapter.notifyDataSetChanged();
+    }
+
     private void sendComment() {
         String content = edtCommentInput.getText().toString().trim();
         if (content.isEmpty()) {
             return;
         }
 
-        // Giả sử ID người dùng đang đăng nhập là 1
+        if (currentPost.id >= 990) {
+            BinhLuan newDummyComment = new BinhLuan();
+            newDummyComment.id = (int) (System.currentTimeMillis() / 1000); 
+            newDummyComment.idNguoiBinhLuan = 1; 
+            newDummyComment.noiDung = content;
+            
+            commentList.add(newDummyComment);
+            adapter.notifyItemInserted(commentList.size() - 1);
+            recyclerView.scrollToPosition(commentList.size() - 1);
+            edtCommentInput.setText("");
+            return;
+        }
+
         int currentUserId = 1; 
         CommentRequest request = new CommentRequest(currentUserId, content);
 
@@ -109,7 +144,7 @@ public class BangTinCommentActivity extends AppCompatActivity {
                     adapter.notifyItemInserted(commentList.size() - 1);
                     recyclerView.scrollToPosition(commentList.size() - 1);
                     edtCommentInput.setText("");
-                    hasNewComment = true; // Đánh dấu là đã có bình luận mới
+                    hasNewComment = true; 
                 } else {
                     Toast.makeText(BangTinCommentActivity.this, "Không thể gửi bình luận", Toast.LENGTH_SHORT).show();
                 }
@@ -124,7 +159,6 @@ public class BangTinCommentActivity extends AppCompatActivity {
 
     @Override
     public void finish() {
-        // Khi đóng màn hình, gửi kết quả về cho Fragment
         if (hasNewComment && postPosition != -1) {
             Intent resultIntent = new Intent();
             resultIntent.putExtra("post_position", postPosition);
