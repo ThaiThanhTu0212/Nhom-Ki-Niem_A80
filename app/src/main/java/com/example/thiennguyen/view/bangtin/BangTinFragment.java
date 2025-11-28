@@ -119,7 +119,12 @@ public class BangTinFragment extends Fragment {
             }
         });
 
-        loadPostsFromServer();
+        // --- THAY ĐỔI ĐỂ BÁO CÁO ---
+        // Vô hiệu hóa việc gọi API thật
+        // loadPostsFromServer();
+        // Hiển thị dữ liệu giả ngay lập tức
+        loadDummyPosts();
+        // --------------------------
 
         ImageView fabCreatePost = view.findViewById(R.id.bangtin_fab_create_post);
         fabCreatePost.setOnClickListener(v -> showCreatePostDialog());
@@ -189,14 +194,21 @@ public class BangTinFragment extends Fragment {
     }
 
     private void loadDummyPosts() {
+        if (getContext() == null) return; 
+
         postList.clear();
+
+        String dongBaoMtUri = "android.resource://" + getContext().getPackageName() + "/" + R.drawable.dong_bao_mt;
+        String quyenGopKhanCapUri = "android.resource://" + getContext().getPackageName() + "/" + R.drawable.quyen_gop_khan_cap;
+        String tinhNguyenVienUri = "android.resource://" + getContext().getPackageName() + "/" + R.drawable.tinh_nguyen_vien_trao_qua;
+
         postList.add(new NewsPost(
                 999,
                 "Quỹ Tấm Lòng Vàng",
                 "Vừa xong",
                 "Chung tay ủng hộ đồng bào miền Trung vượt qua bão lũ. Mỗi đóng góp của bạn đều là niềm hy vọng cho những gia đình đang gặp khó khăn.",
-                "https://images.unsplash.com/photo-1547928574-8812321516a0?q=80&w=1000&auto=format&fit=crop",
-                R.drawable.bangtin_avatar_default,
+                dongBaoMtUri,
+                R.drawable.quy_tamlongvang_avatar,
                 1502,
                 356
         ));
@@ -205,8 +217,8 @@ public class BangTinFragment extends Fragment {
                 "Hội Chữ Thập Đỏ",
                 "1 giờ trước",
                 "Kêu gọi quyên góp khẩn cấp cho các tỉnh bị ảnh hưởng bởi lũ lụt. Hiện chúng tôi đang cần quần áo, lương thực và nước uống sạch. Xin hãy cùng lan tỏa!",
-                null,
-                R.drawable.bangtin_avatar_default,
+                quyenGopKhanCapUri, 
+                R.drawable.hoi_chuthapdo_avatar,
                 875,
                 128
         ));
@@ -215,8 +227,8 @@ public class BangTinFragment extends Fragment {
                 "Tình nguyện viên An",
                 "Hôm qua",
                 "Hôm nay đoàn chúng mình đã trao tận tay 100 phần quà cho các hộ dân tại xã X, huyện Y. Cảm ơn sự đóng góp của tất cả mọi người!",
-                "https://images.unsplash.com/photo-1618423412361-e6c2a85acb18?q=80&w=1000&auto=format&fit=crop",
-                R.drawable.bangtin_avatar_default,
+                tinhNguyenVienUri,
+                R.drawable.tinh_nguyen_vien_an_avatar,
                 420,
                 95
         ));
@@ -272,7 +284,6 @@ public class BangTinFragment extends Fragment {
         });
     }
 
-    // SỬA LỖI: Xóa bỏ kiểm tra bài viết giả để luôn mở màn hình bình luận
     private void handleCommentClick(int position) {
         if (position < 0 || position >= postList.size()) return;
 
