@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.thiennguyen.R;
 import com.example.thiennguyen.databinding.FragmentKhamPhaBinding;
@@ -33,20 +32,18 @@ public class KhamPhaFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        // ✅ Dùng ViewBinding thay vì inflate thủ công
         binding = FragmentKhamPhaBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
         setupBanner();
         setupRecyclerViews();
+        setupCampaignTop1();   // ⭐ chỉ hiển thị top 1
         setupEvents();
 
         return view;
     }
 
     private void setupBanner() {
-        banners = new ArrayList<>();
-
         banners.add(new BannerItem(
                 "CHUNG TAY CỨU TRỢ KHẨN CẤP ĐỒNG BÀO BỊ ẢNH HƯỞNG BỞI LŨ LỤT",
                 "Trên nền tảng VNeID năm 2025",
@@ -68,7 +65,6 @@ public class KhamPhaFragment extends Fragment {
         BannerAdapter adapter = new BannerAdapter(banners);
         binding.viewPagerBanner.setAdapter(adapter);
 
-        // Hiệu ứng chuyển mượt
         binding.viewPagerBanner.setPageTransformer((page, position) -> {
             page.setAlpha(0.5f + (1 - Math.abs(position)));
             page.setScaleY(0.9f + (1 - Math.abs(position)) * 0.1f);
@@ -78,7 +74,7 @@ public class KhamPhaFragment extends Fragment {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (binding.viewPagerBanner.getAdapter() != null && banners.size() > 0) {
+                if (binding.viewPagerBanner.getAdapter() != null && !banners.isEmpty()) {
                     currentBanner = (currentBanner + 1) % banners.size();
                     binding.viewPagerBanner.setCurrentItem(currentBanner, true);
                     handler.postDelayed(this, 3000);
@@ -88,18 +84,52 @@ public class KhamPhaFragment extends Fragment {
     }
 
     private void setupRecyclerViews() {
-        binding.rvChienDich.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-        binding.rvSuKien.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-        binding.rvHoanCanh.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvSuKien.setLayoutManager(
+                new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
 
-        binding.rvChienDich.setAdapter(new DemoAdapter("Chiến dịch"));
-        binding.rvSuKien.setAdapter(new DemoAdapter("Sự kiện"));
-        binding.rvHoanCanh.setAdapter(new DemoAdapter("Hoàn cảnh"));
+        binding.rvHoanCanh.setLayoutManager(
+                new LinearLayoutManager(getContext()));
+
+        // demo
+        binding.rvSuKien.setAdapter(new Adapter("Sự kiện"));
+        binding.rvHoanCanh.setAdapter(new Adapter("Hoàn cảnh"));
     }
 
+    // --------------------------
+    // HIỂN THỊ TOP 1 CHIẾN DỊCH
+    // --------------------------
+    private void setupCampaignTop1() {
+
+        List<DongHanhItem> list = new ArrayList<>();
+
+        list.add(new DongHanhItem(
+                R.drawable.h1,
+                "Chương trình trồng 1 triệu cây xanh cho Trường Sa",
+                "5.981.152.110 đ",
+                "24/04/2025",
+                "MB - Khối CNTT",
+                1
+        ));
+
+        //  chỉ lấy top 1
+        List<DongHanhItem> top1 = new ArrayList<>();
+        top1.add(list.get(0));
+
+        DongHanhAdapter adapter = new DongHanhAdapter(top1);
+
+        binding.rvChienDich.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvChienDich.setAdapter(adapter);
+    }
+
+    // --------------------------
+    // SỰ KIỆN NHẤN ICON
+    // --------------------------
     private void setupEvents() {
-        binding.ivSearch.setOnClickListener(v -> Toast.makeText(getContext(), "Tìm kiếm", Toast.LENGTH_SHORT).show());
-        binding.ivBell.setOnClickListener(v -> Toast.makeText(getContext(), "Thông báo", Toast.LENGTH_SHORT).show());
+        binding.ivSearch.setOnClickListener(v ->
+                Toast.makeText(getContext(), "Tìm kiếm", Toast.LENGTH_SHORT).show());
+
+        binding.ivBell.setOnClickListener(v ->
+                Toast.makeText(getContext(), "Thông báo", Toast.LENGTH_SHORT).show());
 
         binding.btnHoanCanh.setOnClickListener(v ->
                 startActivity(new Intent(getContext(), HoanCanhActivity.class)));
@@ -112,6 +142,11 @@ public class KhamPhaFragment extends Fragment {
 
         binding.btnBanDo.setOnClickListener(v ->
                 startActivity(new Intent(getContext(), BanDoActivity.class)));
+
+        binding.btnXemTatCa.setOnClickListener(v ->
+                startActivity(new Intent(getContext(), DongHanhActivity.class))
+        );
+
     }
 
     @Override
