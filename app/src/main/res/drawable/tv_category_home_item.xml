@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+<!--    <solid android:color="@android:color/transparent" />-->
+    <stroke
+        android:width="1dp"
+        android:color="#66B40000" /> <!-- viền trắng mờ -->
+    <corners android:radius="50dp" /> <!-- bo tròn -->
+
+
+    <gradient android:startColor="#2FE6DADA"
+        android:endColor="#1BE4EBDE"/>
+</shape>

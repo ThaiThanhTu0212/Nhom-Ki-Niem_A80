@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="5dp">
+
+    <RelativeLayout
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Avatar -->
+        <ImageView
+            android:id="@+id/imgThumb"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/h1" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/txtCampaignTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/imgThumb"
+            android:layout_marginStart="12dp"
+            android:textColor="#FF8A00"
+            android:textStyle="bold"
+            android:textSize="15sp" />
+
+        <!-- Rank Icon -->
+        <ImageView
+            android:id="@+id/imgRank"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="35dp"
+            android:layout_alignParentEnd="true" />
+            <!--android:src="@drawable/huychuong1" />
+
+        <!- Đã kêu gọi -->
+        <TextView
+            android:id="@+id/txtAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtCampaignTitle"
+            android:layout_toEndOf="@id/imgThumb"
+            android:layout_marginStart="12dp"
+            android:textSize="15sp"
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/lblStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtAmount"
+            android:layout_toEndOf="@id/imgThumb"
+            android:layout_marginStart="12dp"
+            android:text="Bắt đầu kêu gọi từ"
+            android:textSize="13sp"
+            android:textColor="#777" />
+
+        <TextView
+            android:id="@+id/txtStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lblStart"
+            android:layout_toEndOf="@id/imgThumb"
+            android:layout_marginStart="12dp"
+            android:textSize="15sp"
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/lblSponsor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtStartDate"
+            android:layout_toEndOf="@id/imgThumb"
+            android:layout_marginStart="12dp"
+            android:text="Người đồng hành"
+            android:textSize="13sp"
+            android:textColor="#777" />
+
+        <TextView
+            android:id="@+id/txtSponsor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lblSponsor"
+            android:layout_toEndOf="@id/imgThumb"
+            android:layout_marginStart="12dp"
+            android:textSize="15sp"
+            android:textColor="#000" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
