@@ -3,8 +3,8 @@ package com.example.thiennguyen.api.bangtin;
 import com.google.gson.annotations.SerializedName;
 
 public class BaiViet {
-    // SỬA LỖI 404: Đổi tên thuộc tính để khớp với JSON từ server
-    @SerializedName("idBv")
+    // SỬA LỖI: Đồng bộ lại với server, server trả về "id"
+    @SerializedName("id")
     public int id;
 
     @SerializedName("idNguoiDang")
@@ -18,4 +18,10 @@ public class BaiViet {
 
     @SerializedName("ngayDang")
     public String ngayDang;
+
+    @SerializedName("soLuotThich")
+    public int soLuotThich;
+
+    @SerializedName("soLuotBinhLuan")
+    public int soLuotBinhLuan;
 }

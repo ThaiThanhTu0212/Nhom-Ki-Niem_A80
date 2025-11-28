@@ -14,21 +14,33 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface ApiService {
-    // SỬA LỖI 404: Quay lại đường dẫn "baiviet" (số ít) đã hoạt động
     @GET("api/baiviet")
     Call<List<BaiViet>> getBaiViets();
 
     @POST("api/baiviet")
-    Call<Void> createBaiViet(@Body CreatePostRequest request);
+    Call<CreatePostResponse> createBaiViet(@Body CreatePostRequest request);
 
     @Multipart
     @POST("api/baiviet")
-    Call<Void> createBaiViet(
-            @Part("idNguoiDang") RequestBody idNguoiDang,
-            @Part("noiDung") RequestBody noiDung,
+    Call<CreatePostResponse> createBaiViet(
+            @Part("IdNguoiDang") RequestBody idNguoiDang,
+            @Part("NoiDung") RequestBody noiDung,
             @Part MultipartBody.Part file
     );
 
     @DELETE("api/baiviet/{id}")
     Call<Void> deleteBaiViet(@Path("id") int postId);
+
+    @POST("api/baiviet/{id}/like")
+    Call<LikeCommentResponse> likePost(@Path("id") int postId);
+
+    // --- TÍNH NĂNG BÌNH LUẬN MỚI ---
+
+    // Lấy danh sách bình luận của một bài viết
+    @GET("api/baiviet/{id}/comments")
+    Call<List<BinhLuan>> getCommentsForPost(@Path("id") int postId);
+
+    // Thêm một bình luận mới vào bài viết
+    @POST("api/baiviet/{id}/comments")
+    Call<BinhLuan> addCommentToPost(@Path("id") int postId, @Body CommentRequest commentRequest);
 }
