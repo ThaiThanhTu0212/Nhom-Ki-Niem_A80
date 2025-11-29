@@ -82,7 +82,7 @@ public class UngHoFragment extends Fragment {
                 "Sơn La",
                 "Mộc Châu",
                 "Bản Mường Vạt",
-                "https://i.pinimg.com/236x/86/84/99/86849922ac2ddc9223897abce598e786.jpg",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIzKfCa55ifIAuooE8JCca5JwTH7GUiG_KXA&s",
                 nd1,
                 dm1
         );
@@ -99,7 +99,7 @@ public class UngHoFragment extends Fragment {
                 "Hà Giang",
                 "Đồng Văn",
                 "Xã Lũng Cú",
-                "https://www.google.com/url?sa=i&url=https%3A%2F%2Fbanobagi.vn%2Fhinh-anh%2Fhinh-anh-gai-cute%2F&psig=AOvVaw02i2l1LjC5KzQ5XfXEIQLm&ust=1763026530936000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPDvuOOn7JADFQAAAAAdAAAAABAd",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIzKfCa55ifIAuooE8JCca5JwTH7GUiG_KXA&s",
                 nd2,
                 dm2
         );
