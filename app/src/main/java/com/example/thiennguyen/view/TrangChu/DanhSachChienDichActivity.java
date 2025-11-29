@@ -31,7 +31,7 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
     List<NguoiDung> nguoiDungListHome;
     ImageView image_back_tolist;
     ListChienDichHomeAdapter listChienDichHomeAdapter;
-    DanhMuchHomeAdapter danhMuchHomeAdapter;
+    DanhMucHomeAdapter danhMucHomeAdapter;
     SearchView searchBarHomeId;
 
 
@@ -84,11 +84,11 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
 
         //danh sach loai chien dich
         loaiCd_ctcd_home = findViewById(R.id.loaiCd_ctcd_home);
-        danhMuchHomeAdapter = new DanhMuchHomeAdapter(danhMuclistHome);
+        danhMucHomeAdapter = new DanhMucHomeAdapter(danhMuclistHome);
         loaiCd_ctcd_home.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
 
-        danhMuchHomeAdapter.setListener(danhMuc -> {
+        danhMucHomeAdapter.setListener(danhMuc -> {
             chienDichListChildHome.clear();
             for (ChienDich cd : chienDichListHome){
                 if (cd.getDanhMuc() != null && cd.getDanhMuc().getIdDm() == danhMuc.getIdDm()){
@@ -98,7 +98,7 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
             listChienDichHomeAdapter.notifyDataSetChanged();
         });
 
-        loaiCd_ctcd_home.setAdapter(danhMuchHomeAdapter);
+        loaiCd_ctcd_home.setAdapter(danhMucHomeAdapter);
 
 
 

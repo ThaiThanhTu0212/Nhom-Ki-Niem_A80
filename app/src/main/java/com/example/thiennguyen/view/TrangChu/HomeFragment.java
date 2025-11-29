@@ -54,6 +54,7 @@ public class HomeFragment extends Fragment {
         NguoiDung nd4 = new NguoiDung(4, "Độ Mixi", "mixi.pham@gmail.com", "0977888999", "123456", "nguoi_ung_ho", "hoat_dong", "https://cafefcdn.com/203337114487263232/2024/12/24/xi-cau-hon-vo-lan-2-nhung-qua-khung-the-nao-ma-cong-dong-mang-lai-choang-the-nay-16484388521731690750957-17350132878921014156514-1735022686155-17350226863391385593884.jpg");
         NguoiDung nd5 = new NguoiDung(5, "Độ Mixi", "mixi.pham@gmail.com", "0977888999", "123456", "nguoi_ung_ho", "hoat_dong", "");
 
+
         DanhMuc dm1 = new DanhMuc(1, "Y tế");
         DanhMuc dm2 = new DanhMuc(2, "Giáo dục");
         DanhMuc dm3 = new DanhMuc(3, "Cứu trợ thiên tai");
@@ -174,15 +175,15 @@ public class HomeFragment extends Fragment {
 
         //recycleView for danhMuc
         danhmucHomeRecyleid = view.findViewById(R.id.danhmucHomeRecyleid);
-        DanhMuchHomeAdapter danhMuchHomeAdapter = new DanhMuchHomeAdapter(danhMuclistHome);
+        DanhMucHomeAdapter danhMucHomeAdapter = new DanhMucHomeAdapter(danhMuclistHome);
         danhmucHomeRecyleid.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        danhMuchHomeAdapter.setListener(danhMuc -> {
+        danhMucHomeAdapter.setListener(danhMuc -> {
             Intent intent = new Intent(getContext(),DanhSachChienDichActivity.class);
             intent.putExtra("ID_DANH_MUC", danhMuc.getIdDm());
             startActivity(intent);
         });
 
-        danhmucHomeRecyleid.setAdapter(danhMuchHomeAdapter);
+        danhmucHomeRecyleid.setAdapter(danhMucHomeAdapter);
 
         //recycleView for nguoi dung
         nguoiDungHomeRecycleid = view.findViewById(R.id.nguoiDungHomeRecycleid);

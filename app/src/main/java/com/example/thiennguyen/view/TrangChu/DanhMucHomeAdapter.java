@@ -13,7 +13,7 @@ import com.example.thiennguyen.view.model.DanhMuc;
 
 import java.util.List;
 
-public class DanhMuchHomeAdapter extends RecyclerView.Adapter<DanhMuchHomeAdapter.DanhMucHomeHolder> {
+public class DanhMucHomeAdapter extends RecyclerView.Adapter<DanhMucHomeAdapter.DanhMucHomeHolder> {
     public interface OnItemClickListener {
         void onItemClick(DanhMuc danhMuc);
     }
@@ -25,7 +25,7 @@ public class DanhMuchHomeAdapter extends RecyclerView.Adapter<DanhMuchHomeAdapte
 
     List<DanhMuc> danhMucListHome;
 
-    public DanhMuchHomeAdapter(List<DanhMuc> danhMucListHome) {
+    public DanhMucHomeAdapter(List<DanhMuc> danhMucListHome) {
         this.danhMucListHome = danhMucListHome;
     }
 
