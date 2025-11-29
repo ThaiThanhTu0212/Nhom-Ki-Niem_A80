@@ -1,0 +1,58 @@
+Index: app/src/main/res/layout/activity_thongbao.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:gravity=\"center\"\r\n    android:orientation=\"vertical\"\r\n    android:background=\"#F5F5F5\">\r\n\r\n    <TextView\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"Chưa có thông báo nào\"\r\n        android:textSize=\"18sp\"\r\n        android:textColor=\"#666666\" />\r\n\r\n</LinearLayout>
+===================================================================
+diff --git a/app/src/main/res/layout/activity_thongbao.xml b/app/src/main/res/layout/activity_thongbao.xml
+--- a/app/src/main/res/layout/activity_thongbao.xml	(revision 275be54317e112667cfb439eafb08e0bd82555df)
++++ b/app/src/main/res/layout/activity_thongbao.xml	(date 1764348599938)
+@@ -1,16 +1,23 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:gravity="center"
+     android:orientation="vertical"
+-    android:background="#F5F5F5">
++    tools:context=".view.bangtin.ThongBaoActivity">
+ 
+-    <TextView
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:text="Chưa có thông báo nào"
+-        android:textSize="18sp"
+-        android:textColor="#666666" />
++    <androidx.appcompat.widget.Toolbar
++        android:id="@+id/thongbao_toolbar"
++        android:layout_width="match_parent"
++        android:layout_height="?attr/actionBarSize"
++        android:background="?attr/colorPrimary"
++        app:title="Thông báo"
++        app:titleTextColor="@android:color/white" />
+ 
+-</LinearLayout>
+\ No newline at end of file
++    <androidx.recyclerview.widget.RecyclerView
++        android:id="@+id/thongbao_recyclerView" 
++        android:layout_width="match_parent"
++        android:layout_height="match_parent" />
++
++</LinearLayout>
+Index: app/src/main/java/com/example/thiennguyen/view/bangtin/ThongBaoActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.thiennguyen.view.bangtin;\r\n\r\nimport android.os.Bundle;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.example.thiennguyen.R;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class ThongBaoActivity extends AppCompatActivity {\r\n\r\n    private RecyclerView recyclerView;\r\n    private ThongBaoAdapter adapter;\r\n    private List<ThongBao> thongBaoList;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_thong_bao);\r\n\r\n        recyclerView = findViewById(R.id.thongbao_recyclerView);\r\n        recyclerView.setLayoutManager(new LinearLayoutManager(this));\r\n\r\n        thongBaoList = new ArrayList<>();\r\n        adapter = new ThongBaoAdapter(this, thongBaoList);\r\n        recyclerView.setAdapter(adapter);\r\n\r\n        loadDummyNotifications();\r\n    }\r\n\r\n    // THAY ĐỔI: Cập nhật thông báo giả theo chủ đề thiện nguyện\r\n    private void loadDummyNotifications() {\r\n        thongBaoList.clear();\r\n\r\n        thongBaoList.add(new ThongBao(\"Mạnh Thường Quân đã thích bài viết kêu gọi ủng hộ của bạn.\", R.drawable.bangtin_avatar_default));\r\n        thongBaoList.add(new ThongBao(\"Nhà Hảo Tâm đã bình luận về bài viết của bạn: 'Cảm ơn thông tin hữu ích!'\", R.drawable.bangtin_avatar_default));\r\n        thongBaoList.add(new ThongBao(\"Hội Chữ Thập Đỏ đã thích bình luận của bạn.\", R.drawable.bangtin_avatar_default));\r\n        thongBaoList.add(new ThongBao(\"Chiến dịch 'Chung tay vì miền Trung' vừa được cập nhật.\", R.drawable.bangtin_avatar_default));\r\n\r\n        adapter.notifyDataSetChanged();\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/app/src/main/java/com/example/thiennguyen/view/bangtin/ThongBaoActivity.java b/app/src/main/java/com/example/thiennguyen/view/bangtin/ThongBaoActivity.java
+--- a/app/src/main/java/com/example/thiennguyen/view/bangtin/ThongBaoActivity.java	(revision 275be54317e112667cfb439eafb08e0bd82555df)
++++ b/app/src/main/java/com/example/thiennguyen/view/bangtin/ThongBaoActivity.java	(date 1764348313464)
+@@ -31,7 +31,6 @@
+         loadDummyNotifications();
+     }
+ 
+-    // THAY ĐỔI: Cập nhật thông báo giả theo chủ đề thiện nguyện
+     private void loadDummyNotifications() {
+         thongBaoList.clear();
+ 
