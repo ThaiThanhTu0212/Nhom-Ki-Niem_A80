@@ -1,9 +1,12 @@
 package com.example.thiennguyen.view.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class ChienDich {
+public class ChienDich implements Parcelable {
     private int idCd;
     private String tenCd;
     private String moTa;
@@ -38,6 +41,58 @@ public class ChienDich {
         this.nguoiToChuc = nguoiToChuc;
         this.danhMuc = danhMuc;
     }
+
+    protected ChienDich(Parcel in) {
+        idCd = in.readInt();
+        tenCd = in.readString();
+        moTa = in.readString();
+        soTienMucTieu = (BigDecimal) in.readSerializable();
+        soTienHienTai = (BigDecimal) in.readSerializable();
+        ngayBatDau = (Date) in.readSerializable();
+        ngayKetThuc = (Date) in.readSerializable();
+        trangThai = in.readString();
+        tinhThanh = in.readString();
+        quanHuyen = in.readString();
+        diaChi = in.readString();
+        hinhAnh = in.readString();
+        nguoiToChuc = in.readParcelable(NguoiDung.class.getClassLoader());
+        danhMuc = in.readParcelable(DanhMuc.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(idCd);
+        dest.writeString(tenCd);
+        dest.writeString(moTa);
+        dest.writeSerializable(soTienMucTieu);
+        dest.writeSerializable(soTienHienTai);
+        dest.writeSerializable(ngayBatDau);
+        dest.writeSerializable(ngayKetThuc);
+        dest.writeString(trangThai);
+        dest.writeString(tinhThanh);
+        dest.writeString(quanHuyen);
+        dest.writeString(diaChi);
+        dest.writeString(hinhAnh);
+        dest.writeParcelable(nguoiToChuc, flags);
+        dest.writeParcelable(danhMuc, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<ChienDich> CREATOR = new Creator<ChienDich>() {
+        @Override
+        public ChienDich createFromParcel(Parcel in) {
+            return new ChienDich(in);
+        }
+
+        @Override
+        public ChienDich[] newArray(int size) {
+            return new ChienDich[size];
+        }
+    };
 
     public String getHinhAnh() {
         return hinhAnh;
