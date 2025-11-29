@@ -17,9 +17,11 @@ import java.util.List;
 
 public class ChienDichUngHoAdapter extends RecyclerView.Adapter<ChienDichUngHoAdapter.ChienDichUngHoViewHolder> {
     List<ChienDich> chienDichList;
+    private OnChienDichClickListener onChienDichClickListener;
 
-    public ChienDichUngHoAdapter(List<ChienDich> chienDichList) {
+    public ChienDichUngHoAdapter(List<ChienDich> chienDichList, OnChienDichClickListener onChienDichClickListener) {
         this.chienDichList = chienDichList;
+        this.onChienDichClickListener = onChienDichClickListener;
     }
 
     @NonNull
@@ -41,6 +43,7 @@ public class ChienDichUngHoAdapter extends RecyclerView.Adapter<ChienDichUngHoAd
         Glide.with(holder.itemView.getContext())
                 .load(chienDich.getHinhAnh())
                 .into(holder.imgchiendichUngHo);
+        holder.itemView.setOnClickListener(v -> onChienDichClickListener.onChienDichClick(chienDich));
     }
 
     @Override
@@ -58,5 +61,8 @@ public class ChienDichUngHoAdapter extends RecyclerView.Adapter<ChienDichUngHoAd
             tvSotienHienTai = itemView.findViewById(R.id.tvSotienHienTai);
             tvSotienMucTieu = itemView.findViewById(R.id.tvSotienMucTieu);
         }
+    }
+    public interface OnChienDichClickListener {
+        void onChienDichClick(ChienDich chienDich);
     }
 }
