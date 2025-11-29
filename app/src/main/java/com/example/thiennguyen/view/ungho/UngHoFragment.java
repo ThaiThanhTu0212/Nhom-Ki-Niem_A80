@@ -3,6 +3,7 @@ package com.example.thiennguyen.view.ungho;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class UngHoFragment extends Fragment {
+public class UngHoFragment extends Fragment implements ChienDichUngHoAdapter.OnChienDichClickListener {
     RecyclerView chiendich_ungHo_recycleID;
     List<ChienDich> chienDichList;
 
@@ -37,7 +38,7 @@ public class UngHoFragment extends Fragment {
     private void initUi(View view) {
         chiendich_ungHo_recycleID = view.findViewById(R.id.chiendich_ungHo_recycleID);
         chiendich_ungHo_recycleID.setLayoutManager(new LinearLayoutManager(getContext()));
-        ChienDichUngHoAdapter chiendichUngHoAdapter = new ChienDichUngHoAdapter(chienDichList);
+        ChienDichUngHoAdapter chiendichUngHoAdapter = new ChienDichUngHoAdapter(chienDichList,this);
         chiendich_ungHo_recycleID.setAdapter(chiendichUngHoAdapter);
     }
 
@@ -128,4 +129,16 @@ public class UngHoFragment extends Fragment {
     }
 
 
+    @Override
+    public void onChienDichClick(ChienDich chienDich) {
+        ChiTietChienDichFragment chiTietChienDichFragment = new ChiTietChienDichFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("chien_dich", chienDich);
+        chiTietChienDichFragment.setArguments(bundle);
+
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.add(R.id.fragment_container, chiTietChienDichFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }
