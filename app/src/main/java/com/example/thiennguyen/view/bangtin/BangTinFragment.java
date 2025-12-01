@@ -63,7 +63,7 @@ public class BangTinFragment extends Fragment {
     private ImageView dialogImgSelectedPhoto;
     private ImageView dialogBtnRemovePhoto;
 
-    private static final String IMAGE_BASE_URL = "http://192.168.1.5:5089";
+    private static final String IMAGE_BASE_URL = "http://192.168.1.81:5089";
 
 
     @Override
@@ -507,7 +507,7 @@ public class BangTinFragment extends Fragment {
     private String getMimeType(Uri uri) {
         if (getContext() == null) return null;
         String mimeType;
-        if (ContentResolver.SCHEME_CONTENT.equals("content")) {
+        if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme())) {
             ContentResolver cr = getContext().getContentResolver();
             mimeType = cr.getType(uri);
         } else {
