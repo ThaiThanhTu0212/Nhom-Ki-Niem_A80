@@ -1,0 +1,19 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Vòng nguyệt quế -->
+    <path
+        android:fillColor="#E6B089"
+        android:pathData="M60,10 C35,10 15,30 15,55 C15,80 35,100 60,100 C85,100 105,80 105,55 C105,30 85,10 60,10z"
+        android:strokeColor="#CC8A55"
+        android:strokeWidth="4"/>
+
+    <!-- Số 3 -->
+    <path
+        android:fillColor="#B07040"
+        android:pathData="M50,40 C50,35 60,30 70,35 C75,38 75,48 70,50 C75,52 75,63 70,68 C60,75 50,70 50,65 L60,63 C62,66 67,65 67,60 C67,55 60,55 58,55 L58,48 C60,48 67,48 67,43 C67,38 60,38 58,40z"/>
+
+</vector>
