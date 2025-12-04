@@ -96,8 +96,8 @@
                     android:layout_height="wrap_content"
                     android:progress="25"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvSoTienHienTai"
@@ -141,7 +141,7 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="@+id/cardProgress"
             app:layout_constraintStart_toStartOf="@+id/cardProgress"
-            app:layout_constraintTop_toBottomOf="@+id/cardProgress" />
+            app:layout_constraintTop_toBottomOf="@id/cardProgress" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
