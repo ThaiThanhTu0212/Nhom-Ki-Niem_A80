@@ -22,17 +22,26 @@ import java.util.Locale;
 
 public class ChiTietChienDichFragment extends Fragment {
 
+    private static final String ARG_CHIEN_DICH = "chien_dich";
     private ChienDich chienDich;
 
     public ChiTietChienDichFragment() {
         // Required empty public constructor
     }
 
+    public static ChiTietChienDichFragment newInstance(ChienDich chienDich) {
+        ChiTietChienDichFragment fragment = new ChiTietChienDichFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(ARG_CHIEN_DICH, chienDich);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            chienDich = getArguments().getParcelable("chien_dich");
+            chienDich = getArguments().getParcelable(ARG_CHIEN_DICH);
         }
     }
 
@@ -79,8 +88,8 @@ public class ChiTietChienDichFragment extends Fragment {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
-        ImageView imgClose = dialog.findViewById(R.id.imgClose);
-        imgClose.setOnClickListener(v -> dialog.dismiss());
+        ImageView imgCloseDialog = dialog.findViewById(R.id.imgCloseDialog);
+        imgCloseDialog.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
     }
