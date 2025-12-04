@@ -67,20 +67,21 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Tiêu đề -->
+
+    <!-- Danh sách chiến dịch -->
     <TextView
         android:id="@+id/title_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="388dp"
+        android:layout_height="62dp"
         android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
         android:text="Đồng hành cùng cộng đồng thiện nguyện minh bạch từ năm 2021"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/top_bar_layout" />
+        app:layout_constraintTop_toBottomOf="@id/top_bar_layout"
+        tools:layout_editor_absoluteX="-5dp" />
 
-    <!-- Danh sách chiến dịch -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chiendich_ungHo_recycleID"
         android:layout_width="match_parent"
@@ -88,6 +89,8 @@
         android:clipToPadding="false"
         android:paddingTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_text" />
+        app:layout_constraintTop_toBottomOf="@+id/title_text"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="28dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
