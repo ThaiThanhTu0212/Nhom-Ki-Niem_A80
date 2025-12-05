@@ -62,16 +62,6 @@ public class TaiKhoanFragment extends Fragment {
     }
 
     private void setupUserData() {
-        // Tạo user mẫu
-        currentUser = new NguoiDung(
-                1,
-                "Nguyễn Thành Phát",
-                "phat@example.com",
-                "0909123456",
-                "matkhau123",
-                "nguoi_ung_ho",
-                "hoat_dong"
-        );
 
         // Hiển thị thông tin
         tvUserName.setText("ThanhPhat2604");
