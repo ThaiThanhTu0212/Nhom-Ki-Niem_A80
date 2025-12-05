@@ -21,6 +21,7 @@ import com.example.thiennguyen.view.data.DTO.Response.NguoiDungResponse;
 import com.example.thiennguyen.view.data.api.AuthenticationApi;
 import com.example.thiennguyen.view.data.api.NguoiDungApi;
 import com.example.thiennguyen.view.data.sharepreference.DataLocalManager;
+import com.example.thiennguyen.view.login.RegisterActivity;
 import com.example.thiennguyen.view.model.NguoiDung;
 import com.google.android.material.tabs.TabLayout;
 
@@ -32,9 +33,9 @@ public class TaiKhoanFragment extends Fragment {
 
     // Views
     private ImageView ivBanner, ivAvatar, ivCameraAvatar, ivCameraBanner, ivGmail;
-    private TextView tvUserName, tvUserId, tvFollowers, tvPosts;
+    private TextView tvUserName, tvUserId, tvFollowers, tvPosts, tvOr;
     private TextView tvDonationDays, tvCampaignsJoined, tvSupportCount, tvBtnLogOut;
-    private Button btnEditProfile,btnLoginTaiKhoan;
+    private Button btnEditProfile,btnLoginTaiKhoan, btnDangKy2;
     private TabLayout tabLayout;
     private View llStats, llStatsRow, llFollowing, cvActivity;
 
@@ -124,6 +125,9 @@ public class TaiKhoanFragment extends Fragment {
             btnLoginTaiKhoan.setOnClickListener(v -> {
                 startActivity(new Intent(getContext(), LoginActivity.class));
             });
+            btnDangKy2.setOnClickListener(v -> {
+                startActivity(new Intent(getContext(), RegisterActivity.class));
+            });
 
             // Ẩn các icon camera
             ivCameraAvatar.setVisibility(View.GONE);
@@ -161,6 +165,8 @@ public class TaiKhoanFragment extends Fragment {
             llStatsRow.setVisibility(View.VISIBLE);
             llFollowing.setVisibility(View.VISIBLE);
             btnLoginTaiKhoan.setVisibility(View.GONE);
+            btnDangKy2.setVisibility(View.GONE);
+            tvOr.setVisibility(View.GONE);
 
 
             // Load user từ API (hoặc dữ liệu local)
@@ -200,6 +206,8 @@ public class TaiKhoanFragment extends Fragment {
 
         tvBtnLogOut = view.findViewById(R.id.tvBtnLogOut);
         btnLoginTaiKhoan = view.findViewById(R.id.btnLoginTaiKhoan);
+        btnDangKy2 = view.findViewById(R.id.btnDangKy2);
+        tvOr = view.findViewById(R.id.tvOr);
 
 
 

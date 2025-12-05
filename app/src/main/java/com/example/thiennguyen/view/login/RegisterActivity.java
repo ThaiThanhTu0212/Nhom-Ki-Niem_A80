@@ -28,6 +28,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
@@ -98,11 +99,17 @@ public class RegisterActivity extends AppCompatActivity {
         tvLogin.setOnClickListener(v -> finish());
     }
     public void createNguoiDung(String email, String password){
+        long time = System.currentTimeMillis() % 100000; // lấy 5 số cuối
+        int rand = new Random().nextInt(900) + 100;      // 3 số random
+        String uniqueName = "User" + rand + time;
+
         NguoiDungRequest nguoiDungRequest = new NguoiDungRequest();
         nguoiDungRequest.setAvatar("https://i.pinimg.com/736x/bc/43/98/bc439871417621836a0eeea768d60944.jpg");
         nguoiDungRequest.setEmail(email);
         nguoiDungRequest.setMatKhau(password);
-        nguoiDungRequest.setHoTen("");
+
+
+        nguoiDungRequest.setHoTen(uniqueName);
         nguoiDungRequest.setTrangThai("hoat_dong");
         nguoiDungRequest.setVaiTro("nguoi_ung_ho");
         nguoiDungRequest.setSoDienThoai("");

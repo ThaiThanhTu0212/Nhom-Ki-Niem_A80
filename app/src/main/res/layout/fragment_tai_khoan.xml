@@ -197,6 +197,26 @@
             android:textStyle="bold"
             android:text="Đăng nhập" />
 
+        <TextView
+            android:id="@+id/tvOr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:text="Hoặc" />
+
+        <Button
+            android:id="@+id/btnDangKy2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#262DDC"
+            app:backgroundTint="@null"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:textStyle="bold"
+            android:text="Đăng ký" />
+
         <ImageView
             android:id="@+id/ivGmail"
             android:layout_width="40dp"
