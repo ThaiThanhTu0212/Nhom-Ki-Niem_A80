@@ -1,6 +1,9 @@
 package com.example.thiennguyen.view.model;
 
-public class NguoiDung {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class NguoiDung implements Parcelable {
     private int idNd;
     private String hoTen;
     private String email;
@@ -23,6 +26,46 @@ public class NguoiDung {
         this.trangThai = trangThai;
         this.avatar = avatar;
     }
+
+    protected NguoiDung(Parcel in) {
+        idNd = in.readInt();
+        hoTen = in.readString();
+        email = in.readString();
+        soDienThoai = in.readString();
+        matKhau = in.readString();
+        vaiTro = in.readString();
+        trangThai = in.readString();
+        avatar = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(idNd);
+        dest.writeString(hoTen);
+        dest.writeString(email);
+        dest.writeString(soDienThoai);
+        dest.writeString(matKhau);
+        dest.writeString(vaiTro);
+        dest.writeString(trangThai);
+        dest.writeString(avatar);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<NguoiDung> CREATOR = new Creator<NguoiDung>() {
+        @Override
+        public NguoiDung createFromParcel(Parcel in) {
+            return new NguoiDung(in);
+        }
+
+        @Override
+        public NguoiDung[] newArray(int size) {
+            return new NguoiDung[size];
+        }
+    };
 
     public String getAvatar() {
         return avatar;

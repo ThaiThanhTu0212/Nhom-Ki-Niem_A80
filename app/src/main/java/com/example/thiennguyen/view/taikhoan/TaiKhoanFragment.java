@@ -62,6 +62,8 @@ public class TaiKhoanFragment extends Fragment {
     }
 
     private void setupUserData() {
+        // Tạo user mẫu
+
 
         // Hiển thị thông tin
         tvUserName.setText("ThanhPhat2604");
@@ -101,6 +103,7 @@ public class TaiKhoanFragment extends Fragment {
                         break;
                     case 2: // Chiến dịch đóng hành
                         break;
+                        
                 }
             }
 
