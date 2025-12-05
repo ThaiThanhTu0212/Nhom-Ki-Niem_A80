@@ -1,0 +1,25 @@
+Index: app/src/main/res/layout/fragment_thong_bao.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@android:color/white\"\r\n    android:clickable=\"true\"\r\n    android:focusable=\"true\"\r\n    tools:context=\".view.thongbao.ThongBaoFragment\">\r\n\r\n    <LinearLayout\r\n        android:id=\"@+id/top_bar\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:gravity=\"center_vertical\"\r\n        android:orientation=\"horizontal\"\r\n        app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n        <ImageView\r\n            android:id=\"@+id/imgClose\"\r\n            android:layout_width=\"48dp\"\r\n            android:layout_height=\"48dp\"\r\n            android:background=\"?attr/selectableItemBackgroundBorderless\"\r\n            android:clickable=\"true\"\r\n            android:focusable=\"true\"\r\n            android:padding=\"12dp\"\r\n            android:src=\"@drawable/ic_close_dialog\"\r\n            app:tint=\"@android:color/black\" />\r\n\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Thông Báo\"\r\n            android:textColor=\"@android:color/black\"\r\n            android:textSize=\"20sp\"\r\n            android:textStyle=\"bold\" />\r\n\r\n    </LinearLayout>\r\n\r\n    <androidx.recyclerview.widget.RecyclerView\r\n        android:id=\"@+id/recyclerViewThongBao\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"0dp\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/top_bar\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        tools:listitem=\"@layout/item_thong_bao\"/>\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_thong_bao.xml b/app/src/main/res/layout/fragment_thong_bao.xml
+--- a/app/src/main/res/layout/fragment_thong_bao.xml	(revision ef99ce907e477e5392dfcd88398711c98c38ee32)
++++ b/app/src/main/res/layout/fragment_thong_bao.xml	(date 1764924706729)
+@@ -46,4 +46,15 @@
+         app:layout_constraintBottom_toBottomOf="parent"
+         tools:listitem="@layout/item_thong_bao"/>
+ 
++    <TextView
++        android:id="@+id/tv_empty_notification"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:text="Chưa có thông báo nào"
++        android:textSize="18sp"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent" />
++
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
