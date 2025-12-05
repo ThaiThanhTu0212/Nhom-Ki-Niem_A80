@@ -1,13 +1,27 @@
 ﻿// using ThienNguyenAPI.Data; // Đảm bảo bạn đã thêm using này
 // using Microsoft.EntityFrameworkCore; // Và using này
 
+using FirebaseAdmin.Auth;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using Microsoft.AspNetCore.Builder.Extensions;
 using Microsoft.EntityFrameworkCore;
 using ThienNguyenAPI.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // =================== CÁC DỊCH VỤ CẦN THIẾT ===================
+var firebaseKeyPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "firebase-service-account.json");
 
+FirebaseApp.Create(new AppOptions()
+{
+    Credential = GoogleCredential.FromFile(firebaseKeyPath),
+    ProjectId = builder.Configuration["Firebase:ProjectId"]
+});
+
+// Đăng ký để inject vào controller (tùy chọn)
+builder.Services.AddSingleton(FirebaseAuth.DefaultInstance);
 //1. (QUAN TRỌNG) Thêm chính sách CORS để cho phép Android gọi vào
 builder.Services.AddCors(options =>
 {
