@@ -33,7 +33,7 @@ public class ThongBaoFragment extends Fragment implements ThongBaoAdapter.OnThon
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_thong_bao, container, false);
+        View view = inflater.inflate(R.layout.fragment_thong_bao_layout, container, false);
 
         ImageView imgClose = view.findViewById(R.id.imgClose);
         imgClose.setOnClickListener(v -> getParentFragmentManager().popBackStack());
@@ -41,9 +41,11 @@ public class ThongBaoFragment extends Fragment implements ThongBaoAdapter.OnThon
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewThongBao);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        if (chienDichList != null) {
+        if (chienDichList != null && !chienDichList.isEmpty()) {
             ThongBaoAdapter adapter = new ThongBaoAdapter(chienDichList, this);
             recyclerView.setAdapter(adapter);
+        } else {
+            view.findViewById(R.id.tv_empty_notification).setVisibility(View.VISIBLE);
         }
 
         return view;
