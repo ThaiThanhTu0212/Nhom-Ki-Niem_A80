@@ -21,6 +21,7 @@ import com.example.thiennguyen.view.data.DTO.Response.AuthenticationResponse;
 import com.example.thiennguyen.view.data.DTO.request.AuthenticationRequest;
 import com.example.thiennguyen.view.data.api.AuthenticationApi;
 import com.example.thiennguyen.view.data.sharepreference.DataLocalManager;
+import com.example.thiennguyen.view.login.RegisterActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,14 +30,14 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
     EditText edtEmailLogin, edtPasswordLogin;
     TextView txtForgotPassLogin;
-    Button btnLogin;
+    Button btnLogin, btnDangKy;
     AuthenticationApi authenticationApi = ApiClient.getRetrofit().create(AuthenticationApi.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login_home);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -83,6 +84,10 @@ public class LoginActivity extends AppCompatActivity {
             checkLogin(email, password);
 
         });
+        btnDangKy.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void initUI() {
@@ -90,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
         edtPasswordLogin = findViewById(R.id.edtPasswordLogin);
         txtForgotPassLogin = findViewById(R.id.txtForgotPassLogin);
         btnLogin = findViewById(R.id.btnLogin);
+        btnDangKy = findViewById(R.id.btnDangKy);
 
     }
 }
