@@ -286,6 +286,12 @@ namespace ThienNguyenAPI.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("email");
 
+                    b.Property<bool>("EmailVerified")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FirebaseUid")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("HoTen")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
@@ -295,6 +301,12 @@ namespace ThienNguyenAPI.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("mat_khau");
+
+                    b.Property<string>("OtpCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("OtpExpiry")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("SoDienThoai")
                         .HasMaxLength(20)
