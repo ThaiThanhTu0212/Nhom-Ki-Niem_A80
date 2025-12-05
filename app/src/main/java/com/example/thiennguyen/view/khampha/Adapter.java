@@ -15,12 +15,12 @@ import com.example.thiennguyen.R;
 import java.util.Arrays;
 import java.util.List;
 
-public class DemoAdapter extends RecyclerView.Adapter<DemoAdapter.ViewHolder> {
+public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     private final List<String> items;
     private final String type; // để phân biệt loại
 
-    public DemoAdapter(String type) {
+    public Adapter(String type) {
         this.type = type;
         if (type.equals("Chiến dịch")) {
             items = Arrays.asList("Trồng cây xanh", "HiGreen Challenge", "Tiếp sức đến trường");

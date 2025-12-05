@@ -1,9 +1,33 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Base application theme -->
     <style name="Base.Theme.ThienNguyen" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Màu chủ đạo của app bạn -->
+        <item name="colorPrimary">#FF9800</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#FFD180</item>
     </style>
 
     <style name="Theme.ThienNguyen" parent="Base.Theme.ThienNguyen" />
+
+    <!-- Style TabLayout Bảng tin -->
+    <style name="BangTin.TabTextAppearance" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <!-- Các style dùng chung trong item bài viết -->
+    <style name="BangTin.PostUserName" parent="TextAppearance.Material3.TitleSmall">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#1A1A1A</item>
+    </style>
+
+    <style name="BangTin.PostTime" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textColor">#888888</item>
+    </style>
+
+    <style name="BangTin.PostContent" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">#333333</item>
+        <item name="android:lineSpacingExtra">4dp</item>
+    </style>
 </resources>

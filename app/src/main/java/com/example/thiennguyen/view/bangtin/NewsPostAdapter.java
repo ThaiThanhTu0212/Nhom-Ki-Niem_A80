@@ -1,59 +1,159 @@
 package com.example.thiennguyen.view.bangtin;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
+import com.example.thiennguyen.api.bangtin.NewsPost;
+import com.example.thiennguyen.api.bangtin.RetrofitClient;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.PostViewHolder> {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    private List<NewsPost> posts;
+public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPostViewHolder> {
 
-    public NewsPostAdapter(List<NewsPost> posts) {
-        this.posts = posts;
+    private final List<NewsPost> postList;
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onCommentClick(int position);
+        void onLikeClick(int position);
+        void onMoreOptionsClick(int position, View view);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public NewsPostAdapter(List<NewsPost> postList) {
+        this.postList = postList;
     }
 
     @NonNull
     @Override
-    public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_news_post, parent, false);
-        return new PostViewHolder(view);
+    public NewsPostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news_post, parent, false);
+        return new NewsPostViewHolder(view, listener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
-        NewsPost post = posts.get(position);
-        holder.tvUsername.setText(post.username);
-        holder.tvTime.setText(post.time);
-        holder.tvContent.setText(post.content);
-        holder.imgMain.setImageResource(post.imgMain);
-        holder.imgSmall1.setImageResource(post.imgSmall1);
-        holder.imgSmall2.setImageResource(post.imgSmall2);
+    public void onBindViewHolder(@NonNull NewsPostViewHolder holder, int position) {
+        NewsPost currentPost = postList.get(position);
+        holder.bind(currentPost);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull NewsPostViewHolder holder, int position, @NonNull List<Object> payloads) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads);
+        } else {
+            if (payloads.contains("like_status_changed")) {
+                NewsPost currentPost = postList.get(position);
+                holder.updateLikeStatus(currentPost);
+            }
+        }
     }
 
     @Override
     public int getItemCount() {
-        return posts.size();
+        return postList != null ? postList.size() : 0;
     }
 
-    static class PostViewHolder extends RecyclerView.ViewHolder {
-        TextView tvUsername, tvTime, tvContent, tvLikeCount, tvCommentCount;
-        ImageView imgAvatar, imgMain, imgSmall1, imgSmall2;
+    public static class NewsPostViewHolder extends RecyclerView.ViewHolder {
+        public ImageView avatar;
+        public TextView author;
+        public TextView time;
+        public TextView content;
+        public ImageView postImage; // Chỉ còn một ImageView
+        public TextView commentCount;
+        public TextView likeCount;
+        public ImageView btnLike;
+        public ImageView btnMoreOptions;
+        public LinearLayout commentArea;
 
-        public PostViewHolder(@NonNull View itemView) {
+        public NewsPostViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-            tvUsername = itemView.findViewById(R.id.tvUsername);
-            tvTime = itemView.findViewById(R.id.tvTime);
-            tvContent = itemView.findViewById(R.id.tvContent);
-            imgMain = itemView.findViewById(R.id.imgMain);
-            imgSmall1 = itemView.findViewById(R.id.imgSmall1); // cần thêm ID
-            imgSmall2 = itemView.findViewById(R.id.imgSmall2); // cần thêm ID
+
+            avatar = itemView.findViewById(R.id.imgAvatar);
+            author = itemView.findViewById(R.id.tvUsername);
+            time = itemView.findViewById(R.id.tvTime);
+            content = itemView.findViewById(R.id.tvContent);
+            postImage = itemView.findViewById(R.id.imgMain); // Tham chiếu đến ImageView duy nhất
+            commentCount = itemView.findViewById(R.id.tvCommentCount);
+            likeCount = itemView.findViewById(R.id.tvLikeCount);
+            btnLike = itemView.findViewById(R.id.btnLike);
+            commentArea = itemView.findViewById(R.id.bangtin_layout_comment_area);
+            btnMoreOptions = itemView.findViewById(R.id.btnMoreOptions);
+
+            commentArea.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onCommentClick(position);
+                    }
+                }
+            });
+
+            btnLike.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onLikeClick(position);
+                    }
+                }
+            });
+
+            btnMoreOptions.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onMoreOptionsClick(position, v);
+                    }
+                }
+            });
+        }
+
+        public void bind(NewsPost post) {
+            author.setText(post.author);
+            time.setText(post.time);
+            content.setText(post.content);
+            avatar.setImageResource(post.avatarResource);
+
+            // Sử dụng Glide để tải ảnh từ URL
+            if (post.imageUrl != null && !post.imageUrl.isEmpty()) {
+                postImage.setVisibility(View.VISIBLE);
+                Glide.with(itemView.getContext())
+                     .load(post.imageUrl)
+                     .placeholder(R.drawable.placeholder_image)
+                     .error(R.drawable.bangtin_img_default_post)
+                     .into(postImage);
+            } else {
+                postImage.setVisibility(View.GONE);
+            }
+
+            updateLikeStatus(post);
+            commentCount.setText(String.valueOf(post.commentCount) + " Bình luận");
+        }
+
+        public void updateLikeStatus(NewsPost post) {
+            likeCount.setText(String.valueOf(post.likeCount) + " lượt thích");
+            btnLike.setImageResource(post.isLiked ? R.drawable.bangtin_heart_filled : R.drawable.bangtin_heart_outline);
         }
     }
 }
