@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="danh_muc_chien_dich">
+        <item>Giáo dục</item>
+        <item>Y tế</item>
+        <item>Môi trường</item>
+        <item>Thiên tai</item>
+        <item>Người già và trẻ em</item>
+        <item>Khác</item>
+    </string-array>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">ThienNguyen</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <style name="Base.Theme.ThienNguyen" parent="Theme.Material3.DayNight.NoActionBar">
+        
+        
+    </style>
+    <style name="Theme.ThienNguyen" parent="Base.Theme.ThienNguyen"/>
+</resources>

@@ -1,0 +1,168 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.thiennguyen"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="22"
+9        android:targetSdkVersion="36" />
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:5:5-67
+11-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:5:22-64
+12
+13    <permission
+13-->[androidx.core:core:1.13.0] C:\Users\FPT\.gradle\caches\8.13\transforms\e52246a3ca566ffec71db2c161faddaf\transformed\core-1.13.0\AndroidManifest.xml:22:5-24:47
+14        android:name="com.example.thiennguyen.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+14-->[androidx.core:core:1.13.0] C:\Users\FPT\.gradle\caches\8.13\transforms\e52246a3ca566ffec71db2c161faddaf\transformed\core-1.13.0\AndroidManifest.xml:23:9-81
+15        android:protectionLevel="signature" />
+15-->[androidx.core:core:1.13.0] C:\Users\FPT\.gradle\caches\8.13\transforms\e52246a3ca566ffec71db2c161faddaf\transformed\core-1.13.0\AndroidManifest.xml:24:9-44
+16
+17    <uses-permission android:name="com.example.thiennguyen.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+17-->[androidx.core:core:1.13.0] C:\Users\FPT\.gradle\caches\8.13\transforms\e52246a3ca566ffec71db2c161faddaf\transformed\core-1.13.0\AndroidManifest.xml:26:5-97
+17-->[androidx.core:core:1.13.0] C:\Users\FPT\.gradle\caches\8.13\transforms\e52246a3ca566ffec71db2c161faddaf\transformed\core-1.13.0\AndroidManifest.xml:26:22-94
+18
+19    <application
+19-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:7:5-42:19
+20        android:name="com.example.thiennguyen.view.data.sharepreference.MyApplication"
+20-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:8:9-64
+21        android:allowBackup="true"
+21-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:9:9-35
+22        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+22-->[androidx.core:core:1.13.0] C:\Users\FPT\.gradle\caches\8.13\transforms\e52246a3ca566ffec71db2c161faddaf\transformed\core-1.13.0\AndroidManifest.xml:28:18-86
+23        android:dataExtractionRules="@xml/data_extraction_rules"
+23-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:10:9-65
+24        android:debuggable="true"
+25        android:extractNativeLibs="true"
+26        android:fullBackupContent="@xml/backup_rules"
+26-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:11:9-54
+27        android:icon="@mipmap/ic_launcher"
+27-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:12:9-43
+28        android:label="@string/app_name"
+28-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:13:9-41
+29        android:networkSecurityConfig="@xml/network_security_config"
+29-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:14:9-69
+30        android:roundIcon="@mipmap/ic_launcher_round"
+30-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:15:9-54
+31        android:supportsRtl="true"
+31-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:16:9-35
+32        android:testOnly="true"
+33        android:theme="@style/Theme.ThienNguyen" >
+33-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:17:9-49
+34        <activity
+34-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:18:9-20:40
+35            android:name="com.example.thiennguyen.view.TrangChu.ChienDich.CreateChienDichActivity"
+35-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:19:13-76
+36            android:exported="false" />
+36-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:20:13-37
+37        <activity
+37-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:21:9-23:40
+38            android:name="com.example.thiennguyen.view.taikhoan.LoginActivity"
+38-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:22:13-56
+39            android:exported="false" />
+39-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:23:13-37
+40        <activity
+40-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:24:9-26:40
+41            android:name="com.example.thiennguyen.view.TrangChu.ProfileHomeActivity"
+41-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:25:13-62
+42            android:exported="false" />
+42-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:26:13-37
+43        <activity
+43-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:27:9-29:40
+44            android:name="com.example.thiennguyen.view.TrangChu.DanhSachChienDichActivity"
+44-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:28:13-68
+45            android:exported="false" />
+45-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:29:13-37
+46        <activity
+46-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:30:9-32:40
+47            android:name="com.example.thiennguyen.view.TrangChu.ChiTietChienDichHomeActivity"
+47-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:31:13-71
+48            android:exported="false" />
+48-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:32:13-37
+49        <activity
+49-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:33:9-41:20
+50            android:name="com.example.thiennguyen.view.MainActivity"
+50-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:34:13-46
+51            android:exported="true" >
+51-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:35:13-36
+52            <intent-filter>
+52-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:36:13-40:29
+53                <action android:name="android.intent.action.MAIN" />
+53-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:37:17-69
+53-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:37:25-66
+54
+55                <category android:name="android.intent.category.LAUNCHER" />
+55-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:39:17-77
+55-->E:\AndroidA80\Nhom-Ki-Niem_A80\app\src\main\AndroidManifest.xml:39:27-74
+56            </intent-filter>
+57        </activity>
+58
+59        <provider
+59-->[androidx.emoji2:emoji2:1.3.0] C:\Users\FPT\.gradle\caches\8.13\transforms\c1ff2eca36024ee04ae5deecf3917221\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+60            android:name="androidx.startup.InitializationProvider"
+60-->[androidx.emoji2:emoji2:1.3.0] C:\Users\FPT\.gradle\caches\8.13\transforms\c1ff2eca36024ee04ae5deecf3917221\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
+61            android:authorities="com.example.thiennguyen.androidx-startup"
+61-->[androidx.emoji2:emoji2:1.3.0] C:\Users\FPT\.gradle\caches\8.13\transforms\c1ff2eca36024ee04ae5deecf3917221\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
+62            android:exported="false" >
+62-->[androidx.emoji2:emoji2:1.3.0] C:\Users\FPT\.gradle\caches\8.13\transforms\c1ff2eca36024ee04ae5deecf3917221\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
+63            <meta-data
+63-->[androidx.emoji2:emoji2:1.3.0] C:\Users\FPT\.gradle\caches\8.13\transforms\c1ff2eca36024ee04ae5deecf3917221\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+64                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+64-->[androidx.emoji2:emoji2:1.3.0] C:\Users\FPT\.gradle\caches\8.13\transforms\c1ff2eca36024ee04ae5deecf3917221\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
+65                android:value="androidx.startup" />
+65-->[androidx.emoji2:emoji2:1.3.0] C:\Users\FPT\.gradle\caches\8.13\transforms\c1ff2eca36024ee04ae5deecf3917221\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
+66            <meta-data
+66-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\FPT\.gradle\caches\8.13\transforms\a405556433b9fdd4a0cf3afef28e2e27\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:29:13-31:52
+67                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+67-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\FPT\.gradle\caches\8.13\transforms\a405556433b9fdd4a0cf3afef28e2e27\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:30:17-78
+68                android:value="androidx.startup" />
+68-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\FPT\.gradle\caches\8.13\transforms\a405556433b9fdd4a0cf3afef28e2e27\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:31:17-49
+69            <meta-data
+69-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:29:13-31:52
+70                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+70-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:30:17-85
+71                android:value="androidx.startup" />
+71-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:31:17-49
+72        </provider>
+73
+74        <receiver
+74-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:34:9-52:20
+75            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+75-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:35:13-76
+76            android:directBootAware="false"
+76-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:36:13-44
+77            android:enabled="true"
+77-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:37:13-35
+78            android:exported="true"
+78-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:38:13-36
+79            android:permission="android.permission.DUMP" >
+79-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:39:13-57
+80            <intent-filter>
+80-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:40:13-42:29
+81                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+81-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:41:17-91
+81-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:41:25-88
+82            </intent-filter>
+83            <intent-filter>
+83-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:43:13-45:29
+84                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+84-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:44:17-85
+84-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:44:25-82
+85            </intent-filter>
+86            <intent-filter>
+86-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:46:13-48:29
+87                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+87-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:47:17-88
+87-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:47:25-85
+88            </intent-filter>
+89            <intent-filter>
+89-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:49:13-51:29
+90                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+90-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:50:17-95
+90-->[androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\FPT\.gradle\caches\8.13\transforms\f2677b96e19b518f2e653af3d9255e85\transformed\profileinstaller-1.4.0\AndroidManifest.xml:50:25-92
+91            </intent-filter>
+92        </receiver>
+93    </application>
+94
+95</manifest>

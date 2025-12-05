@@ -1,0 +1,350 @@
+[
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_sontung.png.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/sontung.png"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_item_danhmuc_home.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/item_danhmuc_home.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_h6.jpg.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/h6.jpg"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_khampha_ic_bando.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/khampha_ic_bando.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.thiennguyen.app-main-42:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_home.png.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/home.png"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_item_news_post.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/item_news_post.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_activity_create_chien_dich.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/activity_create_chien_dich.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/menu_bottom_nav.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/menu/bottom_nav.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "com.example.thiennguyen.app-pngs-36:/drawable-anydpi-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_gradient_orange_bg.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/gradient_orange_bg.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_fragment_home.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/fragment_home.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_h8.webp.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/h8.webp"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_khampha_ic_donghanh.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/khampha_ic_donghanh.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_kham_pha.png.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/kham_pha.png"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_fragment_tai_khoan.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/fragment_tai_khoan.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_fragment_ung_ho.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/fragment_ung_ho.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_home_back.png.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/home_back.png"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_img_donation.jpg.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/img_donation.jpg"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_h3.jpg.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/h3.jpg"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_item_listchiendich_home.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/item_listchiendich_home.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_home_left_arrow.png.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/home_left_arrow.png"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_activity_profile_home.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/activity_profile_home.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_khampha_item_demo.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/khampha_item_demo.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_activity_login.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/activity_login.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_h7.jpg.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/h7.jpg"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.example.thiennguyen.app-main-42:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_h2.webp.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/h2.webp"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_item_chiendich_home.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/item_chiendich_home.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_khampha_ic_hoancanh.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/khampha_ic_hoancanh.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_fragment_kham_pha.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/fragment_kham_pha.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.thiennguyen.app-main-42:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/xml_backup_rules.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_bangtin_comment.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/bangtin_comment.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_circle_background.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/circle_background.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_khampha_item_demo_bg.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/khampha_item_demo_bg.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_h4.jpg.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/h4.jpg"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_khampha_ic_bell.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/khampha_ic_bell.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_item_tochuc_home.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/item_tochuc_home.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_bangtin_heart_outline.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/bangtin_heart_outline.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.thiennguyen.app-main-42:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_item_chiendich_ungho.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/item_chiendich_ungho.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_ic_gmail_taikhoan.png.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/ic_gmail_taikhoan.png"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_img_house_landslide.jpg.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/img_house_landslide.jpg"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_ban_tin.png.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/ban_tin.png"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_ic_heart_tai_khoan.png.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/ic_heart_tai_khoan.png"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_activity_danh_sach_chien_dich.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/activity_danh_sach_chien_dich.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_khampha_item_banner_gradient.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/khampha_item_banner_gradient.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_bangtin_avatar_default.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/bangtin_avatar_default.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.thiennguyen.app-main-42:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_ung_ho.png.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/ung_ho.png"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.thiennguyen.app-main-42:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_h1.jpg.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/h1.jpg"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_circle_white_bg.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/circle_white_bg.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_khampha_ic_runner.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/khampha_ic_runner.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable-v24_chiendich_image.png.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable-v24/chiendich_image.png"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/xml_network_security_config.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/xml/network_security_config.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_nguoidung.png.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/nguoidung.png"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.example.thiennguyen.app-main-42:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_img_rescue.jpg.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/img_rescue.jpg"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_home_footer.png.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/home_footer.png"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_fragment_bang_tin.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/fragment_bang_tin.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_placeholder_image.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/placeholder_image.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_khampha_ic_flood.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/khampha_ic_flood.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_sontungavatataikhoan.png.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/sontungavatataikhoan.png"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_khampha_activity_empty.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/khampha_activity_empty.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_khampha_ic_search.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/khampha_ic_search.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_activity_chi_tiet_chien_dich_home.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/activity_chi_tiet_chien_dich_home.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_khampha_ic_sukien.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/khampha_ic_sukien.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_item_nguoidung_home.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/item_nguoidung_home.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/xml_data_extraction_rules.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_khampha_ic_leaf.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/khampha_ic_leaf.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_bangtin_more_vert.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/bangtin_more_vert.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_h5.jpg.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/h5.jpg"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.thiennguyen.app-main-42:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_home_round_image.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/home_round_image.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_tai_khoan.png.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/tai_khoan.png"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.thiennguyen.app-main-42:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_tv_category_home_item.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/tv_category_home_item.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_ic_support_tai_khoan.png.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/ic_support_tai_khoan.png"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_home_right_arrow.png.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/home_right_arrow.png"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.example.thiennguyen.app-main-42:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/layout_activity_main.xml.flat",
+        "source": "com.example.thiennguyen.app-main-42:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-debug-40:/drawable_img_mudslide.jpg.flat",
+        "source": "com.example.thiennguyen.app-main-42:/drawable/img_mudslide.jpg"
+    }
+]

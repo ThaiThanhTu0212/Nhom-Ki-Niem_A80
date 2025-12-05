@@ -1,0 +1,86 @@
+[
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/activity_danh_sach_chien_dich.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/activity_danh_sach_chien_dich.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/item_nguoidung_home.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/item_nguoidung_home.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/activity_create_chien_dich.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/activity_create_chien_dich.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/fragment_kham_pha.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/fragment_kham_pha.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/fragment_ung_ho.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/fragment_ung_ho.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/khampha_item_banner_gradient.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/khampha_item_banner_gradient.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/activity_login.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/activity_login.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/fragment_tai_khoan.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/fragment_tai_khoan.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/item_chiendich_home.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/item_chiendich_home.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/fragment_bang_tin.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/fragment_bang_tin.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/khampha_activity_empty.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/khampha_activity_empty.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/item_tochuc_home.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/item_tochuc_home.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/khampha_item_demo.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/khampha_item_demo.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/activity_chi_tiet_chien_dich_home.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/activity_chi_tiet_chien_dich_home.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/activity_profile_home.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/activity_profile_home.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/item_chiendich_ungho.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/item_chiendich_ungho.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/item_listchiendich_home.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/item_listchiendich_home.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/activity_main.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/item_news_post.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/item_news_post.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/fragment_home.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/fragment_home.xml"
+    },
+    {
+        "merged": "com.example.thiennguyen.app-mergeDebugResources-39:/layout/item_danhmuc_home.xml",
+        "source": "com.example.thiennguyen.app-main-42:/layout/item_danhmuc_home.xml"
+    }
+]

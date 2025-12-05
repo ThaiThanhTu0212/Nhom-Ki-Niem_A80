@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#43EDE7C8"
+    android:paddingTop="5dp"
+    android:paddingBottom="10dp"
+    android:layout_margin="7dp"
+    android:orientation="vertical">
+
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/imageViewCDhome"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_margin="10dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        app:riv_corner_radius="17dp"
+        app:riv_border_width="1dp"
+        app:riv_border_color="#66B40000"
+        app:riv_mutate_background="true"
+        android:src="@drawable/chiendich_image" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvtenCdHome"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:text="Tên chiến dịch"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvsoTienHienTaiHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Số tiền hiện tại" />
+    </LinearLayout>
+
+</LinearLayout>

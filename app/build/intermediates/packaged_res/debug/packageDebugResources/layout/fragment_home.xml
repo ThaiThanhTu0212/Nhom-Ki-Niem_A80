@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.TrangChu.HomeFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/btnCreateChienDich"
+            android:layout_width="242dp"
+            android:layout_height="wrap_content"
+            android:text="Tạo chiến dịch" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Danh mục" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/danhmucHomeRecyleid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đồng hàng tích cực"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/nguoiDungHomeRecycleid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="173dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Chiến dịch nổi bật"
+                android:textColor="#F21101"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btnXemTatCa_ct_home"
+                android:layout_width="182dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="Xem tất cả "
+                android:textColor="#F6E004"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="15dp"
+                android:layout_height="24dp"
+                android:src="@drawable/home_right_arrow"
+                android:contentDescription="@string/app_name"
+                app:tint="#F6E004" />
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chiendichHomeRecycleid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:text="Tổ chức" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ToChuchomeRecycleId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="616dp"
+            android:src="@drawable/home_footer" />
+
+        <TextView
+        android:id="@+id/textView11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
