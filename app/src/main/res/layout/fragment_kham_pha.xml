@@ -23,6 +23,8 @@
             android:drawablePadding="8dp"
             android:hint="Tìm kiếm chiến dịch..."
             android:padding="12dp"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
             app:layout_constraintEnd_toStartOf="@+id/ivBell"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
