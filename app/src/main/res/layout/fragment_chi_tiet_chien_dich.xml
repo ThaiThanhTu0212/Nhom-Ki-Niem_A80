@@ -14,15 +14,16 @@
         android:layout_height="wrap_content"
         android:paddingBottom="32dp">
 
-        <ImageView
-            android:id="@+id/imgChienDich"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/imageRecyclerView"
             android:layout_width="0dp"
-            android:layout_height="250dp"
-            android:scaleType="centerCrop"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            tools:listitem="@layout/item_image" />
 
         <TextView
             android:id="@+id/tvTenChienDich"
@@ -36,7 +37,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imgChienDich"
+            app:layout_constraintTop_toBottomOf="@+id/imageRecyclerView"
             tools:text="Hỗ trợ học sinh nghèo - Sơn La" />
 
         <TextView
@@ -117,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:text="đã quyên góp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvSoTienHienTai" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvSoTienHienTai" />
 
                 <TextView
                     android:id="@+id/tvSoTienMucTieu"
@@ -125,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tvSoTienHienTai"
+                    app:layout_constraintTop_toTopOf="@+id/tvSoTienHienTai"
                     tools:text="trên 10.000.000 VND" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -141,7 +142,7 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="@+id/cardProgress"
             app:layout_constraintStart_toStartOf="@+id/cardProgress"
-            app:layout_constraintTop_toBottomOf="@id/cardProgress" />
+            app:layout_constraintTop_toBottomOf="@+id/cardProgress" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
