@@ -16,11 +16,12 @@ import com.example.thiennguyen.view.model.ChienDich;
 
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class ChienDichUngHoAdapter extends RecyclerView.Adapter<ChienDichUngHoAdapter.ChienDichUngHoViewHolder> {
-    private final List<ChienDich> chienDichList;
+    private List<ChienDich> chienDichList;
     private final OnChienDichClickListener onChienDichClickListener;
 
     public ChienDichUngHoAdapter(List<ChienDich> chienDichList, OnChienDichClickListener onChienDichClickListener) {
@@ -45,6 +46,11 @@ public class ChienDichUngHoAdapter extends RecyclerView.Adapter<ChienDichUngHoAd
     @Override
     public int getItemCount() {
         return chienDichList != null ? chienDichList.size() : 0;
+    }
+
+    public void filterList(ArrayList<ChienDich> filteredList) {
+        chienDichList = filteredList;
+        notifyDataSetChanged();
     }
 
     public interface OnChienDichClickListener {
