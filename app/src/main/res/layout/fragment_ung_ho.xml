@@ -17,36 +17,21 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <!-- Thanh tìm kiếm -->
-        <LinearLayout
-            android:id="@+id/search_bar"
+        <EditText
+            android:id="@+id/edtSearch"
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:background="#F2F2F2"
-            android:clipToOutline="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:hint="Tìm kiếm tên chiến dịch"
             android:paddingHorizontal="12dp"
+            android:drawableStart="@android:drawable/ic_menu_search"
+            android:drawablePadding="8dp"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnNotifications"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginEnd="8dp"
-                android:src="@android:drawable/ic_menu_search"
-                app:tint="#888888" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tìm kiếm tên chiến dịch"
-                android:textColor="#999999"
-                android:textSize="14sp" />
-
-        </LinearLayout>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Nút thông báo -->
         <ImageView
@@ -61,7 +46,7 @@
             android:src="@drawable/ic_notifications"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/search_bar"
+            app:layout_constraintStart_toEndOf="@+id/edtSearch"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -72,16 +57,17 @@
 
     <TextView
         android:id="@+id/title_text"
-        android:layout_width="388dp"
-        android:layout_height="62dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Đồng hành cùng cộng đồng thiện nguyện minh bạch từ năm 2021"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/top_bar_layout"
-        tools:layout_editor_absoluteX="-5dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_bar_layout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chiendich_ungHo_recycleID"
