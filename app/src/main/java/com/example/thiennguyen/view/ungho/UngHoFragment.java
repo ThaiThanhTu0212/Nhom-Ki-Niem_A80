@@ -1,14 +1,13 @@
 package com.example.thiennguyen.view.ungho;
 
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,7 +20,6 @@ import com.example.thiennguyen.view.thongbao.ThongBaoFragment;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.stream.Collectors;
 
 public class UngHoFragment extends Fragment implements ChienDichUngHoAdapter.OnChienDichClickListener {
     private RecyclerView chiendich_ungHo_recycleID;
@@ -50,12 +48,17 @@ public class UngHoFragment extends Fragment implements ChienDichUngHoAdapter.OnC
         });
 
         edtSearch = view.findViewById(R.id.edtSearch);
-        edtSearch.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                filter(v.getText().toString());
-                return true;
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filter(s.toString());
             }
-            return false;
+
+            @Override
+            public void afterTextChanged(Editable s) {}
         });
 
         return view;
