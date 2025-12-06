@@ -14,16 +14,15 @@
         android:layout_height="wrap_content"
         android:paddingBottom="32dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/imageRecyclerView"
+        <ImageView
+            android:id="@+id/imgChienDich"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_image" />
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <TextView
             android:id="@+id/tvTenChienDich"
@@ -37,7 +36,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageRecyclerView"
+            app:layout_constraintTop_toBottomOf="@id/imgChienDich"
             tools:text="Hỗ trợ học sinh nghèo - Sơn La" />
 
         <TextView
@@ -97,8 +96,8 @@
                     android:layout_height="wrap_content"
                     android:progress="25"
                     app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvSoTienHienTai"
