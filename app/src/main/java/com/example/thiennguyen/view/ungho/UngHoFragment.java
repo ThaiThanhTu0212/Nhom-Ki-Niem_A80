@@ -1,27 +1,33 @@
 package com.example.thiennguyen.view.ungho;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import com.example.thiennguyen.R;
 import com.example.thiennguyen.view.model.ChienDich;
 import com.example.thiennguyen.view.model.DanhMuc;
 import com.example.thiennguyen.view.model.NguoiDung;
 import com.example.thiennguyen.view.thongbao.ThongBaoFragment;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 public class UngHoFragment extends Fragment implements ChienDichUngHoAdapter.OnChienDichClickListener {
-    RecyclerView chiendich_ungHo_recycleID;
-    ArrayList<ChienDich> chienDichList;
+    private RecyclerView chiendich_ungHo_recycleID;
+    private ArrayList<ChienDich> chienDichList;
+    private ChienDichUngHoAdapter chiendichUngHoAdapter;
+    private EditText edtSearch;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,14 +49,33 @@ public class UngHoFragment extends Fragment implements ChienDichUngHoAdapter.OnC
             transaction.commit();
         });
 
+        edtSearch = view.findViewById(R.id.edtSearch);
+        edtSearch.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                filter(v.getText().toString());
+                return true;
+            }
+            return false;
+        });
+
         return view;
     }
 
     private void initUi(View view) {
         chiendich_ungHo_recycleID = view.findViewById(R.id.chiendich_ungHo_recycleID);
         chiendich_ungHo_recycleID.setLayoutManager(new LinearLayoutManager(getContext()));
-        ChienDichUngHoAdapter chiendichUngHoAdapter = new ChienDichUngHoAdapter(chienDichList, this);
+        chiendichUngHoAdapter = new ChienDichUngHoAdapter(chienDichList, this);
         chiendich_ungHo_recycleID.setAdapter(chiendichUngHoAdapter);
+    }
+
+    private void filter(String text) {
+        ArrayList<ChienDich> filteredList = new ArrayList<>();
+        for (ChienDich item : chienDichList) {
+            if (item.getTenCd().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        chiendichUngHoAdapter.filterList(filteredList);
     }
 
     private void initData() {
