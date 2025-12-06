@@ -33,7 +33,7 @@ public class ThongBaoFragment extends Fragment implements ThongBaoAdapter.OnThon
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_thong_bao_layout, container, false);
+        View view = inflater.inflate(R.layout.layout_thong_bao, container, false);
 
         ImageView imgClose = view.findViewById(R.id.imgClose);
         imgClose.setOnClickListener(v -> getParentFragmentManager().popBackStack());
