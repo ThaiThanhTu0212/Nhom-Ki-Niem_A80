@@ -35,7 +35,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.khampha_item_demo, parent, false);
+                .inflate(R.layout.khampha_item, parent, false);
         return new ViewHolder(v);
     }
 
