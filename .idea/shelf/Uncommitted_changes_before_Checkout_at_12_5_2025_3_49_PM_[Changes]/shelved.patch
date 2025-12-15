@@ -1,0 +1,510 @@
+Index: app/src/main/res/layout/fragment_kham_pha.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@android:color/white\"\r\n    android:fillViewport=\"true\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        android:padding=\"16dp\">\r\n\r\n        <!-- Header -->\r\n        <RelativeLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"12dp\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/tvTitle\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Khám phá\"\r\n                android:textStyle=\"bold\"\r\n                android:textSize=\"24sp\"\r\n                android:textColor=\"@android:color/black\"\r\n                android:layout_alignParentStart=\"true\"/>\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:orientation=\"horizontal\"\r\n                android:layout_alignParentEnd=\"true\">\r\n\r\n                <ImageView\r\n                    android:id=\"@+id/ivSearch\"\r\n                    android:layout_width=\"28dp\"\r\n                    android:layout_height=\"28dp\"\r\n                    android:layout_marginEnd=\"12dp\"\r\n                    android:src=\"@drawable/khampha_ic_search\"\r\n                    android:contentDescription=\"Search\"/>\r\n\r\n                <ImageView\r\n                    android:id=\"@+id/ivBell\"\r\n                    android:layout_width=\"28dp\"\r\n                    android:layout_height=\"28dp\"\r\n                    android:src=\"@drawable/khampha_ic_bell\"\r\n                    android:contentDescription=\"Bell\"/>\r\n            </LinearLayout>\r\n        </RelativeLayout>\r\n\r\n        <!-- Banner -->\r\n        <androidx.viewpager2.widget.ViewPager2\r\n            android:id=\"@+id/viewPagerBanner\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"180dp\"\r\n            android:clipToPadding=\"false\"\r\n            android:layout_marginBottom=\"20dp\"/>\r\n\r\n        <!-- Danh mục -->\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Danh mục\"\r\n            android:textSize=\"18sp\"\r\n            android:textStyle=\"bold\"\r\n            android:layout_marginBottom=\"10dp\"\r\n            android:textColor=\"@android:color/black\" />\r\n\r\n        <LinearLayout\r\n            android:id=\"@+id/layoutDanhMuc\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"horizontal\"\r\n            android:gravity=\"center\"\r\n            android:weightSum=\"4\"\r\n            android:layout_marginBottom=\"8dp\">\r\n\r\n            <!-- Hoàn cảnh -->\r\n            <LinearLayout\r\n                android:id=\"@+id/btnHoanCanh\"\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_weight=\"1\"\r\n                android:orientation=\"vertical\"\r\n                android:gravity=\"center\"\r\n                android:paddingVertical=\"8dp\">\r\n\r\n                <ImageView\r\n                    android:layout_width=\"42dp\"\r\n                    android:layout_height=\"42dp\"\r\n                    android:src=\"@drawable/khampha_ic_hoancanh\"\r\n                    app:tint=\"#FFA000\"\r\n                    android:contentDescription=\"Hoàn cảnh\" />\r\n\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"Hoàn cảnh\"\r\n                    android:textColor=\"#555555\"\r\n                    android:textSize=\"14sp\"\r\n                    android:layout_marginTop=\"4dp\" />\r\n            </LinearLayout>\r\n\r\n            <!-- Đồng hành -->\r\n            <LinearLayout\r\n                android:id=\"@+id/btnDongHanh\"\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_weight=\"1\"\r\n                android:orientation=\"vertical\"\r\n                android:gravity=\"center\"\r\n                android:paddingVertical=\"8dp\">\r\n\r\n                <ImageView\r\n                    android:layout_width=\"42dp\"\r\n                    android:layout_height=\"42dp\"\r\n                    android:src=\"@drawable/khampha_ic_donghanh\"\r\n                    app:tint=\"#FFA000\"\r\n                    android:contentDescription=\"Đồng hành\" />\r\n\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"Đồng hành\"\r\n                    android:textColor=\"#555555\"\r\n                    android:textSize=\"14sp\"\r\n                    android:layout_marginTop=\"4dp\" />\r\n            </LinearLayout>\r\n\r\n            <!-- Sự kiện -->\r\n            <LinearLayout\r\n                android:id=\"@+id/btnSuKien\"\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_weight=\"1\"\r\n                android:orientation=\"vertical\"\r\n                android:gravity=\"center\"\r\n                android:paddingVertical=\"8dp\">\r\n\r\n                <ImageView\r\n                    android:layout_width=\"42dp\"\r\n                    android:layout_height=\"42dp\"\r\n                    android:src=\"@drawable/khampha_ic_sukien\"\r\n                    app:tint=\"#FFA000\"\r\n                    android:contentDescription=\"Sự kiện\" />\r\n\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"Sự kiện\"\r\n                    android:textColor=\"#555555\"\r\n                    android:textSize=\"14sp\"\r\n                    android:layout_marginTop=\"4dp\" />\r\n            </LinearLayout>\r\n\r\n            <!-- Bản đồ -->\r\n            <LinearLayout\r\n                android:id=\"@+id/btnBanDo\"\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_weight=\"1\"\r\n                android:orientation=\"vertical\"\r\n                android:gravity=\"center\"\r\n                android:paddingVertical=\"8dp\">\r\n\r\n                <ImageView\r\n                    android:layout_width=\"42dp\"\r\n                    android:layout_height=\"42dp\"\r\n                    android:src=\"@drawable/khampha_ic_bando\"\r\n                    app:tint=\"#FFA000\"\r\n                    android:contentDescription=\"Bản đồ\" />\r\n\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"Bản đồ\"\r\n                    android:textColor=\"#555555\"\r\n                    android:textSize=\"14sp\"\r\n                    android:layout_marginTop=\"4dp\" />\r\n            </LinearLayout>\r\n        </LinearLayout>\r\n\r\n\r\n        <!-- Chiến dịch đồng hành -->\r\n        <RelativeLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"20dp\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/txtChienDichTitle\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Chiến dịch đồng hành\"\r\n                android:textSize=\"18sp\"\r\n                android:textStyle=\"bold\"\r\n                android:textColor=\"@android:color/black\"/>\r\n\r\n            <TextView\r\n                android:id=\"@+id/btnXemTatCa\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Xem tất cả\"\r\n                android:textSize=\"14sp\"\r\n                android:textColor=\"#FF9800\"\r\n                android:layout_alignParentEnd=\"true\"\r\n                android:padding=\"4dp\"\r\n                android:textStyle=\"bold\"/>\r\n        </RelativeLayout>\r\n\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:id=\"@+id/rvChienDich\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:paddingTop=\"10dp\"\r\n            android:nestedScrollingEnabled=\"false\"/>\r\n\r\n        <!-- Khám phá sự kiện -->\r\n        <LinearLayout\r\n            android:orientation=\"horizontal\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:gravity=\"center_vertical\"\r\n            android:paddingTop=\"20dp\">\r\n\r\n            <TextView\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_weight=\"1\"\r\n                android:text=\"Sự kiện\"\r\n                android:textSize=\"18sp\"\r\n                android:textStyle=\"bold\"\r\n                android:textColor=\"@android:color/black\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/btnXemTatCaSuKien\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Xem tất cả >\"\r\n                android:textColor=\"#F5A623\"\r\n                android:textSize=\"14sp\"\r\n                android:padding=\"4dp\" />\r\n\r\n        </LinearLayout>\r\n\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:id=\"@+id/rvSuKienNoiBat\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:nestedScrollingEnabled=\"false\"/>\r\n\r\n\r\n        <!-- Hoàn cảnh khó khăn -->\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Hoàn cảnh khó khăn\"\r\n            android:textSize=\"18sp\"\r\n            android:textStyle=\"bold\"\r\n            android:layout_marginTop=\"20dp\"\r\n            android:textColor=\"@android:color/black\"/>\r\n\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:id=\"@+id/rvHoanCanh\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:overScrollMode=\"never\"/>\r\n    </LinearLayout>\r\n</ScrollView>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_kham_pha.xml b/app/src/main/res/layout/fragment_kham_pha.xml
+--- a/app/src/main/res/layout/fragment_kham_pha.xml	(revision af11e113d42d201374faa86f6a3bdabf379da264)
++++ b/app/src/main/res/layout/fragment_kham_pha.xml	(date 1764924518262)
+@@ -1,273 +1,168 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:background="@android:color/white"
+     android:fillViewport="true">
+ 
+-    <LinearLayout
++    <androidx.constraintlayout.widget.ConstraintLayout
+         android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:orientation="vertical"
+-        android:padding="16dp">
+-
+-        <!-- Header -->
+-        <RelativeLayout
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:layout_marginBottom="12dp">
++        android:layout_height="wrap_content">
+ 
+-            <TextView
+-                android:id="@+id/tvTitle"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:text="Khám phá"
+-                android:textStyle="bold"
+-                android:textSize="24sp"
+-                android:textColor="@android:color/black"
+-                android:layout_alignParentStart="true"/>
+-
+-            <LinearLayout
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:orientation="horizontal"
+-                android:layout_alignParentEnd="true">
++        <EditText
++            android:id="@+id/ivSearch"
++            android:layout_width="0dp"
++            android:layout_height="wrap_content"
++            android:layout_marginStart="16dp"
++            android:layout_marginTop="16dp"
++            android:layout_marginEnd="8dp"
++            android:background="@drawable/search_background"
++            android:drawableStart="@android:drawable/ic_menu_search"
++            android:drawablePadding="8dp"
++            android:hint="Tìm kiếm chiến dịch..."
++            android:padding="12dp"
++            app:layout_constraintEnd_toStartOf="@+id/ivBell"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent" />
+ 
+-                <ImageView
+-                    android:id="@+id/ivSearch"
+-                    android:layout_width="28dp"
+-                    android:layout_height="28dp"
+-                    android:layout_marginEnd="12dp"
+-                    android:src="@drawable/khampha_ic_search"
+-                    android:contentDescription="Search"/>
+-
+-                <ImageView
+-                    android:id="@+id/ivBell"
+-                    android:layout_width="28dp"
+-                    android:layout_height="28dp"
+-                    android:src="@drawable/khampha_ic_bell"
+-                    android:contentDescription="Bell"/>
+-            </LinearLayout>
+-        </RelativeLayout>
++        <ImageView
++            android:id="@+id/ivBell"
++            android:layout_width="48dp"
++            android:layout_height="48dp"
++            android:layout_marginEnd="16dp"
++            android:src="@drawable/ic_notifications"
++            app:layout_constraintBottom_toBottomOf="@+id/ivSearch"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintTop_toTopOf="@+id/ivSearch" />
+ 
+-        <!-- Banner -->
+         <androidx.viewpager2.widget.ViewPager2
+             android:id="@+id/viewPagerBanner"
+-            android:layout_width="match_parent"
+-            android:layout_height="180dp"
+-            android:clipToPadding="false"
+-            android:layout_marginBottom="20dp"/>
++            android:layout_width="0dp"
++            android:layout_height="200dp"
++            android:layout_marginTop="16dp"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/ivSearch" />
+ 
+-        <!-- Danh mục -->
+         <TextView
++            android:id="@+id/tvSuKienNoiBat"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+-            android:text="Danh mục"
+-            android:textSize="18sp"
++            android:layout_marginStart="16dp"
++            android:layout_marginTop="16dp"
++            android:text="Sự kiện nổi bật"
++            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+             android:textStyle="bold"
+-            android:layout_marginBottom="10dp"
+-            android:textColor="@android:color/black" />
+-
+-        <LinearLayout
+-            android:id="@+id/layoutDanhMuc"
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:orientation="horizontal"
+-            android:gravity="center"
+-            android:weightSum="4"
+-            android:layout_marginBottom="8dp">
+-
+-            <!-- Hoàn cảnh -->
+-            <LinearLayout
+-                android:id="@+id/btnHoanCanh"
+-                android:layout_width="0dp"
+-                android:layout_height="wrap_content"
+-                android:layout_weight="1"
+-                android:orientation="vertical"
+-                android:gravity="center"
+-                android:paddingVertical="8dp">
+-
+-                <ImageView
+-                    android:layout_width="42dp"
+-                    android:layout_height="42dp"
+-                    android:src="@drawable/khampha_ic_hoancanh"
+-                    app:tint="#FFA000"
+-                    android:contentDescription="Hoàn cảnh" />
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/viewPagerBanner" />
+ 
+-                <TextView
+-                    android:layout_width="wrap_content"
+-                    android:layout_height="wrap_content"
+-                    android:text="Hoàn cảnh"
+-                    android:textColor="#555555"
+-                    android:textSize="14sp"
+-                    android:layout_marginTop="4dp" />
+-            </LinearLayout>
++        <TextView
++            android:id="@+id/btnXemTatCaSuKien"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginEnd="16dp"
++            android:text="Xem tất cả"
++            android:textColor="@color/purple_500"
++            app:layout_constraintBottom_toBottomOf="@+id/tvSuKienNoiBat"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintTop_toTopOf="@+id/tvSuKienNoiBat" />
+ 
+-            <!-- Đồng hành -->
+-            <LinearLayout
+-                android:id="@+id/btnDongHanh"
+-                android:layout_width="0dp"
+-                android:layout_height="wrap_content"
+-                android:layout_weight="1"
+-                android:orientation="vertical"
+-                android:gravity="center"
+-                android:paddingVertical="8dp">
+-
+-                <ImageView
+-                    android:layout_width="42dp"
+-                    android:layout_height="42dp"
+-                    android:src="@drawable/khampha_ic_donghanh"
+-                    app:tint="#FFA000"
+-                    android:contentDescription="Đồng hành" />
++        <androidx.recyclerview.widget.RecyclerView
++            android:id="@+id/rvSuKienNoiBat"
++            android:layout_width="0dp"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="8dp"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/tvSuKienNoiBat" />
+ 
+-                <TextView
+-                    android:layout_width="wrap_content"
+-                    android:layout_height="wrap_content"
+-                    android:text="Đồng hành"
+-                    android:textColor="#555555"
+-                    android:textSize="14sp"
+-                    android:layout_marginTop="4dp" />
+-            </LinearLayout>
++        <TextView
++            android:id="@+id/tvHoanCanh"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginStart="16dp"
++            android:layout_marginTop="16dp"
++            android:text="Hoàn cảnh"
++            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
++            android:textStyle="bold"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/rvSuKienNoiBat" />
+ 
+-            <!-- Sự kiện -->
+-            <LinearLayout
+-                android:id="@+id/btnSuKien"
+-                android:layout_width="0dp"
+-                android:layout_height="wrap_content"
+-                android:layout_weight="1"
+-                android:orientation="vertical"
+-                android:gravity="center"
+-                android:paddingVertical="8dp">
+-
+-                <ImageView
+-                    android:layout_width="42dp"
+-                    android:layout_height="42dp"
+-                    android:src="@drawable/khampha_ic_sukien"
+-                    app:tint="#FFA000"
+-                    android:contentDescription="Sự kiện" />
++        <androidx.recyclerview.widget.RecyclerView
++            android:id="@+id/rvHoanCanh"
++            android:layout_width="0dp"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="8dp"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/tvHoanCanh" />
+ 
+-                <TextView
+-                    android:layout_width="wrap_content"
+-                    android:layout_height="wrap_content"
+-                    android:text="Sự kiện"
+-                    android:textColor="#555555"
+-                    android:textSize="14sp"
+-                    android:layout_marginTop="4dp" />
+-            </LinearLayout>
+-
+-            <!-- Bản đồ -->
+-            <LinearLayout
+-                android:id="@+id/btnBanDo"
+-                android:layout_width="0dp"
+-                android:layout_height="wrap_content"
+-                android:layout_weight="1"
+-                android:orientation="vertical"
+-                android:gravity="center"
+-                android:paddingVertical="8dp">
+-
+-                <ImageView
+-                    android:layout_width="42dp"
+-                    android:layout_height="42dp"
+-                    android:src="@drawable/khampha_ic_bando"
+-                    app:tint="#FFA000"
+-                    android:contentDescription="Bản đồ" />
+-
+-                <TextView
+-                    android:layout_width="wrap_content"
+-                    android:layout_height="wrap_content"
+-                    android:text="Bản đồ"
+-                    android:textColor="#555555"
+-                    android:textSize="14sp"
+-                    android:layout_marginTop="4dp" />
+-            </LinearLayout>
+-        </LinearLayout>
+-
+-
+-        <!-- Chiến dịch đồng hành -->
+-        <RelativeLayout
+-            android:layout_width="match_parent"
++        <TextView
++            android:id="@+id/tvChienDich"
++            android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+-            android:layout_marginTop="20dp">
+-
+-            <TextView
+-                android:id="@+id/txtChienDichTitle"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:text="Chiến dịch đồng hành"
+-                android:textSize="18sp"
+-                android:textStyle="bold"
+-                android:textColor="@android:color/black"/>
++            android:layout_marginStart="16dp"
++            android:layout_marginTop="16dp"
++            android:text="Chiến dịch"
++            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
++            android:textStyle="bold"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/rvHoanCanh" />
+ 
+-            <TextView
+-                android:id="@+id/btnXemTatCa"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:text="Xem tất cả"
+-                android:textSize="14sp"
+-                android:textColor="#FF9800"
+-                android:layout_alignParentEnd="true"
+-                android:padding="4dp"
+-                android:textStyle="bold"/>
+-        </RelativeLayout>
++        <TextView
++            android:id="@+id/btnXemTatCa"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginEnd="16dp"
++            android:text="Xem tất cả"
++            android:textColor="@color/purple_500"
++            app:layout_constraintBottom_toBottomOf="@+id/tvChienDich"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintTop_toTopOf="@+id/tvChienDich" />
+ 
+         <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/rvChienDich"
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:paddingTop="10dp"
+-            android:nestedScrollingEnabled="false"/>
+-
+-        <!-- Khám phá sự kiện -->
+-        <LinearLayout
+-            android:orientation="horizontal"
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:gravity="center_vertical"
+-            android:paddingTop="20dp">
+-
+-            <TextView
+-                android:layout_width="0dp"
+-                android:layout_height="wrap_content"
+-                android:layout_weight="1"
+-                android:text="Sự kiện"
+-                android:textSize="18sp"
+-                android:textStyle="bold"
+-                android:textColor="@android:color/black" />
++            android:layout_width="0dp"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="8dp"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/tvChienDich" />
+ 
+-            <TextView
+-                android:id="@+id/btnXemTatCaSuKien"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:text="Xem tất cả >"
+-                android:textColor="#F5A623"
+-                android:textSize="14sp"
+-                android:padding="4dp" />
++        <Button
++            android:id="@+id/btnHoanCanh"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Hoàn cảnh"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/rvChienDich" />
+ 
+-        </LinearLayout>
+-
+-        <androidx.recyclerview.widget.RecyclerView
+-            android:id="@+id/rvSuKienNoiBat"
+-            android:layout_width="match_parent"
++        <Button
++            android:id="@+id/btnDongHanh"
++            android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+-            android:nestedScrollingEnabled="false"/>
++            android:text="Đồng hành"
++            app:layout_constraintStart_toEndOf="@+id/btnHoanCanh"
++            app:layout_constraintTop_toTopOf="@+id/btnHoanCanh" />
+ 
+-
+-        <!-- Hoàn cảnh khó khăn -->
+-        <TextView
++        <Button
++            android:id="@+id/btnSuKien"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+-            android:text="Hoàn cảnh khó khăn"
+-            android:textSize="18sp"
+-            android:textStyle="bold"
+-            android:layout_marginTop="20dp"
+-            android:textColor="@android:color/black"/>
++            android:text="Sự kiện"
++            app:layout_constraintStart_toEndOf="@+id/btnDongHanh"
++            app:layout_constraintTop_toTopOf="@+id/btnDongHanh" />
+ 
+-        <androidx.recyclerview.widget.RecyclerView
+-            android:id="@+id/rvHoanCanh"
+-            android:layout_width="match_parent"
++        <Button
++            android:id="@+id/btnBanDo"
++            android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+-            android:layout_marginTop="10dp"
+-            android:overScrollMode="never"/>
+-    </LinearLayout>
++            android:text="Bản đồ"
++            app:layout_constraintStart_toEndOf="@+id/btnSuKien"
++            app:layout_constraintTop_toTopOf="@+id/btnSuKien" />
++
++    </androidx.constraintlayout.widget.ConstraintLayout>
++
+ </ScrollView>
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <color name=\"black\">#FF000000</color>\r\n    <color name=\"white\">#FFFFFFFF</color>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/colors.xml b/app/src/main/res/values/colors.xml
+--- a/app/src/main/res/values/colors.xml	(revision af11e113d42d201374faa86f6a3bdabf379da264)
++++ b/app/src/main/res/values/colors.xml	(date 1764924518281)
+@@ -1,5 +1,10 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <resources>
++    <color name="purple_200">#FFBB86FC</color>
++    <color name="purple_500">#FF6200EE</color>
++    <color name="purple_700">#FF3700B3</color>
++    <color name="teal_200">#FF03DAC5</color>
++    <color name="teal_700">#FF018786</color>
+     <color name="black">#FF000000</color>
+     <color name="white">#FFFFFFFF</color>
+-</resources>
+\ No newline at end of file
++</resources>
+Index: app/src/main/res/layout/fragment_thongbao.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:gravity=\"center\"\r\n    android:orientation=\"vertical\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/tv_empty_notification\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"Chưa có thông báo\"\r\n        android:textSize=\"18sp\"\r\n        android:textColor=\"#888888\" />\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_thongbao.xml b/app/src/main/res/layout/fragment_thongbao.xml
+--- a/app/src/main/res/layout/fragment_thongbao.xml	(revision af11e113d42d201374faa86f6a3bdabf379da264)
++++ b/app/src/main/res/layout/fragment_thongbao.xml	(date 1764924518278)
+@@ -1,16 +1,49 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:gravity="center"
+-    android:orientation="vertical">
++    android:background="@android:color/white"
++    android:clickable="true"
++    android:focusable="true"
++    tools:context=".view.thongbao.ThongBaoFragment">
++
++    <LinearLayout
++        android:id="@+id/top_bar"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:gravity="center_vertical"
++        android:orientation="horizontal"
++        app:layout_constraintTop_toTopOf="parent">
++
++        <ImageView
++            android:id="@+id/imgClose"
++            android:layout_width="48dp"
++            android:layout_height="48dp"
++            android:background="?attr/selectableItemBackgroundBorderless"
++            android:clickable="true"
++            android:focusable="true"
++            android:padding="12dp"
++            android:src="@drawable/ic_close_dialog"
++            app:tint="@android:color/black" />
+ 
+-    <TextView
+-        android:id="@+id/tv_empty_notification"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:text="Chưa có thông báo"
+-        android:textSize="18sp"
+-        android:textColor="#888888" />
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Thông Báo"
++            android:textColor="@android:color/black"
++            android:textSize="20sp"
++            android:textStyle="bold" />
++
++    </LinearLayout>
++
++    <androidx.recyclerview.widget.RecyclerView
++        android:id="@+id/recyclerViewThongBao"
++        android:layout_width="match_parent"
++        android:layout_height="0dp"
++        app:layout_constraintTop_toBottomOf="@id/top_bar"
++        app:layout_constraintBottom_toBottomOf="parent"
++        tools:listitem="@layout/item_thong_bao"/>
+ 
+-</LinearLayout>
+\ No newline at end of file
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
