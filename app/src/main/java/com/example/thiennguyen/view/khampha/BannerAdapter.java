@@ -49,15 +49,16 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
 
     @Override
     public int getItemCount() {
-        return banners.size();
+        return banners == null ? 0 : banners.size();
     }
 
     static class BannerViewHolder extends RecyclerView.ViewHolder {
-        CardView cardView;
-        TextView tvTitle, tvSubtitle;
-        ImageView imgIcon;
+        final CardView cardView;
+        final TextView tvTitle;
+        final TextView tvSubtitle;
+        final ImageView imgIcon;
 
-        public BannerViewHolder(@NonNull View itemView) {
+        BannerViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardBanner);
             tvTitle = itemView.findViewById(R.id.tvBannerTitle);

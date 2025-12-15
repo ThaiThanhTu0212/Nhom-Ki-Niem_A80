@@ -13,31 +13,30 @@ import com.example.thiennguyen.R;
 
 import java.util.List;
 
-public class SuKienAdapter extends RecyclerView.Adapter<SuKienAdapter.ViewHolder> {
+public class HoanCanhAdapter extends RecyclerView.Adapter<HoanCanhAdapter.ViewHolder> {
 
-    private final List<SuKienItem> list;
+    private final List<HoanCanhItem> list;
 
-    public SuKienAdapter(List<SuKienItem> list) {
+    public HoanCanhAdapter(List<HoanCanhItem> list) {
         this.list = list;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.khampha_item_sukien, parent, false);
-        return new ViewHolder(v);
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.khampha_item_hoancanh, parent, false);
+        return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        SuKienItem item = list.get(position);
+        HoanCanhItem item = list.get(position);
 
-        holder.imgBanner.setImageResource(item.getBannerRes());
-        holder.txtTag.setText(item.getTag());
+        holder.imgThumb.setImageResource(item.getImageRes());
         holder.txtTitle.setText(item.getTitle());
-        holder.txtDate.setText(item.getDate());
-        holder.txtInterested.setText(item.getInterested());
+        holder.txtTag.setText(item.getTag());
+        holder.txtLocation.setText(item.getLocation());
     }
 
     @Override
@@ -46,21 +45,19 @@ public class SuKienAdapter extends RecyclerView.Adapter<SuKienAdapter.ViewHolder
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-
-        final ImageView imgBanner;
-        final TextView txtTag;
+        final ImageView imgThumb;
         final TextView txtTitle;
-        final TextView txtDate;
-        final TextView txtInterested;
+        final TextView txtTag;
+        final TextView txtLocation;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            imgBanner = itemView.findViewById(R.id.imgBanner);
-            txtTag = itemView.findViewById(R.id.txtTag);
+            // Khớp với id trong khampha_item_hoancanh.xml
+            imgThumb = itemView.findViewById(R.id.imgThumb);
             txtTitle = itemView.findViewById(R.id.txtTitle);
-            txtDate = itemView.findViewById(R.id.txtDate);
-            txtInterested = itemView.findViewById(R.id.txtInterested);
+            txtTag = itemView.findViewById(R.id.txtTag);
+            txtLocation = itemView.findViewById(R.id.txtAddress);
         }
     }
 }
