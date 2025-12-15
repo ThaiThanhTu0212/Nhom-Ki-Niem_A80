@@ -8,6 +8,7 @@
 
     <!-- AppBar -->
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
@@ -17,9 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
+            app:navigationIcon="@drawable/khampha_hoancanh_ic_arrow_back"
             app:title="Hoàn cảnh khó khăn"
-            app:titleTextColor="@color/black"
-            app:navigationIcon="@drawable/khampha_hoancanh_ic_arrow_back"/>
+            app:titleTextColor="@color/black" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Content -->
