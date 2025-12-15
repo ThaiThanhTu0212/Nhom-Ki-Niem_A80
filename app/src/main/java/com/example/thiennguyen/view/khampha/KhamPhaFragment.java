@@ -38,6 +38,7 @@ public class KhamPhaFragment extends Fragment {
         setupBanner();
         setupRecyclerViews();
         setupCampaignTop1();
+        setupHoanCanh();
         setupEvents();
         setupSuKien();
 
@@ -149,6 +150,22 @@ public class KhamPhaFragment extends Fragment {
                 startActivity(new Intent(getContext(), SuKienActivity.class)));
 
 
+    }
+
+    private void setupHoanCanh() {
+        // Dữ liệu mẫu dùng chung từ HoanCanhItem
+        List<HoanCanhItem> list = HoanCanhItem.createSampleList();
+
+        // chỉ hiển thị 3 item như mẫu
+        binding.rvHoanCanh.setLayoutManager(
+                new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false)
+        );
+
+        binding.rvHoanCanh.setAdapter(new HoanCanhAdapter(list));
+
+        binding.btnXemTatCaHoanCanh.setOnClickListener(v ->
+                startActivity(new Intent(getContext(), HoanCanhActivity.class))
+        );
     }
 
     private void setupSuKien() {
