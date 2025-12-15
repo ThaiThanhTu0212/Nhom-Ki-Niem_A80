@@ -70,10 +70,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtTitle;
-        CardView cardView;
+        final TextView txtTitle;
+        final CardView cardView;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtTitle = itemView.findViewById(R.id.txtTitle);
             cardView = (CardView) itemView;
