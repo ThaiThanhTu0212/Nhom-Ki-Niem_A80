@@ -42,15 +42,18 @@ public class SuKienAdapter extends RecyclerView.Adapter<SuKienAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return list == null ? 0 : list.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imgBanner;
-        TextView txtTag, txtTitle, txtDate, txtInterested;
+        final ImageView imgBanner;
+        final TextView txtTag;
+        final TextView txtTitle;
+        final TextView txtDate;
+        final TextView txtInterested;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imgBanner = itemView.findViewById(R.id.imgBanner);
