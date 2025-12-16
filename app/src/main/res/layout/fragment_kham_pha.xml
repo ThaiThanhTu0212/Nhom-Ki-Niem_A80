@@ -52,12 +52,23 @@
         </RelativeLayout>
 
         <!-- Banner -->
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPagerBanner"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:clipToPadding="false"
-            android:layout_marginBottom="20dp"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="16dp"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="4dp">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPagerBanner"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:clipToPadding="false"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp" />
+
+        </androidx.cardview.widget.CardView>
 
         <!-- Danh mục -->
         <TextView
@@ -239,10 +250,12 @@
                 android:id="@+id/btnXemTatCaSuKien"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Xem tất cả >"
-                android:textColor="#F5A623"
+                android:text="Xem tất cả"
                 android:textSize="14sp"
-                android:padding="4dp" />
+                android:textColor="#FF9800"
+                android:layout_alignParentEnd="true"
+                android:padding="4dp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -253,15 +266,36 @@
             android:nestedScrollingEnabled="false"/>
 
 
+
         <!-- Hoàn cảnh khó khăn -->
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hoàn cảnh khó khăn"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            android:textColor="@android:color/black"/>
+            android:gravity="center_vertical"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Hoàn cảnh khó khăn"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
+
+            <TextView
+                android:id="@+id/btnXemTatCaHoanCanh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xem tất cả"
+                android:textSize="14sp"
+                android:textColor="#FF9800"
+                android:padding="4dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvHoanCanh"
