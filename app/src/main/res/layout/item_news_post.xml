@@ -74,13 +74,12 @@
             android:textSize="14sp"
             android:lineSpacingExtra="4dp" />
 
-        <!-- SỬA LỖI: Thay thế lưới ảnh phức tạp bằng một ImageView duy nhất -->
+        <!-- ẢNH BÀI VIẾT - ĐÃ SỬA LỖI MỜ -->
         <ImageView
             android:id="@+id/imgMain"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="220dp" 
             android:layout_marginTop="10dp"
-            android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:visibility="gone" /> <!-- Mặc định sẽ ẩn đi -->
 
@@ -100,6 +99,17 @@
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:padding="6dp"
                 app:tint="#FF5722" />
+
+            <!-- NÚT SHARE ĐƯỢC THÊM VÀO -->
+            <ImageView
+                android:id="@+id/btnShare"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:src="@android:drawable/ic_menu_share"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:padding="6dp"
+                app:tint="#666666" />
 
             <TextView
                 android:id="@+id/tvLikeCount"

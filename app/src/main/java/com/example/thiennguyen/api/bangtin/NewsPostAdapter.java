@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide; // THÊM IMPORT GLIDE
+import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
 
 import java.util.ArrayList;
@@ -21,9 +21,11 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
     private final ArrayList<NewsPost> postList;
     private OnItemClickListener listener;
 
+    // ĐÃ THÊM onShareClick VÀO INTERFACE
     public interface OnItemClickListener {
         void onCommentClick(int position);
         void onLikeClick(int position);
+        void onShareClick(int position);
         void onMoreOptionsClick(int position, View view);
     }
 
@@ -48,7 +50,6 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
         holder.bind(currentPost);
     }
 
-    // Tối ưu hóa việc cập nhật chỉ phần thay đổi
     @Override
     public void onBindViewHolder(@NonNull NewsPostViewHolder holder, int position, @NonNull List<Object> payloads) {
         if (payloads.isEmpty()) {
@@ -75,6 +76,7 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
         public TextView commentCount;
         public TextView likeCount;
         public ImageView btnLike;
+        public ImageView btnShare; // Khai báo nút Share
         public ImageView btnMoreOptions;
         public LinearLayout commentArea;
 
@@ -87,8 +89,9 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
             content = itemView.findViewById(R.id.tvContent);
             postImage = itemView.findViewById(R.id.imgMain);
             commentCount = itemView.findViewById(R.id.tvCommentCount);
-            likeCount = itemView.findViewById(R.id.tvLikeCount); // ID của TextView số lượt thích
+            likeCount = itemView.findViewById(R.id.tvLikeCount);
             btnLike = itemView.findViewById(R.id.btnLike);
+            btnShare = itemView.findViewById(R.id.btnShare); // Gán ID cho nút Share
             commentArea = itemView.findViewById(R.id.bangtin_layout_comment_area);
             btnMoreOptions = itemView.findViewById(R.id.btnMoreOptions);
 
@@ -110,6 +113,18 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
                 }
             });
 
+            // THÊM LISTENER CHO NÚT SHARE
+            if (btnShare != null) { // Kiểm tra null để tránh crash nếu chưa có ID
+                btnShare.setOnClickListener(v -> {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onShareClick(position);
+                        }
+                    }
+                });
+            }
+
             btnMoreOptions.setOnClickListener(v -> {
                 if (listener != null) {
                     int position = getAdapterPosition();
@@ -120,20 +135,18 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
             });
         }
 
-        // Gán dữ liệu vào ViewHolder (ĐÃ SỬA ĐỂ DÙNG GLIDE)
         public void bind(NewsPost post) {
             author.setText(post.author);
             time.setText(post.time);
             content.setText(post.content);
             avatar.setImageResource(post.avatarResource);
 
-            // SỬ DỤNG GLIDE ĐỂ TẢI ẢNH TỪ URL
             if (post.imageUrl != null && !post.imageUrl.isEmpty()) {
                 postImage.setVisibility(View.VISIBLE);
                 Glide.with(itemView.getContext())
                      .load(post.imageUrl)
-                     .placeholder(R.drawable.placeholder_image) // Ảnh hiển thị trong lúc tải
-                     .error(R.drawable.bangtin_img_default_post) // Ảnh hiển thị khi lỗi
+                     .placeholder(R.drawable.placeholder_image)
+                     .error(R.drawable.bangtin_img_default_post)
                      .into(postImage);
             } else {
                 postImage.setVisibility(View.GONE);
@@ -142,13 +155,12 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
             commentCount.setText(String.valueOf(post.commentCount) + " Bình luận");
         }
 
-        // Cập nhật trạng thái và số lượt thích
         public void updateLikeStatus(NewsPost post) {
             likeCount.setText(String.valueOf(post.likeCount) + " lượt thích");
             if (post.isLiked) {
-                btnLike.setImageResource(R.drawable.bangtin_heart_filled); // Icon trái tim đã tô màu
+                btnLike.setImageResource(R.drawable.bangtin_heart_filled);
             } else {
-                btnLike.setImageResource(R.drawable.bangtin_heart_outline); // Icon trái tim rỗng
+                btnLike.setImageResource(R.drawable.bangtin_heart_outline);
             }
         }
     }
