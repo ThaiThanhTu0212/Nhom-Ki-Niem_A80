@@ -1,103 +1,57 @@
 package com.example.thiennguyen.view.model;
 
-public class NguoiDung {
+import java.io.Serializable; // Thêm Serializable để truyền giữa các Activity
+
+public class NguoiDung implements Serializable {
     private int idNd;
     private String hoTen;
     private String email;
     private String soDienThoai;
-    private String matKhau;
-    private String vaiTro;     // nguoi_ung_ho, nguoi_van_dong, admin
-    private String trangThai;  // mặc định: "hoat_dong"
+    private String matKhau; // Trong thực tế không nên truyền mật khẩu qua UI
+    private String vaiTro;
+    private String trangThai;
     private String avatar;
+
+    // Thêm các trường thống kê cho UI
+    private String userIdTag; // @phat123
+    private int soNguoiTheoDoi;
+    private int soBaiViet;
+    private String tongTienUngHo; // Dùng String để dễ format (ví dụ: "1.500.000 đ")
+    private int soChienDichThamGia;
+    private int soLuotHoTro;
 
     public NguoiDung() {
     }
 
-    public NguoiDung(int idNd, String hoTen, String email, String soDienThoai, String matKhau, String vaiTro, String trangThai, String avatar) {
+    // Constructor đầy đủ
+    public NguoiDung(int idNd, String hoTen, String email, String soDienThoai,
+                     String userIdTag, int soNguoiTheoDoi, int soBaiViet,
+                     String tongTienUngHo, int soChienDichThamGia, int soLuotHoTro) {
         this.idNd = idNd;
         this.hoTen = hoTen;
         this.email = email;
         this.soDienThoai = soDienThoai;
-        this.matKhau = matKhau;
-        this.vaiTro = vaiTro;
-        this.trangThai = trangThai;
-        this.avatar = avatar;
+        this.userIdTag = userIdTag;
+        this.soNguoiTheoDoi = soNguoiTheoDoi;
+        this.soBaiViet = soBaiViet;
+        this.tongTienUngHo = tongTienUngHo;
+        this.soChienDichThamGia = soChienDichThamGia;
+        this.soLuotHoTro = soLuotHoTro;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
+    // --- Getter & Setter ---
+    public String getHoTen() { return hoTen; }
+    public void setHoTen(String hoTen) { this.hoTen = hoTen; }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
+    public String getUserIdTag() { return userIdTag; }
 
-    public int getIdNd() {
-        return idNd;
-    }
+    public String getEmail() { return email; }
+    public String getSoDienThoai() { return soDienThoai; }
 
-    public void setIdNd(int idNd) {
-        this.idNd = idNd;
-    }
+    public String getSoNguoiTheoDoi() { return String.valueOf(soNguoiTheoDoi); }
+    public String getSoBaiViet() { return String.valueOf(soBaiViet); }
 
-    public String getHoTen() {
-        return hoTen;
-    }
-
-    public void setHoTen(String hoTen) {
-        this.hoTen = hoTen;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSoDienThoai() {
-        return soDienThoai;
-    }
-
-    public void setSoDienThoai(String soDienThoai) {
-        this.soDienThoai = soDienThoai;
-    }
-
-    public String getMatKhau() {
-        return matKhau;
-    }
-
-    public void setMatKhau(String matKhau) {
-        this.matKhau = matKhau;
-    }
-
-    public String getVaiTro() {
-        return vaiTro;
-    }
-
-    public void setVaiTro(String vaiTro) {
-        this.vaiTro = vaiTro;
-    }
-
-    public String getTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(String trangThai) {
-        this.trangThai = trangThai;
-    }
-
-    @Override
-    public String toString() {
-        return "NguoiDung{" +
-                "idNd=" + idNd +
-                ", hoTen='" + hoTen + '\'' +
-                ", email='" + email + '\'' +
-                ", soDienThoai='" + soDienThoai + '\'' +
-                ", matKhau='" + matKhau + '\'' +
-                ", vaiTro='" + vaiTro + '\'' +
-                ", trangThai='" + trangThai + '\'' +
-                '}';
-    }
+    public String getTongTienUngHo() { return tongTienUngHo; }
+    public String getSoChienDichThamGia() { return String.valueOf(soChienDichThamGia); }
+    public String getSoLuotHoTro() { return String.valueOf(soLuotHoTro); }
 }
