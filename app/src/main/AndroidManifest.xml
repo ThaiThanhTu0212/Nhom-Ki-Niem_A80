@@ -31,6 +31,11 @@
         </activity>
         <activity android:name=".view.login.RegisterActivity" />
 
+        <!-- ACTIVITY CHUYỂN TIỀN MỚI ĐƯỢC ĐĂNG KÝ -->
+        <activity
+            android:name=".view.bangtin.ChuyenTienActivity"
+            android:exported="false" />
+
         <!-- Các Activity đã có -->
         <activity android:name=".view.khampha.DongHanhActivity" />
         <activity

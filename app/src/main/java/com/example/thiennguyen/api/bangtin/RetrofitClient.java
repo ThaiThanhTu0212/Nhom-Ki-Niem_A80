@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL = "http://192.168.1.81:5089/";
+    private static final String BASE_URL = "http://192.168.1.10:5089/";
 
     private static Retrofit retrofit;
 
