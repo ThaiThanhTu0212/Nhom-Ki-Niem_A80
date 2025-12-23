@@ -22,8 +22,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/sontungavatataikhoan"
-                android:contentDescription="Ảnh bìa"
+                android:src="@color/darker_gray"
+                tools:src="@drawable/sontungavatataikhoan"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.cardview.widget.CardView
@@ -42,8 +42,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/sontungavatataikhoan"
-                    android:contentDescription="Ảnh đại diện" />
+                    android:src="@color/darker_gray"
+                    tools:src="@drawable/sontungavatataikhoan" />
             </androidx.cardview.widget.CardView>
 
             <ImageView
@@ -53,9 +53,9 @@
                 android:background="@drawable/circle_white_bg"
                 android:padding="6dp"
                 android:src="@android:drawable/ic_menu_camera"
+                app:tint="#000000"
                 app:layout_constraintBottom_toBottomOf="@id/cvAvatar"
-                app:layout_constraintEnd_toEndOf="@id/cvAvatar"
-                app:tint="#000000" />
+                app:layout_constraintEnd_toEndOf="@id/cvAvatar" />
 
             <ImageView
                 android:id="@+id/ivCameraBanner"
@@ -66,9 +66,23 @@
                 android:background="@drawable/circle_white_bg"
                 android:padding="8dp"
                 android:src="@android:drawable/ic_menu_camera"
+                app:tint="#000000"
                 app:layout_constraintBottom_toBottomOf="@id/ivBanner"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivSettings"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/circle_white_bg"
+                android:padding="8dp"
+                android:src="@android:drawable/ic_menu_preferences"
+                app:tint="#666666"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:tint="#000000" />
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
@@ -93,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                tools:text="phat123"
+                tools:text="@phat123"
                 android:textColor="#666666"
                 android:textSize="14sp" />
 
@@ -108,14 +122,14 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@android:drawable/ic_menu_my_calendar"
-                    app:tint="#666666" />
+                    app:tint="#666666"/>
 
                 <TextView
                     android:id="@+id/tvFollowers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    tools:text="120"
+                    tools:text="0"
                     android:textColor="#666666"
                     android:textSize="14sp" />
 
@@ -137,7 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    tools:text="5"
+                    tools:text="0"
                     android:textColor="#666666"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -158,7 +172,6 @@
                 android:layout_height="50dp"
                 android:backgroundTint="#FF9800"
                 android:stateListAnimator="@null"
-                android:drawablePadding="8dp"
                 android:text="Chỉnh sửa thông tin"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
@@ -170,8 +183,9 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginBottom="16dp"
-            android:src="@drawable/ic_gmail_taikhoan"
-            tools:src="@android:drawable/sym_action_email" />
+            tools:src="@android:drawable/sym_action_email"
+            android:src="@drawable/ic_gmail_taikhoan" />
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
@@ -185,16 +199,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hoạt động" />
-
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Thành tựu" />
-
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chiến dịch đồng hành" />
+                android:text="Chiến dịch" />
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.cardview.widget.CardView
@@ -242,8 +254,8 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <ImageView
@@ -252,31 +264,25 @@
                     android:src="@drawable/ic_heart_tai_khoan"
                     tools:src="@android:drawable/star_on"
                     app:tint="#FF9800"/>
-
                 <TextView
                     android:id="@+id/tvCampaignsJoined"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    tools:text="12"
-                    android:textColor="#000000"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
+                    tools:text="0"
+                    android:textStyle="bold"
+                    android:textSize="24sp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="chiến dịch đã tham gia"
-                    android:textColor="#666666"
-                    android:textSize="14sp" />
+                    android:text="Chiến dịch"
+                    android:textSize="14sp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <ImageView
@@ -285,62 +291,35 @@
                     android:src="@drawable/ic_support_tai_khoan"
                     tools:src="@android:drawable/ic_dialog_info"
                     app:tint="#FF9800"/>
-
                 <TextView
                     android:id="@+id/tvSupportCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    tools:text="36"
-                    android:textColor="#000000"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
+                    tools:text="0"
+                    android:textStyle="bold"
+                    android:textSize="24sp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="lượt ủng hộ"
-                    android:textColor="#666666"
-                    android:textSize="14sp" />
+                    android:text="Lượt ủng hộ"
+                    android:textSize="14sp"/>
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_margin="16dp"
             android:background="#FFFFFF"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Đang theo dõi"
-                    android:textColor="#000000"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvDownload"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="4dp"
-                    android:text="Tải"
-                    android:textColor="#FF9800"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                android:text="Đang theo dõi"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -355,13 +334,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?attr/selectableItemBackground"
                     android:padding="12dp"
                     android:text="Tổ chức"
-                    android:textColor="#666666"
-                    android:textSize="16sp" />
+                    android:textColor="#FF9800"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvIndividuals"
@@ -369,13 +345,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?attr/selectableItemBackground"
                     android:padding="12dp"
                     android:text="Cá nhân"
-                    android:textColor="#666666"
-                    android:textSize="16sp" />
+                    android:textColor="#666666" />
             </LinearLayout>
 
             <TextView
@@ -385,8 +357,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="24dp"
                 android:text="Không có nội dung hiển thị"
-                android:textColor="#999999"
-                android:textSize="14sp" />
+                android:textColor="#999999" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
