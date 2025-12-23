@@ -1,28 +1,57 @@
 package com.example.thiennguyen.view.taikhoan;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
 import com.example.thiennguyen.view.model.NguoiDung;
 import com.google.android.material.tabs.TabLayout;
 
 public class TaiKhoanFragment extends Fragment {
 
-    // Views
-    private ImageView ivBanner, ivAvatar, ivCameraAvatar, ivCameraBanner;
+    // --- Views ---
+    private ImageView ivBanner, ivAvatar, ivCameraAvatar, ivCameraBanner, ivSettings;
     private TextView tvUserName, tvUserId, tvFollowers, tvPosts;
-    private TextView tvDonationDays, tvCampaignsJoined, tvSupportCount;
+    private TextView tvDonationDays, tvCampaignsJoined, tvSupportCount, tvEmptyState;
+    private TextView tvOrganizations, tvIndividuals;
     private Button btnEditProfile;
     private TabLayout tabLayout;
 
     private View view;
     private NguoiDung currentUser;
+
+    // --- Launchers (Xử lý kết quả trả về) ---
+
+    // 1. Nhận kết quả sau khi chỉnh sửa hồ sơ
+    private final ActivityResultLauncher<Intent> editProfileLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    NguoiDung updatedUser = (NguoiDung) result.getData().getSerializableExtra("updated_user");
+                    if (updatedUser != null) {
+                        currentUser = updatedUser;
+                        updateUI(); // Cập nhật lại giao diện ngay lập tức
+                        Toast.makeText(getContext(), "Cập nhật hồ sơ thành công!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+    );
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
