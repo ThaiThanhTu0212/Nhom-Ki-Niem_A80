@@ -10,6 +10,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import com.bumptech.glide.Glide;
+
+
 
 import com.example.thiennguyen.R;
 import com.example.thiennguyen.view.model.NguoiDung;
@@ -145,7 +150,21 @@ public class TaiKhoanFragment extends Fragment {
             if(tvEmptyState != null) tvEmptyState.setText("Chưa theo dõi cá nhân nào.");
         });
     }
+    private final ActivityResultLauncher<String> pickAvatarLauncher = registerForActivityResult(
+            new ActivityResultContracts.GetContent(),
+            uri -> {
+                if (uri != null) {
+                    // Load ảnh vừa chọn lên ImageView Avatar
+                    Glide.with(this)
+                            .load(uri)
+                            .circleCrop() // Cắt ảnh hình tròn tự động
+                            .into(ivAvatar);
 
+                    // TODO: Tại đây bạn sẽ viết code upload ảnh lên Server
+                    currentUser.setAvatar(uri.toString()); // Lưu tạm vào model
+                }
+            }
+    );
     private void updateContentBasedOnTab(int position) {
         if (tvEmptyState == null) return;
 
