@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +38,12 @@ public class HoanCanhAdapter extends RecyclerView.Adapter<HoanCanhAdapter.ViewHo
         holder.txtTitle.setText(item.getTitle());
         holder.txtTag.setText(item.getTag());
         holder.txtLocation.setText(item.getLocation());
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), ChiTietDongHanh1Activity.class);
+            intent.putExtra("TITLE", item.getTitle());
+            v.getContext().startActivity(intent);
+        });
     }
 
     @Override
