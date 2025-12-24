@@ -92,22 +92,43 @@ public class TaiKhoanFragment extends Fragment {
 
     private void setupUserData() {
         // Tạo user mẫu
+        currentUser = new NguoiDung(1, "ThanhPhat2604", "phat@example.com", "0123456789", "@phat123");
+        // Bạn có thể thêm URL ảnh mẫu nếu muốn
+        // currentUser.setAvatarUrl("https://example.com/avatar.jpg");
+        // currentUser.setBannerUrl("https://example.com/banner.jpg");
 
-
-        // Hiển thị thông tin
-        tvUserName.setText("ThanhPhat2604");
-        tvUserId.setText("@phat123");
-        tvFollowers.setText("0");
-        tvPosts.setText("0");
-        tvDonationDays.setText("0 đ");
-        tvCampaignsJoined.setText("0");
-        tvSupportCount.setText("0");
+        updateUI();
     }
+     private void updateUI() {
+        if (currentUser == null) return;
 
+        tvUserName.setText(currentUser.getHoTen());
+        tvUserId.setText(currentUser.getUserIdTag());
+        tvFollowers.setText(currentUser.getDisplayFollowers());
+        tvPosts.setText(currentUser.getDisplayPosts());
+        tvDonationDays.setText(currentUser.getTongTienUngHo());
+        tvCampaignsJoined.setText(currentUser.getDisplayCampaigns());
+        tvSupportCount.setText(currentUser.getDisplaySupport());
+
+        // Sử dụng Glide để tải ảnh (nếu có URL)
+        // Ví dụ, bạn có thể thêm ảnh mặc định
+        Glide.with(this)
+                .load(currentUser.getAvatarUrl())
+                .placeholder(R.drawable.sontungavatataikhoan) // Ảnh mặc định
+                .circleCrop()
+                .into(ivAvatar);
+
+        Glide.with(this)
+                .load(currentUser.getBannerUrl())
+                .placeholder(R.drawable.sontungavatataikhoan) // Ảnh mặc định
+                .into(ivBanner);
+    }
     private void setupListeners() {
         // Edit profile button
         btnEditProfile.setOnClickListener(v -> {
-            // TODO: Navigate to edit profile screen
+            Intent intent = new Intent(getActivity(), ChinhSuaHoSoActivity.class);
+            intent.putExtra("current_user", currentUser);
+            editProfileLauncher.launch(intent);
         });
 
         // Camera icons
