@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
+import com.example.thiennguyen.view.data.DTO.Response.ChienDichResponse;
 import com.example.thiennguyen.view.model.ChienDich;
 
 import java.util.List;
 
 public class ChienDichHomeAdapter extends RecyclerView.Adapter<ChienDichHomeAdapter.ChienDichHomeHolder> {
     public interface OnItemClickListener {
-        void onItemClick(ChienDich chienDich);
+        void onItemClick(ChienDichResponse chienDich);
     }
     private OnItemClickListener listener;
 
@@ -25,9 +26,9 @@ public class ChienDichHomeAdapter extends RecyclerView.Adapter<ChienDichHomeAdap
         this.listener = listener;
     }
 
-    private List<ChienDich> chienDichList;
+    private List<ChienDichResponse> chienDichList;
 
-    public ChienDichHomeAdapter(List<ChienDich> chienDichList) {
+    public ChienDichHomeAdapter(List<ChienDichResponse> chienDichList) {
         this.chienDichList = chienDichList;
     }
 
@@ -41,10 +42,10 @@ public class ChienDichHomeAdapter extends RecyclerView.Adapter<ChienDichHomeAdap
 
     @Override
     public void onBindViewHolder(@NonNull ChienDichHomeHolder holder, int position) {
-        ChienDich chienDich = chienDichList.get(position);
+        ChienDichResponse chienDich = chienDichList.get(position);
         if (chienDich== null)return;
         holder.tvtenCdHome.setText(chienDich.getTenCd());
-        holder.tvsoTienHienTaiHome.setText(chienDich.getSoTienHienTai().toString());
+        holder.tvsoTienHienTaiHome.setText("Số đã ủng hộ tại: "+chienDich.getSoTienHienTai().toString()+ " VND");
         Glide.with(holder.itemView.getContext())
                 .load(chienDich.getHinhAnh())
                 .placeholder(R.drawable.chiendich_image) // ảnh hiển thị tạm khi đang tải

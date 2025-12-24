@@ -12,22 +12,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
+import com.example.thiennguyen.view.data.DTO.Response.NguoiDungResponse;
 import com.example.thiennguyen.view.model.NguoiDung;
 
 import java.util.List;
 
 public class ToChucHomeAdapter extends RecyclerView.Adapter<ToChucHomeAdapter.ToChucHomeHolder> {
     public interface OnItemClickListener {
-        void onItemClick(NguoiDung nguoiDung);
+        void onItemClick(NguoiDungResponse nguoiDung);
     }
     NguoiDungHomeAdapter.OnItemClickListener listener;
 
     public void setListener(NguoiDungHomeAdapter.OnItemClickListener listener) {
         this.listener = listener;
     }
-    List<NguoiDung> nguoiDungList;
+    List<NguoiDungResponse> nguoiDungList;
 
-    public ToChucHomeAdapter(List<NguoiDung> nguoiDungList) {
+    public ToChucHomeAdapter(List<NguoiDungResponse> nguoiDungList) {
         this.nguoiDungList = nguoiDungList;
     }
 
@@ -41,7 +42,7 @@ public class ToChucHomeAdapter extends RecyclerView.Adapter<ToChucHomeAdapter.To
 
     @Override
     public void onBindViewHolder(@NonNull ToChucHomeHolder holder, int position) {
-        NguoiDung nguoiDung = nguoiDungList.get(position);
+        NguoiDungResponse nguoiDung = nguoiDungList.get(position);
         holder.tvTenTochucHome.setText(nguoiDung.getHoTen());
         Glide.with(holder.itemView.getContext())
                 .load(nguoiDung.getAvatar())

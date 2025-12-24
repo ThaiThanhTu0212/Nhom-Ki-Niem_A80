@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <activity android:name=".view.taikhoan.ChinhSuaHoSoActivity" />
     <application
+        android:name=".view.data.sharepreference.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -23,11 +24,8 @@
             android:name=".view.login.OtpVerificationActivity"
             android:exported="false" />
         <activity android:name=".view.login.LoginActivity"
-                  android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                  android:exported="false">
+
         </activity>
         <activity android:name=".view.login.RegisterActivity" />
 
@@ -39,6 +37,12 @@
         <!-- Các Activity đã có -->
         <activity android:name=".view.khampha.DongHanhActivity" />
         <activity
+            android:name=".view.TrangChu.ChienDich.CreateChienDichActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.taikhoan.LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.TrangChu.ProfileHomeActivity"
             android:exported="false" />
         <activity
@@ -49,7 +53,12 @@
             android:exported="false" />
         <activity
             android:name=".view.MainActivity"
-            android:exported="false" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".view.bangtin.ThongBaoActivity" />
         <activity android:name=".view.bangtin.BangTinCommentActivity" />
 

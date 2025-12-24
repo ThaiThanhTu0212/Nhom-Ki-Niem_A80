@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5"
-    android:fillViewport="true"
     tools:context=".view.taikhoan.TaiKhoanFragment">
 
     <LinearLayout
@@ -13,19 +12,21 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Header với banner image -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="280dp">
 
+            <!-- Banner Image -->
             <ImageView
                 android:id="@+id/ivBanner"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
-                android:src="@color/darker_gray"
-                tools:src="@drawable/sontungavatataikhoan"
+                android:src="@drawable/sontungavatataikhoan"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <!-- Avatar -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvAvatar"
                 android:layout_width="100dp"
@@ -42,10 +43,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@color/darker_gray"
-                    tools:src="@drawable/sontungavatataikhoan" />
+                    android:src="@drawable/sontungavatataikhoan" />
             </androidx.cardview.widget.CardView>
 
+            <!-- Camera icon on avatar -->
             <ImageView
                 android:id="@+id/ivCameraAvatar"
                 android:layout_width="30dp"
@@ -53,10 +54,10 @@
                 android:background="@drawable/circle_white_bg"
                 android:padding="6dp"
                 android:src="@android:drawable/ic_menu_camera"
-                app:tint="#000000"
                 app:layout_constraintBottom_toBottomOf="@id/cvAvatar"
                 app:layout_constraintEnd_toEndOf="@id/cvAvatar" />
 
+            <!-- Camera icon on banner -->
             <ImageView
                 android:id="@+id/ivCameraBanner"
                 android:layout_width="40dp"
@@ -66,25 +67,11 @@
                 android:background="@drawable/circle_white_bg"
                 android:padding="8dp"
                 android:src="@android:drawable/ic_menu_camera"
-                app:tint="#000000"
                 app:layout_constraintBottom_toBottomOf="@id/ivBanner"
                 app:layout_constraintEnd_toEndOf="parent" />
-
-            <ImageView
-                android:id="@+id/ivSettings"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/circle_white_bg"
-                android:padding="8dp"
-                android:src="@android:drawable/ic_menu_preferences"
-                app:tint="#666666"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <!-- User Info -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -97,7 +84,7 @@
                 android:id="@+id/tvUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="ThanhPhat2604"
+                android:text="ThanhPhat2604"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -107,11 +94,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                tools:text="@phat123"
+                android:text="phat123"
                 android:textColor="#666666"
                 android:textSize="14sp" />
 
+            <!-- Stats -->
             <LinearLayout
+                android:id="@+id/llStats"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -120,16 +109,14 @@
 
                 <ImageView
                     android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@android:drawable/ic_menu_my_calendar"
-                    app:tint="#666666"/>
+                    android:layout_height="20dp" />
 
                 <TextView
                     android:id="@+id/tvFollowers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    tools:text="0"
+                    android:text="0"
                     android:textColor="#666666"
                     android:textSize="14sp" />
 
@@ -142,21 +129,20 @@
 
                 <ImageView
                     android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@android:drawable/ic_menu_edit"
-                    app:tint="#666666"/>
+                    android:layout_height="20dp" />
 
                 <TextView
                     android:id="@+id/tvPosts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    tools:text="0"
+                    android:text="0"
                     android:textColor="#666666"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
 
+        <!-- Edit Profile Button -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -166,26 +152,80 @@
             app:cardCornerRadius="25dp"
             app:cardElevation="2dp">
 
-            <Button
-                android:id="@+id/btnEditProfile"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:backgroundTint="#FF9800"
-                android:stateListAnimator="@null"
-                android:text="Chỉnh sửa thông tin"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnEditProfile"
+                    android:layout_width="228dp"
+                    android:layout_height="50dp"
+                    android:background="#FF9800"
+
+                    android:drawablePadding="8dp"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
+                    android:text="Chỉnh sửa thông tin"
+                    android:textColor="#09E0FB"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvBtnLogOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#AF1111"
+                    android:textStyle="bold"
+
+                    android:layout_weight="1"
+                    android:text="Đăng xuất" />
+
+            </LinearLayout>
+
         </androidx.cardview.widget.CardView>
 
+        <!-- Gmail Icon -->
+        <Button
+            android:id="@+id/btnLoginTaiKhoan"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:textStyle="bold"
+            android:text="Đăng nhập" />
+
+        <TextView
+            android:id="@+id/tvOr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:text="Hoặc" />
+
+        <Button
+            android:id="@+id/btnDangKy2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#262DDC"
+            app:backgroundTint="@null"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:textStyle="bold"
+            android:text="Đăng ký" />
+
         <ImageView
+            android:id="@+id/ivGmail"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginBottom="16dp"
-            tools:src="@android:drawable/sym_action_email"
             android:src="@drawable/ic_gmail_taikhoan" />
 
+        <!-- Tabs -->
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
@@ -199,17 +239,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hoạt động" />
+
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Thành tựu" />
+
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chiến dịch" />
+                android:text="Chiến dịch đóng hành" />
         </com.google.android.material.tabs.TabLayout>
 
+        <!-- Activity Card -->
         <androidx.cardview.widget.CardView
+            android:id="@+id/cvActivity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -226,7 +270,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Đã ủng hộ và đồng hành"
+                    android:text="Đã ủng hộ và đóng hành"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp" />
 
@@ -235,14 +279,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    tools:text="1.500.000 đ"
+                    android:text="0 đ"
                     android:textColor="#FFFFFF"
                     android:textSize="32sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <!-- Stats Row -->
         <LinearLayout
+            android:id="@+id/llStatsRow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -251,76 +297,111 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
+            <!-- Campaigns Joined -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_heart_tai_khoan"
-                    tools:src="@android:drawable/star_on"
-                    app:tint="#FF9800"/>
+                    android:src="@drawable/ic_heart_tai_khoan" />
+
                 <TextView
                     android:id="@+id/tvCampaignsJoined"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="0"
-                    android:textStyle="bold"
-                    android:textSize="24sp"/>
+                    android:layout_marginTop="8dp"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chiến dịch"
-                    android:textSize="14sp"/>
+                    android:layout_marginTop="4dp"
+                    android:text="chiến dịch đã tham gia"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
             </LinearLayout>
 
+            <!-- Support Count -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_support_tai_khoan"
-                    tools:src="@android:drawable/ic_dialog_info"
-                    app:tint="#FF9800"/>
+                    android:src="@drawable/ic_support_tai_khoan" />
+
                 <TextView
                     android:id="@+id/tvSupportCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="0"
-                    android:textStyle="bold"
-                    android:textSize="24sp"/>
+                    android:layout_marginTop="8dp"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lượt ủng hộ"
-                    android:textSize="14sp"/>
+                    android:layout_marginTop="4dp"
+                    android:text="lượt ủng hộ"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
 
+        <!-- Following Section -->
         <LinearLayout
+            android:id="@+id/llFollowing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:background="#FFFFFF"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Đang theo dõi"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Đang theo dõi"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDownload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:drawablePadding="4dp"
+                    android:text="Tải"
+                    android:textColor="#FF9800"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Organizations/Individuals Tabs -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -336,8 +417,8 @@
                     android:gravity="center"
                     android:padding="12dp"
                     android:text="Tổ chức"
-                    android:textColor="#FF9800"
-                    android:textStyle="bold" />
+                    android:textColor="#666666"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tvIndividuals"
@@ -347,17 +428,19 @@
                     android:gravity="center"
                     android:padding="12dp"
                     android:text="Cá nhân"
-                    android:textColor="#666666" />
+                    android:textColor="#666666"
+                    android:textSize="16sp" />
             </LinearLayout>
 
+            <!-- Empty State -->
             <TextView
-                android:id="@+id/tvEmptyState"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="24dp"
-                android:text="Không có nội dung hiển thị"
-                android:textColor="#999999" />
+                android:text="Không có nội dung hiện thị"
+                android:textColor="#999999"
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
