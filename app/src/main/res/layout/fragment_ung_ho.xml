@@ -53,8 +53,6 @@
 
     <!-- Tiêu đề -->
 
-    <!-- Danh sách chiến dịch -->
-
     <TextView
         android:id="@+id/title_text"
         android:layout_width="0dp"
