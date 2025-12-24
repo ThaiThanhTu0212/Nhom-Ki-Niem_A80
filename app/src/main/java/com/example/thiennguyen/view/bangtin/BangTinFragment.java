@@ -64,7 +64,7 @@ public class BangTinFragment extends Fragment {
     private TabLayout tabLayout;
     private TextView tvEmptyView;
 
-    private static final String IMAGE_BASE_URL = "http://192.168.1.10:5089"; // THAY BẰNG IP CỦA BẠN
+    private static final String IMAGE_BASE_URL = "http://192.168.120.213:5089"; // THAY BẰNG IP CỦA BẠN
 
     // --- ActivityResultLauncher THAY THẾ CHO onActivityResult --- 
     private ActivityResultLauncher<Intent> imagePickerLauncher;
