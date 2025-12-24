@@ -1,5 +1,6 @@
 package com.example.thiennguyen.view.bangtin;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,9 +14,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thiennguyen.R;
-import com.example.thiennguyen.api.bangtin.RetrofitClient;
 import com.example.thiennguyen.api.bangtin.ApiService;
 import com.example.thiennguyen.api.bangtin.DonationRequest;
+import com.example.thiennguyen.api.bangtin.DonationResponse;
+import com.example.thiennguyen.api.bangtin.RetrofitClient;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.text.DecimalFormat;
@@ -131,7 +133,7 @@ public class ChuyenTienActivity extends AppCompatActivity {
         // TODO: Thay thế userId bằng ID của người dùng đang đăng nhập thực tế (lấy từ SharedPreferences)
         int userId = 1; 
 
-        DonationRequest donationRequest = new DonationRequest(userId, postId, amount, message);
+        DonationRequest donationRequest = new DonationRequest(userId, postId, (int) amount, message);
         sendDonationToApi(donationRequest);
     }
 
@@ -145,25 +147,26 @@ public class ChuyenTienActivity extends AppCompatActivity {
             return;
         }
 
-        apiService.postDonation(request).enqueue(new Callback<Void>() {
+        apiService.postDonation(request).enqueue(new Callback<DonationResponse>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    handleSuccessfulDonation();
+            public void onResponse(Call<DonationResponse> call, Response<DonationResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    handleSuccessfulDonation(response.body());
                 } else {
                     handleFailedDonation("Có lỗi xảy ra: " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<DonationResponse> call, Throwable t) {
                 handleFailedDonation("Lỗi mạng: " + t.getMessage());
             }
         });
     }
 
-    private void handleSuccessfulDonation() {
-        Toast.makeText(this, "Ủng hộ thành công! Cảm ơn tấm lòng của bạn.", Toast.LENGTH_LONG).show();
+    private void handleSuccessfulDonation(DonationResponse donationResponse) {
+        Toast.makeText(this, donationResponse.getMessage(), Toast.LENGTH_LONG).show();
+        setResult(Activity.RESULT_OK);
         // Tạo độ trễ 2 giây trước khi đóng màn hình
         new Handler(Looper.getMainLooper()).postDelayed(this::finish, 2000);
     }

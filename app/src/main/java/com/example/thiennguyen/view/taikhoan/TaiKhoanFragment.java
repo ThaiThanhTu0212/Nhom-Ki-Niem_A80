@@ -1,5 +1,6 @@
 package com.example.thiennguyen.view.taikhoan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ public class TaiKhoanFragment extends Fragment {
     private TextView tvDonationDays, tvCampaignsJoined, tvSupportCount;
     private Button btnEditProfile;
     private TabLayout tabLayout;
+    private TextView tvHistory; // Thêm view cho Lịch sử
 
     private View view;
     private NguoiDung currentUser;
@@ -59,6 +61,9 @@ public class TaiKhoanFragment extends Fragment {
 
         // Tabs
         tabLayout = view.findViewById(R.id.tabLayout);
+
+        // Menu mới
+        tvHistory = view.findViewById(R.id.tvHistory);
     }
 
     private void setupUserData() {
@@ -76,6 +81,14 @@ public class TaiKhoanFragment extends Fragment {
     }
 
     private void setupListeners() {
+        // Nút Lịch sử chuyển tiền
+        tvHistory.setOnClickListener(v -> {
+            if (getActivity() != null) {
+                Intent intent = new Intent(getActivity(), LichSuChuyenTienActivity.class);
+                startActivity(intent);
+            }
+        });
+        
         // Edit profile button
         btnEditProfile.setOnClickListener(v -> {
             // TODO: Navigate to edit profile screen

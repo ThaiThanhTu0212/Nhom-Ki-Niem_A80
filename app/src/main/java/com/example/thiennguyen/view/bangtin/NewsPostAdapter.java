@@ -34,7 +34,9 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
     public interface OnItemClickListener {
         void onCommentClick(int position);
         void onLikeClick(int position);
+        void onShareClick(int position);
         void onMoreOptionsClick(int position, View view);
+        void onDonateClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -80,12 +82,14 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
         public TextView author;
         public TextView time;
         public TextView content;
-        public ImageView postImage; // Chỉ còn một ImageView
+        public ImageView postImage; 
         public TextView commentCount;
         public TextView likeCount;
         public ImageView btnLike;
+        public ImageView btnShare;
         public ImageView btnMoreOptions;
         public LinearLayout commentArea;
+        public ImageView btnDonate;
 
         public NewsPostViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -94,12 +98,14 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
             author = itemView.findViewById(R.id.tvUsername);
             time = itemView.findViewById(R.id.tvTime);
             content = itemView.findViewById(R.id.tvContent);
-            postImage = itemView.findViewById(R.id.imgMain); // Tham chiếu đến ImageView duy nhất
+            postImage = itemView.findViewById(R.id.imgMain);
             commentCount = itemView.findViewById(R.id.tvCommentCount);
             likeCount = itemView.findViewById(R.id.tvLikeCount);
             btnLike = itemView.findViewById(R.id.btnLike);
+            btnShare = itemView.findViewById(R.id.btnShare);
             commentArea = itemView.findViewById(R.id.bangtin_layout_comment_area);
             btnMoreOptions = itemView.findViewById(R.id.btnMoreOptions);
+            btnDonate = itemView.findViewById(R.id.btn_donate_hand);
 
             commentArea.setOnClickListener(v -> {
                 if (listener != null) {
@@ -119,11 +125,29 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
                 }
             });
 
+            btnShare.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onShareClick(position);
+                    }
+                }
+            });
+
             btnMoreOptions.setOnClickListener(v -> {
                 if (listener != null) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         listener.onMoreOptionsClick(position, v);
+                    }
+                }
+            });
+
+            btnDonate.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onDonateClick(position);
                     }
                 }
             });
@@ -135,7 +159,6 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
             content.setText(post.content);
             avatar.setImageResource(post.avatarResource);
 
-            // Sử dụng Glide để tải ảnh từ URL
             if (post.imageUrl != null && !post.imageUrl.isEmpty()) {
                 postImage.setVisibility(View.VISIBLE);
                 Glide.with(itemView.getContext())
