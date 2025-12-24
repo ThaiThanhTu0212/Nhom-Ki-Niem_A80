@@ -360,9 +360,17 @@
                     android:textColor="#666666"
                     android:textSize="14sp" />
             </LinearLayout>
+
         </LinearLayout>
 
         <!-- Following Section -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/idReCycleViewDSThamGia"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="8dp" />
+
         <LinearLayout
             android:id="@+id/llFollowing"
             android:layout_width="match_parent"
