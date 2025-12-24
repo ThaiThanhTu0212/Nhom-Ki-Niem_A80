@@ -1,103 +1,65 @@
 package com.example.thiennguyen.view.model;
 
-public class NguoiDung {
+import java.io.Serializable;
+
+public class NguoiDung implements Serializable {
     private int idNd;
     private String hoTen;
     private String email;
     private String soDienThoai;
-    private String matKhau;
-    private String vaiTro;     // nguoi_ung_ho, nguoi_van_dong, admin
-    private String trangThai;  // mặc định: "hoat_dong"
-    private String avatar;
+    private String userIdTag; // Ví dụ: @phat123
 
-    public NguoiDung() {
-    }
+    // Đường dẫn ảnh (URL hoặc URI)
+    private String avatarUrl;
+    private String bannerUrl;
 
-    public NguoiDung(int idNd, String hoTen, String email, String soDienThoai, String matKhau, String vaiTro, String trangThai, String avatar) {
+    // Thống kê
+    private int soNguoiTheoDoi;
+    private int soBaiViet;
+    private String tongTienUngHo;
+    private int soChienDichThamGia;
+    private int soLuotHoTro;
+
+    public NguoiDung() { }
+
+    public NguoiDung(int idNd, String hoTen, String email, String soDienThoai, String userIdTag) {
         this.idNd = idNd;
         this.hoTen = hoTen;
         this.email = email;
         this.soDienThoai = soDienThoai;
-        this.matKhau = matKhau;
-        this.vaiTro = vaiTro;
-        this.trangThai = trangThai;
-        this.avatar = avatar;
+        this.userIdTag = userIdTag;
+
+        // Dữ liệu mặc định
+        this.soNguoiTheoDoi = 0;
+        this.soBaiViet = 0;
+        this.tongTienUngHo = "0 đ";
+        this.soChienDichThamGia = 0;
+        this.soLuotHoTro = 0;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
+    // --- Getters & Setters ---
+    public String getHoTen() { return hoTen; }
+    public void setHoTen(String hoTen) { this.hoTen = hoTen; }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public int getIdNd() {
-        return idNd;
-    }
+    public String getSoDienThoai() { return soDienThoai; }
+    public void setSoDienThoai(String soDienThoai) { this.soDienThoai = soDienThoai; }
 
-    public void setIdNd(int idNd) {
-        this.idNd = idNd;
-    }
+    public String getUserIdTag() { return userIdTag; }
+    public void setUserIdTag(String userIdTag) { this.userIdTag = userIdTag; }
 
-    public String getHoTen() {
-        return hoTen;
-    }
+    public String getAvatarUrl() { return avatarUrl; }
+    public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
 
-    public void setHoTen(String hoTen) {
-        this.hoTen = hoTen;
-    }
+    public String getBannerUrl() { return bannerUrl; }
+    public void setBannerUrl(String bannerUrl) { this.bannerUrl = bannerUrl; }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSoDienThoai() {
-        return soDienThoai;
-    }
-
-    public void setSoDienThoai(String soDienThoai) {
-        this.soDienThoai = soDienThoai;
-    }
-
-    public String getMatKhau() {
-        return matKhau;
-    }
-
-    public void setMatKhau(String matKhau) {
-        this.matKhau = matKhau;
-    }
-
-    public String getVaiTro() {
-        return vaiTro;
-    }
-
-    public void setVaiTro(String vaiTro) {
-        this.vaiTro = vaiTro;
-    }
-
-    public String getTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(String trangThai) {
-        this.trangThai = trangThai;
-    }
-
-    @Override
-    public String toString() {
-        return "NguoiDung{" +
-                "idNd=" + idNd +
-                ", hoTen='" + hoTen + '\'' +
-                ", email='" + email + '\'' +
-                ", soDienThoai='" + soDienThoai + '\'' +
-                ", matKhau='" + matKhau + '\'' +
-                ", vaiTro='" + vaiTro + '\'' +
-                ", trangThai='" + trangThai + '\'' +
-                '}';
-    }
+    // Helpers hiển thị
+    public String getDisplayFollowers() { return String.valueOf(soNguoiTheoDoi); }
+    public String getDisplayPosts() { return String.valueOf(soBaiViet); }
+    public String getDisplayCampaigns() { return String.valueOf(soChienDichThamGia); }
+    public String getDisplaySupport() { return String.valueOf(soLuotHoTro); }
+    public String getTongTienUngHo() { return tongTienUngHo; }
 }

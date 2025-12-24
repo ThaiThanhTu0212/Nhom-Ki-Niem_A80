@@ -18,7 +18,7 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     private final List<String> items;
-    private final String type; // để phân biệt loại
+    private final String type;
 
     public Adapter(String type) {
         this.type = type;
@@ -35,7 +35,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.khampha_item_demo, parent, false);
+                .inflate(R.layout.khampha_item, parent, false);
         return new ViewHolder(v);
     }
 
@@ -70,10 +70,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtTitle;
-        CardView cardView;
+        final TextView txtTitle;
+        final CardView cardView;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtTitle = itemView.findViewById(R.id.txtTitle);
             cardView = (CardView) itemView;
