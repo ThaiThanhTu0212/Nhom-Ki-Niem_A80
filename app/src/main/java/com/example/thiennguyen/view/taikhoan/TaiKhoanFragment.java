@@ -40,7 +40,7 @@ public class TaiKhoanFragment extends Fragment {
 
     // Views
     private ImageView ivBanner, ivAvatar, ivCameraAvatar, ivCameraBanner, ivGmail;
-    private TextView tvUserName, tvUserId, tvFollowers, tvPosts, tvOr;
+    private TextView tvUserName, tvUserId, tvFollowers, tvPosts, tvOr, tvHistory;
     private TextView tvDonationDays, tvCampaignsJoined, tvSupportCount, tvBtnLogOut;
     private Button btnEditProfile,btnLoginTaiKhoan, btnDangKy2;
     private TabLayout tabLayout;
@@ -155,6 +155,7 @@ public class TaiKhoanFragment extends Fragment {
             ivAvatar.setVisibility(View.GONE);
             tvBtnLogOut.setVisibility(View.GONE);
             btnEditProfile.setVisibility(View.GONE);
+            tvHistory.setVisibility(View.GONE);
 
         } else {
             // --- Đã đăng nhập ---
@@ -178,6 +179,7 @@ public class TaiKhoanFragment extends Fragment {
             btnLoginTaiKhoan.setVisibility(View.GONE);
             btnDangKy2.setVisibility(View.GONE);
             tvOr.setVisibility(View.GONE);
+            tvHistory.setVisibility(View.VISIBLE);
 
 
             // Load user từ API (hoặc dữ liệu local)
@@ -308,6 +310,7 @@ public class TaiKhoanFragment extends Fragment {
         btnLoginTaiKhoan = view.findViewById(R.id.btnLoginTaiKhoan);
         btnDangKy2 = view.findViewById(R.id.btnDangKy2);
         tvOr = view.findViewById(R.id.tvOr);
+        tvHistory = view.findViewById(R.id.tvHistory);
 
 
 
