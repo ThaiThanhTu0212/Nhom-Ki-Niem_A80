@@ -1,0 +1,17 @@
+Index: app/src/main/java/com/example/thiennguyen/view/data/ApiClient.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.thiennguyen.view.data;\r\n\r\nimport com.example.thiennguyen.view.data.api.ChienDichApi;\r\nimport com.google.gson.Gson;\r\nimport com.google.gson.GsonBuilder;\r\n\r\nimport retrofit2.Retrofit;\r\nimport retrofit2.converter.gson.GsonConverterFactory;\r\n\r\npublic class ApiClient {\r\n    public static final String URL_BASE =\"http://192.168.1.22:8080/identity/\";\r\n    public static final Gson gson = new GsonBuilder()\r\n            .setDateFormat(\"yyyy-MM-dd HH:mm:ss\")\r\n            .create();\r\n    private static Retrofit retrofit;\r\n    public static Retrofit getRetrofit(){\r\n        if (retrofit == null){\r\n            retrofit = new Retrofit.Builder()\r\n                    .baseUrl(URL_BASE)\r\n                    .addConverterFactory(GsonConverterFactory.create(gson))\r\n                    .build();\r\n        }\r\n        return retrofit;\r\n    }\r\n//    public static ChienDichApi getChienDichApi(){\r\n//        return getRetrofit().create(ChienDichApi.class);\r\n//    }\r\n}\r\n
+===================================================================
+diff --git a/app/src/main/java/com/example/thiennguyen/view/data/ApiClient.java b/app/src/main/java/com/example/thiennguyen/view/data/ApiClient.java
+--- a/app/src/main/java/com/example/thiennguyen/view/data/ApiClient.java	(revision 4b57b66cd5e5e781e3db91eb87d456f548a3f0fd)
++++ b/app/src/main/java/com/example/thiennguyen/view/data/ApiClient.java	(date 1764932236310)
+@@ -8,7 +8,7 @@
+ import retrofit2.converter.gson.GsonConverterFactory;
+ 
+ public class ApiClient {
+-    public static final String URL_BASE ="http://192.168.1.22:8080/identity/";
++    public static final String URL_BASE ="http://192.168.114.213:8080/identity/";
+     public static final Gson gson = new GsonBuilder()
+             .setDateFormat("yyyy-MM-dd HH:mm:ss")
+             .create();
