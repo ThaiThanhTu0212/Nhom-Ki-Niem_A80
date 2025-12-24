@@ -29,6 +29,10 @@
             android:exported="false"/>
         <activity android:name=".view.khampha.ChiTietDongHanh3Activity"
             android:exported="false"/>
+        <activity android:name=".view.khampha.ChiTietSuKien1Activity"
+            android:exported="false"/>
+        <activity android:name=".view.khampha.ChiTietSuKien2Activity"
+            android:exported="false"/>
 
 
         <activity
