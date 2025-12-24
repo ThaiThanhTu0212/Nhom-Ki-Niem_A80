@@ -32,6 +32,12 @@
             android:exported="false"/>
         <activity android:name=".view.khampha.ChiTietSuKien2Activity"
             android:exported="false"/>
+        <activity android:name=".view.taikhoan.ChinhSuaHoSoActivity" />
+
+        <!-- LỊCH SỬ CHUYỂN TIỀN ACTIVITY -->
+        <activity
+            android:name=".view.taikhoan.LichSuChuyenTienActivity"
+            android:exported="false" />
 
         <activity android:name=".view.taikhoan.ChinhSuaHoSoActivity" />
         <!-- Đăng ký các Activity mới -->

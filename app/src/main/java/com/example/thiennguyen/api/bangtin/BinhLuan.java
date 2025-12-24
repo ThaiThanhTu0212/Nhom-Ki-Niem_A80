@@ -2,11 +2,15 @@ package com.example.thiennguyen.api.bangtin;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
+import java.util.Date;
 
-public class BinhLuan implements Serializable {
+public class BinhLuan {
+
     @SerializedName("id")
     public int id;
+
+    @SerializedName("idBaiViet")
+    public int idBaiViet;
 
     @SerializedName("idNguoiBinhLuan")
     public int idNguoiBinhLuan;
@@ -15,5 +19,5 @@ public class BinhLuan implements Serializable {
     public String noiDung;
 
     @SerializedName("ngayBinhLuan")
-    public String ngayBinhLuan;
+    public Date ngayBinhLuan;
 }

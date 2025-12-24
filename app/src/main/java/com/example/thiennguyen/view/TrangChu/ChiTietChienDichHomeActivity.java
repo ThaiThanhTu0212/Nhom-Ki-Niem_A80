@@ -22,6 +22,9 @@ import com.example.thiennguyen.view.model.ChienDich;
 import com.example.thiennguyen.view.model.DanhMuc;
 import com.example.thiennguyen.view.model.NguoiDung;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -97,6 +100,28 @@ public class ChiTietChienDichHomeActivity extends AppCompatActivity {
                 .placeholder(R.drawable.chiendich_image)
                 .error(R.drawable.chiendich_image)
                 .into(imageViewhinhAnhctcd);
+    }
+
+    private void initListData() {
+        chienDichListHome = new ArrayList<>();
+        danhMuclistHome = new ArrayList<>();
+        nguoiDungListHome = new ArrayList<>();
+
+        // Dữ liệu mẫu
+        NguoiDung nd1 = new NguoiDung(1, "Quỹ Trái Tim Hảo Tâm", "quytraitim@example.com", "0123456789", "123456");
+        NguoiDung nd2 = new NguoiDung(2, "Hội Chữ Thập Xanh", "hoichuthapxanh@example.com", "0987654321", "123456");
+        nguoiDungListHome.add(nd1);
+        nguoiDungListHome.add(nd2);
+
+
+        DanhMuc dm1 = new DanhMuc(1, "Giáo dục");
+        DanhMuc dm2 = new DanhMuc(2, "Y tế");
+        danhMuclistHome.add(dm1);
+        danhMuclistHome.add(dm2);
+
+        chienDichListHome.add(new ChienDich(1, "Sách cho em", "https://picsum.photos/400/200", new BigDecimal("50000000"), new BigDecimal("25000000"), new Date(), new Date(), "Quyên góp sách giáo khoa...", "Giấy phép ABC", "Đối tượng XYZ", "Khu vực 1", nd1, dm1));
+        chienDichListHome.add(new ChienDich(2, "Áo ấm mùa đông", "https://picsum.photos/401/200", new BigDecimal("80000000"), new BigDecimal("65000000"), new Date(), new Date(), "Tặng áo ấm cho các em nhỏ...", "Giấy phép DEF", "Đối tượng PQR", "Khu vực 2", nd2, dm1));
+        chienDichListHome.add(new ChienDich(3, "Hỗ trợ viện phí", "https://picsum.photos/402/200", new BigDecimal("100000000"), new BigDecimal("15000000"), new Date(), new Date(), "Giúp đỡ các bệnh nhi...", "Giấy phép GHI", "Đối tượng TUV", "Khu vực 3", nd1, dm2));
     }
 
 

@@ -1,12 +1,17 @@
 package com.example.thiennguyen.api.bangtin;
 
-// DTO để gửi dữ liệu khi tạo một bình luận mới
+import com.google.gson.annotations.SerializedName;
+
 public class CommentRequest {
-    private int IdNguoiBinhLuan;
-    private String NoiDung;
+
+    @SerializedName("IdNguoiBinhLuan")
+    private int idNguoiBinhLuan;
+
+    @SerializedName("NoiDung")
+    private String noiDung;
 
     public CommentRequest(int idNguoiBinhLuan, String noiDung) {
-        this.IdNguoiBinhLuan = idNguoiBinhLuan;
-        this.NoiDung = noiDung;
+        this.idNguoiBinhLuan = idNguoiBinhLuan;
+        this.noiDung = noiDung;
     }
 }

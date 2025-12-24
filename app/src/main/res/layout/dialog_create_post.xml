@@ -39,13 +39,20 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:visibility="gone" />
 
-    <!-- Nút chọn ảnh -->
-    <LinearLayout
+    <!-- Nút chọn ảnh và CheckBox Kêu gọi -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="end"
         android:layout_marginTop="12dp">
+
+        <!-- CheckBox Kêu gọi ủng hộ -->
+        <CheckBox
+            android:id="@+id/chk_call_for_donation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kêu gọi ủng hộ"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
 
         <ImageView
             android:id="@+id/btn_add_photo"
@@ -54,8 +61,9 @@
             android:src="@drawable/ic_photo_camera"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="8dp"
+            android:layout_alignParentEnd="true"
             android:contentDescription="Thêm ảnh" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

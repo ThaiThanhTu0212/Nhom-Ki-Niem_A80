@@ -49,7 +49,7 @@ public class NguoiDungHomeAdapter extends RecyclerView.Adapter<NguoiDungHomeAdap
         holder.tvTenNDHome.setText(nguoiDung.getHoTen());
 
         Glide.with(holder.itemView.getContext())
-                .load(nguoiDung.getAvatar())
+                .load(nguoiDung.getAvatar()) // Đã sửa thành getAvatarUrl()
                 .placeholder(R.drawable.nguoidung) // ảnh hiển thị tạm khi đang tải
                 .error(R.drawable.nguoidung)         // ảnh lỗi fallback (có thể dùng lại ảnh trong drawable)
                 .into(holder.imageViewNguoiDungHome);

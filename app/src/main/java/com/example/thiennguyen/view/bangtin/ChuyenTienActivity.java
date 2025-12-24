@@ -1,10 +1,12 @@
 package com.example.thiennguyen.view.bangtin;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -13,11 +15,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thiennguyen.R;
-import com.example.thiennguyen.api.bangtin.RetrofitClient;
 import com.example.thiennguyen.api.bangtin.ApiService;
 import com.example.thiennguyen.api.bangtin.DonationRequest;
+import com.example.thiennguyen.api.bangtin.DonationResponse;
+import com.example.thiennguyen.api.bangtin.RetrofitClient;
 import com.google.android.material.appbar.MaterialToolbar;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 
 import retrofit2.Call;
@@ -26,6 +30,7 @@ import retrofit2.Response;
 
 public class ChuyenTienActivity extends AppCompatActivity {
 
+    private static final String TAG = "ChuyenTienActivity";
     private int postId;
     private String receiverName;
 
@@ -40,14 +45,10 @@ public class ChuyenTienActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chuyen_tien);
 
-        // Lấy dữ liệu từ Intent
         postId = getIntent().getIntExtra("POST_ID", -1);
         receiverName = getIntent().getStringExtra("RECEIVER_NAME");
 
-        // Gán Views
         bindViews();
-
-        // Cập nhật UI và xử lý sự kiện
         setupUI();
         setupListeners();
     }
@@ -88,9 +89,7 @@ public class ChuyenTienActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (!s.toString().equals(current)) {
                     edtAmount.removeTextChangedListener(this);
-
                     String cleanString = s.toString().replaceAll("[,.]", "");
-
                     try {
                         double parsed = Double.parseDouble(cleanString);
                         String formatted = decimalFormat.format(parsed);
@@ -98,9 +97,8 @@ public class ChuyenTienActivity extends AppCompatActivity {
                         edtAmount.setText(formatted);
                         edtAmount.setSelection(formatted.length());
                     } catch (NumberFormatException e) {
-                        // Xử lý nếu chuỗi không phải là số
+                        // Bỏ qua lỗi nếu người dùng xóa hết số
                     }
-
                     edtAmount.addTextChangedListener(this);
                 }
             }
@@ -120,7 +118,7 @@ public class ChuyenTienActivity extends AppCompatActivity {
         try {
             amount = Double.parseDouble(amountStr);
         } catch (NumberFormatException e) {
-            // Xử lý trường hợp chuỗi rỗng
+            // amount vẫn bằng 0 nếu chuỗi rỗng
         }
 
         if (amount <= 0) {
@@ -128,49 +126,61 @@ public class ChuyenTienActivity extends AppCompatActivity {
             return;
         }
 
-        // TODO: Thay thế userId bằng ID của người dùng đang đăng nhập thực tế (lấy từ SharedPreferences)
-        int userId = 1; 
+        // TODO: Thay thế userId bằng ID của người dùng đang đăng nhập thực tế
+        int userId = 1;
 
         DonationRequest donationRequest = new DonationRequest(userId, postId, amount, message);
         sendDonationToApi(donationRequest);
     }
 
     private void sendDonationToApi(DonationRequest request) {
-        setConfirmButtonState(false); // Vô hiệu hóa nút bấm
+        setConfirmButtonState(false);
 
         ApiService apiService = RetrofitClient.getService();
         if (apiService == null) {
             Toast.makeText(this, "Không thể khởi tạo kết nối máy chủ", Toast.LENGTH_SHORT).show();
-            setConfirmButtonState(true); // Kích hoạt lại nút bấm
+            setConfirmButtonState(true);
             return;
         }
 
-        apiService.postDonation(request).enqueue(new Callback<Void>() {
+        apiService.postDonation(request).enqueue(new Callback<DonationResponse>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    handleSuccessfulDonation();
+            public void onResponse(Call<DonationResponse> call, Response<DonationResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    handleSuccessfulDonation(response.body());
                 } else {
-                    handleFailedDonation("Có lỗi xảy ra: " + response.code());
+                    // --- DEBUGGING --- Đọc và hiển thị lỗi chi tiết từ server
+                    String errorBody = "";
+                    try {
+                        if (response.errorBody() != null) {
+                            errorBody = response.errorBody().string();
+                        }
+                    } catch (IOException e) {
+                        Log.e(TAG, "Bài viết này chưa bật ủng hộ", e);
+                    }
+                    String errorMessage = "Lỗi " + response.code() + ": " + errorBody;
+                    Log.e(TAG, "API Error: " + errorMessage); // Log chi tiết vào Logcat
+                    handleFailedDonation(errorMessage); // Hiển thị lỗi chi tiết lên Toast
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<DonationResponse> call, Throwable t) {
+                Log.e(TAG, "API Failure", t);
                 handleFailedDonation("Lỗi mạng: " + t.getMessage());
             }
         });
     }
 
-    private void handleSuccessfulDonation() {
-        Toast.makeText(this, "Ủng hộ thành công! Cảm ơn tấm lòng của bạn.", Toast.LENGTH_LONG).show();
-        // Tạo độ trễ 2 giây trước khi đóng màn hình
+    private void handleSuccessfulDonation(DonationResponse donationResponse) {
+        Toast.makeText(this, donationResponse.getMessage(), Toast.LENGTH_LONG).show();
+        setResult(Activity.RESULT_OK);
         new Handler(Looper.getMainLooper()).postDelayed(this::finish, 2000);
     }
 
     private void handleFailedDonation(String errorMessage) {
-        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
-        setConfirmButtonState(true); // Kích hoạt lại nút bấm khi có lỗi
+        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
+        setConfirmButtonState(true);
     }
 
     private void setConfirmButtonState(boolean isEnabled) {
