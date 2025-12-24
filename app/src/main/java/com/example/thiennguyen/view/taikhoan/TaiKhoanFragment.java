@@ -28,170 +28,222 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * TaiKhoanFragment để quản lý giao diện và chức năng liên quan đến tài khoản người dùng.
- *
- * Bao gồm các chức năng như hiển thị thông tin người dùng, đăng nhập, đăng ký,
- * đăng xuất và chỉnh sửa hồ sơ.
+ * ===================================================================================
+ * LỚP: TaiKhoanFragment
+ * ===================================================================================
+ * MỤC ĐÍCH:
+ * - Quản lý giao diện và các chức năng liên quan đến tài khoản người dùng.
+ * - Hiển thị thông tin cá nhân khi người dùng đã đăng nhập.
+ * - Cung cấp các tùy chọn đăng nhập, đăng ký khi người dùng chưa đăng nhập.
+ * - Xử lý các hành động như đăng xuất, chỉnh sửa hồ sơ.
+ * ===================================================================================
  */
 public class TaiKhoanFragment extends Fragment {
 
-    // =============================================================================================
-    //
-    // Các biến thành viên để lưu trữ các View trong layout.
-    //
-    // =============================================================================================
+    // ---------------------------------------------------------------------------------
+    // KHAI BÁO BIẾN THÀNH VIÊN (MEMBER VARIABLES)
+    // ---------------------------------------------------------------------------------
 
-    // Các View liên quan đến hình ảnh
-    private ImageView ivBanner, ivAvatar, ivCameraAvatar, ivCameraBanner, ivGmail;
+    // Các thành phần hình ảnh
+    private ImageView ivBanner;           // Hình ảnh banner của người dùng
+    private ImageView ivAvatar;           // Hình ảnh đại diện (avatar) của người dùng
+    private ImageView ivCameraAvatar;     // Icon camera để thay đổi avatar
+    private ImageView ivCameraBanner;     // Icon camera để thay đổi banner
+    private ImageView ivGmail;            // Icon Gmail
 
-    // Các View liên quan đến văn bản
-    private TextView tvUserName, tvUserId, tvFollowers, tvPosts, tvOr;
+    // Các thành phần văn bản
+    private TextView tvUserName;        // Tên hiển thị của người dùng
+    private TextView tvUserId;          // ID hoặc email của người dùng
+    private TextView tvFollowers;       // Số người theo dõi
+    private TextView tvPosts;           // Số bài đăng
+    private TextView tvOr;              // Chữ "hoặc" giữa nút đăng nhập và đăng ký
 
-    // Các View liên quan đến thống kê
-    private TextView tvDonationDays, tvCampaignsJoined, tvSupportCount, tvBtnLogOut;
+    // Các thành phần thống kê
+    private TextView tvDonationDays;    // Số ngày quyên góp
+    private TextView tvCampaignsJoined; // Số chiến dịch đã tham gia
+    private TextView tvSupportCount;    // Số lượt hỗ trợ
+    private TextView tvBtnLogOut;       // Nút đăng xuất (dưới dạng TextView)
 
     // Các nút bấm
-    private Button btnEditProfile, btnLoginTaiKhoan, btnDangKy2;
+    private Button btnEditProfile;      // Nút chỉnh sửa hồ sơ
+    private Button btnLoginTaiKhoan;    // Nút điều hướng đến trang đăng nhập
+    private Button btnDangKy2;          // Nút điều hướng đến trang đăng ký
 
-    // TabLayout để hiển thị các tab
-    private TabLayout tabLayout;
+    // Thành phần TabLayout
+    private TabLayout tabLayout;          // Thanh tab để hiển thị các mục con
 
-    // Các View layout để ẩn/hiện
-    private View llStats, llStatsRow, llFollowing, cvActivity;
+    // Các layout container để quản lý hiển thị
+    private View llStats;              // Layout chứa các thống kê
+    private View llStatsRow;           // Layout hàng thống kê
+    private View llFollowing;         // Layout chứa thông tin theo dõi
+    private View cvActivity;            // CardView cho hoạt động gần đây
 
-    // View gốc của Fragment
+    // View chính của Fragment
     private View view;
 
-    // Đối tượng người dùng hiện tại
+    // Model chứa dữ liệu người dùng hiện tại
     private NguoiDung currentUser;
 
-    // API client để thực hiện các yêu cầu mạng
+    // Khởi tạo API service cho xác thực
     AuthenticationApi authenticationApi = ApiClient.getRetrofit().create(AuthenticationApi.class);
 
-    // API client cho các chức năng liên quan đến người dùng
+    // Khởi tạo API service cho các chức năng người dùng
     NguoiDungApi nguoiDungApi = ApiClient.getRetrofit().create(NguoiDungApi.class);
 
+
     /**
-     * Phương thức này được gọi khi Fragment được tạo.
-     *
-     * @param inflater           Đối tượng LayoutInflater để inflate layout cho fragment.
-     * @param container          ViewGroup cha mà layout của fragment sẽ được gắn vào.
-     * @param savedInstanceState Nếu không phải null, fragment này đang được tái tạo từ trạng thái đã lưu trước đó.
-     * @return Trả về View gốc cho giao diện của fragment.
+     * ===================================================================================
+     * PHƯƠNG THỨC: onCreateView
+     * ===================================================================================
+     * MỤC ĐÍCH:
+     * - Được gọi để tạo và trả về hệ thống view của Fragment.
+     * - Đây là nơi layout của fragment được "inflate" (đọc và chuyển thành đối tượng View).
+     * ===================================================================================
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate layout cho fragment này
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        
+        // Log để theo dõi vòng đời của Fragment (tùy chọn)
+        // Log.d("TaiKhoanFragment", "onCreateView called");
+
+        // Inflate layout XML vào một đối tượng View
         view = inflater.inflate(R.layout.fragment_tai_khoan, container, false);
 
-        // Khởi tạo các view
+        // Gọi phương thức để ánh xạ các view từ layout
         initViews();
 
-        // Thiết lập dữ liệu người dùng
+        // Thiết lập giao diện dựa trên trạng thái đăng nhập của người dùng
         setupUserData();
 
-        // Cài đặt chức năng đăng xuất
+        // Gán sự kiện cho chức năng đăng xuất
         Logout();
 
-        // Trả về view đã được tạo
+        // Trả về view gốc cho hệ thống Android hiển thị
         return view;
     }
 
     /**
-     * Xử lý sự kiện đăng xuất của người dùng.
-     *
-     * Xóa token, điều hướng về màn hình chính và hiển thị thông báo.
+     * ===================================================================================
+     * PHƯƠNG THỨC: Logout
+     * ===================================================================================
+     * MỤC ĐÍCH:
+     * - Xử lý hành động đăng xuất của người dùng.
+     * - Xóa token xác thực, điều hướng người dùng về màn hình chính và kết thúc phiên làm việc.
+     * ===================================================================================
      */
     private void Logout() {
-        // Gán sự kiện click cho nút đăng xuất
+        
+        // Gán một OnClickListener cho TextView đăng xuất
         tvBtnLogOut.setOnClickListener(v -> {
-            // Xóa token đã lưu
+            
+            // Xóa token khỏi SharedPreferences để đăng xuất người dùng
             DataLocalManager.setToken("");
 
-            // Tạo intent để quay về MainActivity
+            // Tạo một Intent để mở lại MainActivity
             Intent intent = new Intent(getContext(), MainActivity.class);
 
-            // Bắt đầu activity mới
+            // Bắt đầu MainActivity
             startActivity(intent);
 
-            // Hiển thị thông báo đăng xuất thành công
+            // Hiển thị một thông báo ngắn để xác nhận đã đăng xuất
             Toast.makeText(getContext(), "Đã đăng xuất!", Toast.LENGTH_SHORT).show();
 
-            // Kết thúc activity hiện tại
+            // Đóng Activity hiện tại để ngăn người dùng quay lại màn hình trước đó bằng nút back
             requireActivity().finish();
         });
     }
 
     /**
-     * Tải thông tin cá nhân của người dùng từ server.
-     *
-     * Yêu cầu API để lấy thông tin và cập nhật giao diện người dùng.
+     * ===================================================================================
+     * PHƯƠNG THỨC: LoadMyInform
+     * ===================================================================================
+     * MỤC ĐÍCH:
+     * - Tải thông tin chi tiết của người dùng đang đăng nhập từ máy chủ.
+     * - Sử dụng Retrofit để thực hiện yêu cầu API và cập nhật giao diện người dùng.
+     * ===================================================================================
      */
     public void LoadMyInform() {
-        // Lấy token từ bộ nhớ cục bộ
+        
+        // Lấy token của người dùng từ DataLocalManager
         String tokenValue = DataLocalManager.getToken();
 
-        // Kiểm tra xem token có tồn tại không
+        // Kiểm tra xem token có hợp lệ không. Nếu không, yêu cầu đăng nhập lại.
         if (tokenValue == null || tokenValue.isEmpty()) {
             Toast.makeText(getContext(), "Vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
-            return; // Dừng thực thi nếu không có token
+            return; // Thoát khỏi phương thức nếu không có token
         }
         
-        // Thêm "Bearer " vào trước token để xác thực
+        // Chuẩn bị token cho tiêu đề Authorization của yêu cầu API
         String token = "Bearer " + tokenValue;
 
-        // Gọi API để lấy thông tin người dùng
+        // Tạo một cuộc gọi API để lấy thông tin cá nhân
         Call<ApiResponse<NguoiDungResponse>> callGetMyInform = nguoiDungApi.getMyInfo(token);
 
-        // Thực hiện yêu cầu bất đồng bộ
+        // Gửi yêu cầu API một cách bất đồng bộ
         callGetMyInform.enqueue(new Callback<ApiResponse<NguoiDungResponse>>() {
+            
+            /**
+             * Phương thức được gọi khi có phản hồi từ máy chủ.
+             */
             @Override
             public void onResponse(Call<ApiResponse<NguoiDungResponse>> call, Response<ApiResponse<NguoiDungResponse>> response) {
-                // Kiểm tra xem yêu cầu có thành công và có dữ liệu trả về không
+                
+                // Kiểm tra nếu yêu cầu thành công (mã 2xx) và có nội dung trả về
                 if (response.isSuccessful() && response.body() != null && response.body().getResult() != null) {
-                    // Lấy đối tượng NguoiDungResponse từ kết quả API
+                    
+                    // Lấy đối tượng kết quả từ phản hồi
                     NguoiDungResponse nguoiDungResponse = response.body().getResult();
 
-                    // Khởi tạo đối tượng currentUser với dữ liệu từ API
-                    currentUser = new NguoiDung(nguoiDungResponse.getIdNd(), nguoiDungResponse.getHoTen(), nguoiDungResponse.getEmail(), nguoiDungResponse.getSoDienThoai(), nguoiDungResponse.getEmail()); // Sử dụng email làm userIdTag tạm thời
+                    // Tạo một đối tượng NguoiDung mới từ dữ liệu phản hồi
+                    currentUser = new NguoiDung(
+                        nguoiDungResponse.getIdNd(), 
+                        nguoiDungResponse.getHoTen(), 
+                        nguoiDungResponse.getEmail(), 
+                        nguoiDungResponse.getSoDienThoai(), 
+                        nguoiDungResponse.getEmail() // Tạm thời dùng email làm userIdTag
+                    );
                     
-                    // Cập nhật URL ảnh đại diện cho người dùng
+                    // Thiết lập URL ảnh đại diện cho đối tượng người dùng
                     currentUser.setAvatarUrl(nguoiDungResponse.getAvatar());
 
-                    // Cập nhật giao diện với thông tin người dùng
+                    // Cập nhật tên người dùng trên giao diện
                     tvUserName.setText(nguoiDungResponse.getHoTen() != null ? nguoiDungResponse.getHoTen() : "");
 
-                    // Tải và hiển thị avatar bằng Glide
+                    // Sử dụng Glide để tải và hiển thị ảnh đại diện
                     Glide.with(view.getContext())
-                            .load(nguoiDungResponse.getAvatar())
-                            .error(R.drawable.tai_khoan) // Ảnh hiển thị khi có lỗi
-                            .placeholder(R.drawable.tai_khoan) // Ảnh hiển thị khi đang tải
-                            .into(ivAvatar);
+                            .load(nguoiDungResponse.getAvatar())           // Nguồn ảnh
+                            .error(R.drawable.tai_khoan)                   // Ảnh mặc định khi lỗi
+                            .placeholder(R.drawable.tai_khoan)            // Ảnh tạm thời khi đang tải
+                            .into(ivAvatar);                              // ImageView đích
 
-                    // Tải và hiển thị banner bằng Glide
+                    // Sử dụng Glide để tải và hiển thị ảnh bìa
                     Glide.with(view.getContext())
-                            .load(nguoiDungResponse.getAvatar())
-                            .error(R.drawable.tai_khoan) // Ảnh hiển thị khi có lỗi
-                            .placeholder(R.drawable.tai_khoan) // Ảnh hiển thị khi đang tải
-                            .into(ivBanner);
+                            .load(nguoiDungResponse.getAvatar())           // Tạm thời dùng avatar làm banner
+                            .error(R.drawable.tai_khoan)                   // Ảnh mặc định khi lỗi
+                            .placeholder(R.drawable.tai_khoan)            // Ảnh tạm thời khi đang tải
+                            .into(ivBanner);                              // ImageView đích
 
-                    // Hiển thị email người dùng
+                    // Cập nhật email người dùng trên giao diện
                     tvUserId.setText(nguoiDungResponse.getEmail());
 
                 } else {
-                    // Xử lý khi response không thành công
-                    if (response.code() == 401) { // Lỗi xác thực
+                    // Xử lý trường hợp phản hồi không thành công
+                    if (response.code() == 401) {
+                        // Mã 401: Unauthorized - Phiên đăng nhập hết hạn
                         Toast.makeText(getContext(), "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
-                    } else { // Các lỗi khác
+                    } else {
+                        // Các lỗi khác từ máy chủ
                         Toast.makeText(getContext(), "Không thể tải thông tin người dùng!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
+            /**
+             * Phương thức được gọi khi yêu cầu API thất bại (ví dụ: lỗi mạng).
+             */
             @Override
             public void onFailure(Call<ApiResponse<NguoiDungResponse>> call, Throwable t) {
-                // Xử lý khi có lỗi kết nối mạng
+                // Hiển thị thông báo lỗi kết nối
                 Toast.makeText(getContext(), "Lỗi kết nối. Vui lòng thử lại!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -200,40 +252,46 @@ public class TaiKhoanFragment extends Fragment {
 
 
     /**
-     * Thiết lập giao diện người dùng dựa trên trạng thái đăng nhập.
-     *
-     * Hiển thị các nút đăng nhập/đăng ký nếu chưa đăng nhập, hoặc thông tin
-     * người dùng và các chức năng khác nếu đã đăng nhập.
+     * ===================================================================================
+     * PHƯƠNG THỨC: setupUserData
+     * ===================================================================================
+     * MỤC ĐÍCH:
+     * - Kiểm tra trạng thái đăng nhập và cấu hình giao diện cho phù hợp.
+     * - Nếu đã đăng nhập: hiển thị thông tin người dùng và các chức năng liên quan.
+     * - Nếu chưa đăng nhập: hiển thị các nút đăng nhập/đăng ký.
+     * ===================================================================================
      */
     private void setupUserData() {
-        // Lấy token để kiểm tra trạng thái đăng nhập
+        
+        // Lấy token từ local storage để kiểm tra
         String token = DataLocalManager.getToken();
 
-        // Kiểm tra nếu người dùng chưa đăng nhập
+        // Nếu token không tồn tại hoặc rỗng -> người dùng chưa đăng nhập
         if (token == null || token.isEmpty()) {
-            // --- Xử lý trạng thái CHƯA ĐĂNG NHẬP ---
+            
+            // --- CHƯA ĐĂNG NHẬP ---
 
-            // Hiển thị lời mời đăng nhập
+            // Cài đặt văn bản mặc định
             tvUserName.setText("Mời bạn đăng nhập");
 
-            // Ẩn ID người dùng
+            // Ẩn các thành phần không cần thiết
             tvUserId.setVisibility(View.GONE);
 
-            // Gán sự kiện cho nút đăng nhập
+            // Thiết lập sự kiện click cho nút Đăng nhập
             btnLoginTaiKhoan.setOnClickListener(v -> {
                 startActivity(new Intent(getContext(), LoginActivity.class));
             });
 
-            // Gán sự kiện cho nút đăng ký
+            // Thiết lập sự kiện click cho nút Đăng ký
             btnDangKy2.setOnClickListener(v -> {
                 startActivity(new Intent(getContext(), RegistrationActivity.class));
             });
 
-            // Ẩn các icon camera không cần thiết
+            // Ẩn các icon không dành cho người dùng chưa đăng nhập
             ivCameraAvatar.setVisibility(View.GONE);
             ivCameraBanner.setVisibility(View.GONE);
 
-            // Ẩn các phần của giao diện không cần thiết khi chưa đăng nhập
+            // Ẩn các layout và view không cần thiết
             llStats.setVisibility(View.GONE);
             ivGmail.setVisibility(View.GONE);
             tabLayout.setVisibility(View.GONE);
@@ -246,26 +304,27 @@ public class TaiKhoanFragment extends Fragment {
             btnEditProfile.setVisibility(View.GONE);
 
         } else {
-            // --- Xử lý trạng thái ĐÃ ĐĂNG NHẬP ---
+            
+            // --- ĐÃ ĐĂNG NHẬP ---
 
-            // Hiển thị ID người dùng
+            // Hiển thị các thành phần dành cho người dùng đã đăng nhập
             tvUserId.setVisibility(View.VISIBLE);
 
-            // Hiển thị nút chỉnh sửa hồ sơ
+            // Cập nhật văn bản cho nút
             btnEditProfile.setText("Chỉnh sửa hồ sơ");
 
-            // Gán sự kiện cho nút chỉnh sửa hồ sơ
+            // Thiết lập sự kiện click cho nút Chỉnh sửa hồ sơ
             btnEditProfile.setOnClickListener(v -> {
                 Intent intent = new Intent(getContext(), ChinhSuaHoSoActivity.class);
                 intent.putExtra("user_data", currentUser);
                 startActivity(intent);
             });
 
-            // Hiện các icon camera
+            // Hiển thị các icon camera
             ivCameraAvatar.setVisibility(View.VISIBLE);
             ivCameraBanner.setVisibility(View.VISIBLE);
 
-            // Hiện các phần của giao diện dành cho người dùng đã đăng nhập
+            // Hiển thị lại các layout đã bị ẩn
             llStats.setVisibility(View.VISIBLE);
             ivGmail.setVisibility(View.VISIBLE);
             tabLayout.setVisibility(View.VISIBLE);
@@ -273,60 +332,62 @@ public class TaiKhoanFragment extends Fragment {
             llStatsRow.setVisibility(View.VISIBLE);
             llFollowing.setVisibility(View.VISIBLE);
 
-            // Ẩn các nút đăng nhập và đăng ký
+            // Ẩn các nút không cần thiết khi đã đăng nhập
             btnLoginTaiKhoan.setVisibility(View.GONE);
             btnDangKy2.setVisibility(View.GONE);
             tvOr.setVisibility(View.GONE);
 
 
-            // Tải thông tin người dùng từ API
+            // Bắt đầu quá trình tải thông tin người dùng từ máy chủ
             LoadMyInform();
         }
     }
 
     /**
-     * Khởi tạo và ánh xạ các View từ layout.
-     *
-     * Phương thức này tìm và gán các View cho các biến thành viên tương ứng.
+     * ===================================================================================
+     * PHƯƠNG THỨC: initViews
+     * ===================================================================================
+     * MỤC ĐÍCH:
+     * - Ánh xạ các biến thành viên với các View tương ứng trong layout XML.
+     * - Tập trung tất cả các lệnh `findViewById` vào một nơi để dễ quản lý.
+     * ===================================================================================
      */
     private void initViews() {
-        // Ánh xạ các ImageView
+        
+        // --- Ánh xạ ImageView ---
         ivBanner = view.findViewById(R.id.ivBanner);
         ivAvatar = view.findViewById(R.id.ivAvatar);
         ivCameraAvatar = view.findViewById(R.id.ivCameraAvatar);
         ivCameraBanner = view.findViewById(R.id.ivCameraBanner);
         ivGmail = view.findViewById(R.id.ivGmail);
 
-        // Ánh xạ các TextView thông tin người dùng
+        // --- Ánh xạ TextView cho thông tin người dùng ---
         tvUserName = view.findViewById(R.id.tvUserName);
         tvUserId = view.findViewById(R.id.tvUserId);
         tvFollowers = view.findViewById(R.id.tvFollowers);
         tvPosts = view.findViewById(R.id.tvPosts);
 
-        // Ánh xạ các TextView thống kê
+        // --- Ánh xạ TextView cho các thống kê ---
         tvDonationDays = view.findViewById(R.id.tvDonationDays);
         tvCampaignsJoined = view.findViewById(R.id.tvCampaignsJoined);
         tvSupportCount = view.findViewById(R.id.tvSupportCount);
 
-        // Ánh xạ các Button
+        // --- Ánh xạ Button ---
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
 
-        // Ánh xạ TabLayout
+        // --- Ánh xạ TabLayout ---
         tabLayout = view.findViewById(R.id.tabLayout);
 
-        // Ánh xạ các Layout để ẩn/hiện
+        // --- Ánh xạ các Layout container ---
         llStats = view.findViewById(R.id.llStats);
         llStatsRow = view.findViewById(R.id.llStatsRow);
         llFollowing = view.findViewById(R.id.llFollowing);
         cvActivity = view.findViewById(R.id.cvActivity);
 
-        // Ánh xạ các View còn lại
+        // --- Ánh xạ các thành phần còn lại ---
         tvBtnLogOut = view.findViewById(R.id.tvBtnLogOut);
         btnLoginTaiKhoan = view.findViewById(R.id.btnLoginTaiKhoan);
         btnDangKy2 = view.findViewById(R.id.btnDangKy2);
         tvOr = view.findViewById(R.id.tvOr);
-
-
-
     }
 }
