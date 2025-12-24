@@ -8,9 +8,6 @@ public class NguoiDung implements Serializable {
     private String email;
     private String soDienThoai;
     private String userIdTag; // Ví dụ: @phat123
-    private String vaiTro; // vai trò người dùng
-    private String trangThai; // trạng thái hoạt động
-    private String matKhau;
 
     // Đường dẫn ảnh (URL hoặc URI)
     private String avatarUrl;
@@ -40,20 +37,12 @@ public class NguoiDung implements Serializable {
         this.soLuotHoTro = 0;
     }
 
-    // Constructor mới với 8 tham số
-    public NguoiDung(int idNd, String hoTen, String email, String soDienThoai, String matKhau, String vaiTro, String trangThai, String avatarUrl) {
-        this.idNd = idNd;
-        this.hoTen = hoTen;
-        this.email = email;
-        this.soDienThoai = soDienThoai;
-        this.matKhau = matKhau;
-        this.vaiTro = vaiTro;
-        this.trangThai = trangThai;
+    // Constructor mở rộng để tương thích với dữ liệu mẫu trong UngHoFragment
+    public NguoiDung(int idNd, String hoTen, String email, String soDienThoai,
+                     String userIdTag, String vaiTro, String trangThai, String avatarUrl) {
+        this(idNd, hoTen, email, soDienThoai, userIdTag);
+        // Có thể lưu thêm thông tin nếu cần, tạm thời chỉ sử dụng avatarUrl
         this.avatarUrl = avatarUrl;
-    }
-
-    public int getIdNd() {
-        return idNd;
     }
 
     // --- Getters & Setters ---

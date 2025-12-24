@@ -8,18 +8,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL = "http://192.168.114.213:5089/";
+    public static final String BASE_URL = "http://192.168.120.109:5089/";
+
 
     private static Retrofit retrofit;
 
     public static ApiService getService() {
         if (retrofit == null) {
+            // Cấu hình Gson để hiểu định dạng ngày tháng từ API
             Gson gson = new GsonBuilder()
-                    .setDateFormat("dd-MM-yyyy HH:mm") // SỬA: Đổi định dạng ngày tháng
+                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                     .create();
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
+                    // Sử dụng Gson đã được cấu hình
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }

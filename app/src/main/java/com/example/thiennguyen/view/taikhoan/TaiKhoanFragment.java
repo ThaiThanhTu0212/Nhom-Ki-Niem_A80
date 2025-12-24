@@ -1,192 +1,215 @@
 package com.example.thiennguyen.view.taikhoan;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
+import com.example.thiennguyen.view.MainActivity;
+import com.example.thiennguyen.view.data.ApiClient;
+import com.example.thiennguyen.view.data.DTO.ApiResponse;
+import com.example.thiennguyen.view.data.DTO.Response.AuthenticationResponse;
+import com.example.thiennguyen.view.data.DTO.Response.NguoiDungResponse;
+import com.example.thiennguyen.view.data.api.AuthenticationApi;
+import com.example.thiennguyen.view.data.api.NguoiDungApi;
+import com.example.thiennguyen.view.data.sharepreference.DataLocalManager;
+import com.example.thiennguyen.view.login.RegisterActivity;
 import com.example.thiennguyen.view.model.NguoiDung;
 import com.google.android.material.tabs.TabLayout;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TaiKhoanFragment extends Fragment {
 
     // Views
-    private ImageView ivBanner, ivAvatar, ivCameraAvatar, ivCameraBanner, ivSettings;
-    private TextView tvUserName, tvUserId, tvFollowers, tvPosts;
-    private TextView tvDonationDays, tvCampaignsJoined, tvSupportCount, tvEmptyState;
-    private TextView tvOrganizations, tvIndividuals;
-    private Button btnEditProfile;
+    private ImageView ivBanner, ivAvatar, ivCameraAvatar, ivCameraBanner, ivGmail;
+    private TextView tvUserName, tvUserId, tvFollowers, tvPosts, tvOr;
+    private TextView tvDonationDays, tvCampaignsJoined, tvSupportCount, tvBtnLogOut;
+    private Button btnEditProfile,btnLoginTaiKhoan, btnDangKy2;
     private TabLayout tabLayout;
+    private View llStats, llStatsRow, llFollowing, cvActivity;
 
     private View view;
     private NguoiDung currentUser;
 
-    // --- LAUNCHERS ---
-
-    // 1. Edit Profile Result
-    private final ActivityResultLauncher<Intent> editProfileLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                    NguoiDung updatedUser = (NguoiDung) result.getData().getSerializableExtra("updated_user");
-                    if (updatedUser != null) {
-                        currentUser = updatedUser;
-                        updateUI();
-                    }
-                }
-            }
-    );
-
-    // 2. Pick Avatar
-    private final ActivityResultLauncher<String> pickAvatarLauncher = registerForActivityResult(
-            new ActivityResultContracts.GetContent(),
-            uri -> {
-                if (uri != null) {
-                    currentUser.setAvatarUrl(uri.toString());
-                    loadImage(uri, ivAvatar, true);
-                }
-            }
-    );
-
-    // 3. Pick Banner
-    private final ActivityResultLauncher<String> pickBannerLauncher = registerForActivityResult(
-            new ActivityResultContracts.GetContent(),
-            uri -> {
-                if (uri != null) {
-                    currentUser.setBannerUrl(uri.toString());
-                    loadImage(uri, ivBanner, false);
-                }
-            }
-    );
+    AuthenticationApi authenticationApi = ApiClient.getRetrofit().create(AuthenticationApi.class);
+    NguoiDungApi nguoiDungApi = ApiClient.getRetrofit().create(NguoiDungApi.class);
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_tai_khoan, container, false);
+
         initViews();
-        initDummyData();
-        updateUI();
-        setupListeners();
+        setupUserData();
+        Logout();
+
         return view;
     }
 
+    private void Logout() {
+        tvBtnLogOut.setOnClickListener(v -> {
+            DataLocalManager.setToken("");
+            Intent intent = new Intent(getContext(), MainActivity.class);
+            startActivity(intent);
+            Toast.makeText(getContext(), "Đã đăng xuất!", Toast.LENGTH_SHORT).show();
+            requireActivity().finish();
+        });
+    }
+
+    public void LoadMyInform(){
+        String tokenValue = DataLocalManager.getToken();
+        if (tokenValue == null || tokenValue.isEmpty()) {
+            Toast.makeText(getContext(), "Vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        String token = "Bearer " + tokenValue;
+        Call<ApiResponse<NguoiDungResponse>> callGetMyInform = nguoiDungApi.getMyInfo(token);
+        callGetMyInform.enqueue(new Callback<ApiResponse<NguoiDungResponse>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<NguoiDungResponse>> call, Response<ApiResponse<NguoiDungResponse>> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().getResult() != null) {
+                    NguoiDungResponse nguoiDungResponse = response.body().getResult();
+                    // Hiển thị thông tin người dùng
+                    tvUserName.setText(nguoiDungResponse.getHoTen() != null ? nguoiDungResponse.getHoTen() : "");
+                    Glide.with(view.getContext())
+                            .load(nguoiDungResponse.getAvatar())
+                            .error(R.drawable.tai_khoan)
+                            .placeholder(R.drawable.tai_khoan)
+                            .into(ivAvatar);
+                    Glide.with(view.getContext())
+                            .load(nguoiDungResponse.getAvatar())
+                            .error(R.drawable.tai_khoan)
+                            .placeholder(R.drawable.tai_khoan)
+                            .into(ivBanner);
+                    tvUserId.setText(nguoiDungResponse.getEmail());
+
+                } else {
+                    // Xử lý khi response không thành công
+                    if (response.code() == 401) {
+                        Toast.makeText(getContext(), "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Không thể tải thông tin người dùng!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<NguoiDungResponse>> call, Throwable t) {
+                Toast.makeText(getContext(), "Lỗi kết nối. Vui lòng thử lại!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+
+    private void setupUserData() {
+        String token = DataLocalManager.getToken();
+
+        if (token == null || token.isEmpty()) {
+            // --- Chưa đăng nhập ---
+            tvUserName.setText("Mời bạn đăng nhập");
+            tvUserId.setVisibility(View.GONE);
+
+            btnLoginTaiKhoan.setOnClickListener(v -> {
+                startActivity(new Intent(getContext(), LoginActivity.class));
+            });
+            btnDangKy2.setOnClickListener(v -> {
+                startActivity(new Intent(getContext(), RegisterActivity.class));
+            });
+
+            // Ẩn các icon camera
+            ivCameraAvatar.setVisibility(View.GONE);
+            ivCameraBanner.setVisibility(View.GONE);
+
+            // Ẩn các phần không cần thiết khi chưa đăng nhập
+            llStats.setVisibility(View.GONE);
+            ivGmail.setVisibility(View.GONE);
+            tabLayout.setVisibility(View.GONE);
+            cvActivity.setVisibility(View.GONE);
+            llStatsRow.setVisibility(View.GONE);
+            llFollowing.setVisibility(View.GONE);
+            ivBanner.setVisibility(View.GONE);
+            ivAvatar.setVisibility(View.GONE);
+            tvBtnLogOut.setVisibility(View.GONE);
+            btnEditProfile.setVisibility(View.GONE);
+
+        } else {
+            // --- Đã đăng nhập ---
+            tvUserId.setVisibility(View.VISIBLE);
+            btnEditProfile.setText("Chỉnh sửa hồ sơ");
+            btnEditProfile.setOnClickListener(v -> {
+                // TODO: Mở activity chỉnh sửa hồ sơ
+            });
+
+            // Hiện các icon camera
+            ivCameraAvatar.setVisibility(View.VISIBLE);
+            ivCameraBanner.setVisibility(View.VISIBLE);
+
+            // Hiện tất cả các phần khi đã đăng nhập
+            llStats.setVisibility(View.VISIBLE);
+            ivGmail.setVisibility(View.VISIBLE);
+            tabLayout.setVisibility(View.VISIBLE);
+            cvActivity.setVisibility(View.VISIBLE);
+            llStatsRow.setVisibility(View.VISIBLE);
+            llFollowing.setVisibility(View.VISIBLE);
+            btnLoginTaiKhoan.setVisibility(View.GONE);
+            btnDangKy2.setVisibility(View.GONE);
+            tvOr.setVisibility(View.GONE);
+
+
+            // Load user từ API (hoặc dữ liệu local)
+            LoadMyInform();
+        }
+    }
     private void initViews() {
+        // Images
         ivBanner = view.findViewById(R.id.ivBanner);
         ivAvatar = view.findViewById(R.id.ivAvatar);
         ivCameraAvatar = view.findViewById(R.id.ivCameraAvatar);
         ivCameraBanner = view.findViewById(R.id.ivCameraBanner);
-        ivSettings = view.findViewById(R.id.ivSettings); // Đã có ID này trong XML mới
+        ivGmail = view.findViewById(R.id.ivGmail);
 
+        // User Info
         tvUserName = view.findViewById(R.id.tvUserName);
         tvUserId = view.findViewById(R.id.tvUserId);
         tvFollowers = view.findViewById(R.id.tvFollowers);
         tvPosts = view.findViewById(R.id.tvPosts);
+
+        // Stats
         tvDonationDays = view.findViewById(R.id.tvDonationDays);
         tvCampaignsJoined = view.findViewById(R.id.tvCampaignsJoined);
         tvSupportCount = view.findViewById(R.id.tvSupportCount);
-        tvEmptyState = view.findViewById(R.id.tvEmptyState);
 
-        tvOrganizations = view.findViewById(R.id.tvOrganizations);
-        tvIndividuals = view.findViewById(R.id.tvIndividuals);
+        // Button
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
+
+        // Tabs
         tabLayout = view.findViewById(R.id.tabLayout);
-    }
 
-    private void initDummyData() {
-        if (currentUser == null) {
-            currentUser = new NguoiDung(1, "ThanhPhat2604", "phat@gmail.com", "0909123456", "@phat123");
-        }
-    }
+        // Sections to hide/show
+        llStats = view.findViewById(R.id.llStats);
+        llStatsRow = view.findViewById(R.id.llStatsRow);
+        llFollowing = view.findViewById(R.id.llFollowing);
+        cvActivity = view.findViewById(R.id.cvActivity);
 
-    private void updateUI() {
-        if (currentUser == null) return;
+        tvBtnLogOut = view.findViewById(R.id.tvBtnLogOut);
+        btnLoginTaiKhoan = view.findViewById(R.id.btnLoginTaiKhoan);
+        btnDangKy2 = view.findViewById(R.id.btnDangKy2);
+        tvOr = view.findViewById(R.id.tvOr);
 
-        tvUserName.setText(currentUser.getHoTen());
-        tvUserId.setText(currentUser.getUserIdTag());
-        tvFollowers.setText(currentUser.getDisplayFollowers());
-        tvPosts.setText(currentUser.getDisplayPosts());
-        tvDonationDays.setText(currentUser.getTongTienUngHo());
-        tvCampaignsJoined.setText(currentUser.getDisplayCampaigns());
-        tvSupportCount.setText(currentUser.getDisplaySupport());
 
-        if (currentUser.getAvatarUrl() != null) loadImage(Uri.parse(currentUser.getAvatarUrl()), ivAvatar, true);
-        if (currentUser.getBannerUrl() != null) loadImage(Uri.parse(currentUser.getBannerUrl()), ivBanner, false);
-    }
 
-    private void loadImage(Object source, ImageView target, boolean isCircle) {
-        if (getContext() == null) return;
-        var request = Glide.with(this).load(source);
-        if (isCircle) request = request.circleCrop();
-        else request = request.centerCrop();
-        request.into(target);
-    }
-
-    private void setupListeners() {
-        btnEditProfile.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), ChinhSuaHoSoActivity.class);
-            intent.putExtra("user_data", currentUser);
-            editProfileLauncher.launch(intent);
-        });
-
-        ivCameraAvatar.setOnClickListener(v -> pickAvatarLauncher.launch("image/*"));
-        ivCameraBanner.setOnClickListener(v -> pickBannerLauncher.launch("image/*"));
-        ivSettings.setOnClickListener(this::showSettingsMenu);
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                updateTabContent(tab.getPosition());
-            }
-            @Override public void onTabUnselected(TabLayout.Tab tab) {}
-            @Override public void onTabReselected(TabLayout.Tab tab) {}
-        });
-
-        // Filter Org/Individual (Đổi màu chữ khi click)
-        View.OnClickListener filterListener = v -> {
-            boolean isOrg = v.getId() == R.id.tvOrganizations;
-            int orange = 0xFFFF9800; // Mã màu cam
-            int gray = 0xFF666666;   // Mã màu xám
-
-            tvOrganizations.setTextColor(isOrg ? orange : gray);
-            tvIndividuals.setTextColor(!isOrg ? orange : gray);
-            tvEmptyState.setText(isOrg ? "Chưa theo dõi tổ chức nào" : "Chưa theo dõi cá nhân nào");
-        };
-        tvOrganizations.setOnClickListener(filterListener);
-        tvIndividuals.setOnClickListener(filterListener);
-    }
-
-    private void showSettingsMenu(View v) {
-        PopupMenu popup = new PopupMenu(getContext(), v);
-        popup.getMenu().add("Đăng xuất");
-        popup.setOnMenuItemClickListener(item -> {
-            if ("Đăng xuất".equals(item.getTitle())) {
-                Toast.makeText(getContext(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
-            }
-            return true;
-        });
-        popup.show();
-    }
-
-    private void updateTabContent(int position) {
-        if (tvEmptyState == null) return;
-        switch (position) {
-            case 0: tvEmptyState.setText("Không có hoạt động nào gần đây"); break;
-            case 1: tvEmptyState.setText("Chưa có thành tựu nào"); break;
-            case 2: tvEmptyState.setText("Bạn chưa tham gia chiến dịch nào"); break;
-        }
     }
 }

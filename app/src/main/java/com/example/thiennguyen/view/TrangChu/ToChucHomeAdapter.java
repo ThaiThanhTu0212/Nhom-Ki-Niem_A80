@@ -3,6 +3,7 @@ package com.example.thiennguyen.view.TrangChu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,65 +12,65 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
+import com.example.thiennguyen.view.data.DTO.Response.NguoiDungResponse;
 import com.example.thiennguyen.view.model.NguoiDung;
 
 import java.util.List;
 
-public class ToChucHomeAdapter extends RecyclerView.Adapter<ToChucHomeAdapter.ToChucHolder> {
+public class ToChucHomeAdapter extends RecyclerView.Adapter<ToChucHomeAdapter.ToChucHomeHolder> {
     public interface OnItemClickListener {
-        void onItemClick(NguoiDung nguoiDung);
+        void onItemClick(NguoiDungResponse nguoiDung);
     }
-    OnItemClickListener listener;
+    NguoiDungHomeAdapter.OnItemClickListener listener;
 
-    public void setListener(OnItemClickListener listener) {
+    public void setListener(NguoiDungHomeAdapter.OnItemClickListener listener) {
         this.listener = listener;
     }
+    List<NguoiDungResponse> nguoiDungList;
 
-    List<NguoiDung> nguoiDungList;
-
-    public ToChucHomeAdapter(List<NguoiDung> nguoiDungList) {
+    public ToChucHomeAdapter(List<NguoiDungResponse> nguoiDungList) {
         this.nguoiDungList = nguoiDungList;
     }
 
     @NonNull
     @Override
-    public ToChucHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ToChucHomeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_nguoidung_home,parent,false);
-        return new ToChucHolder(view);
+                .inflate(R.layout.item_tochuc_home,parent,false);
+        return new ToChucHomeHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ToChucHolder holder, int position) {
-        NguoiDung nguoiDung = nguoiDungList.get(position);
-        if (nguoiDung==null)return;
-        holder.tvTenNDHome.setText(nguoiDung.getHoTen());
-
+    public void onBindViewHolder(@NonNull ToChucHomeHolder holder, int position) {
+        NguoiDungResponse nguoiDung = nguoiDungList.get(position);
+        holder.tvTenTochucHome.setText(nguoiDung.getHoTen());
         Glide.with(holder.itemView.getContext())
-                .load(nguoiDung.getAvatarUrl()) // Đã sửa thành getAvatarUrl()
-                .placeholder(R.drawable.nguoidung) // ảnh hiển thị tạm khi đang tải
-                .error(R.drawable.nguoidung)         // ảnh lỗi fallback (có thể dùng lại ảnh trong drawable)
-                .into(holder.imageViewNguoiDungHome);
+                .load(nguoiDung.getAvatar())
+                .placeholder(R.drawable.tai_khoan)
+                .error(R.drawable.tai_khoan)
+                .into(holder.imgviewTochucHome);
         holder.itemView.setOnClickListener(v -> {
             if (listener!=null){
                 listener.onItemClick(nguoiDung);
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
-        return nguoiDungList != null?nguoiDungList.size():0;
+        return nguoiDungList!=null? nguoiDungList.size():0;
     }
 
-    public class ToChucHolder extends RecyclerView.ViewHolder {
-        ImageView imageViewNguoiDungHome;
-        TextView tvTenNDHome;
-        public ToChucHolder(@NonNull View itemView) {
+    public class ToChucHomeHolder extends RecyclerView.ViewHolder {
+        ImageView imgviewTochucHome;
+        TextView tvTenTochucHome;
+        Button btnFolowTochucHome;
+
+        public ToChucHomeHolder(@NonNull View itemView) {
             super(itemView);
-            tvTenNDHome = itemView.findViewById(R.id.tvTenNDHome);
-            imageViewNguoiDungHome = itemView.findViewById(R.id.imageViewNguoiDungHome);
+            btnFolowTochucHome = itemView.findViewById(R.id.btnFolowTochucHome);
+            imgviewTochucHome = itemView.findViewById(R.id.imgviewTochucHome);
+            tvTenTochucHome = itemView.findViewById(R.id.tvTenTochucHome);
         }
     }
 }

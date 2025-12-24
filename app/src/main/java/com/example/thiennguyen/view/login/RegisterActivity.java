@@ -2,6 +2,7 @@ package com.example.thiennguyen.view.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -11,6 +12,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thiennguyen.R;
+import com.example.thiennguyen.view.TrangChu.ChienDich.CreateChienDichActivity;
+import com.example.thiennguyen.view.data.ApiClient;
+import com.example.thiennguyen.view.data.DTO.ApiResponse;
+import com.example.thiennguyen.view.data.DTO.Response.NguoiDungResponse;
+import com.example.thiennguyen.view.data.DTO.request.NguoiDungRequest;
+import com.example.thiennguyen.view.data.api.ChienDichApi;
+import com.example.thiennguyen.view.data.api.NguoiDungApi;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseException;
@@ -20,7 +28,12 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -31,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView tvLogin;
     private FirebaseAuth mAuth;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
+    private NguoiDungApi nguoiDungApi = ApiClient.getRetrofit().create(NguoiDungApi.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,11 +98,42 @@ public class RegisterActivity extends AppCompatActivity {
 
         tvLogin.setOnClickListener(v -> finish());
     }
+    public void createNguoiDung(String email, String password){
+        long time = System.currentTimeMillis() % 100000; // lấy 5 số cuối
+        int rand = new Random().nextInt(900) + 100;      // 3 số random
+        String uniqueName = "User" + rand + time;
+
+        NguoiDungRequest nguoiDungRequest = new NguoiDungRequest();
+        nguoiDungRequest.setAvatar("https://i.pinimg.com/736x/bc/43/98/bc439871417621836a0eeea768d60944.jpg");
+        nguoiDungRequest.setEmail(email);
+        nguoiDungRequest.setMatKhau(password);
+
+
+        nguoiDungRequest.setHoTen(uniqueName);
+        nguoiDungRequest.setTrangThai("hoat_dong");
+        nguoiDungRequest.setVaiTro("nguoi_ung_ho");
+        nguoiDungRequest.setSoDienThoai("");
+        Call<ApiResponse<NguoiDungResponse>> callNguoiDung = nguoiDungApi.createNguoiDung(nguoiDungRequest);
+        callNguoiDung.enqueue(new Callback<ApiResponse<NguoiDungResponse>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<NguoiDungResponse>> call, Response<ApiResponse<NguoiDungResponse>> response) {
+                if(response.isSuccessful()&& response.body()!= null){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<NguoiDungResponse>> call, Throwable t) {
+                Toast.makeText(RegisterActivity.this, "Lỗi kết nối. Vui lòng thử lại!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void registerWithEmail() {
         String email = edtEmail.getText().toString().trim();
         String password = edtPassword.getText().toString().trim();
         String confirmPassword = edtConfirmPassword.getText().toString().trim();
+
 
         if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
@@ -108,6 +153,13 @@ public class RegisterActivity extends AppCompatActivity {
                         if (user != null) {
                             user.sendEmailVerification().addOnCompleteListener(task2 -> {
                                 if (task2.isSuccessful()) {
+
+                                    String newEmail = user.getEmail();    // lấy email
+                                    createNguoiDung(email,password);
+
+                                    Log.d("INFO_REGISTER", "Email: " + newEmail);
+                                    Log.d("INFO_REGISTER", "Password: " + password);
+
                                     Toast.makeText(RegisterActivity.this, "Đăng ký thành công. Vui lòng kiểm tra email để xác thực.", Toast.LENGTH_LONG).show();
                                     finish(); // Quay lại Login
                                 } else {

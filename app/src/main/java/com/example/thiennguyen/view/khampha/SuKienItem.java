@@ -44,9 +44,9 @@ public class SuKienItem {
         list.add(new SuKienItem(
             R.drawable.khampha_sukien2,
             "Hoàn cảnh khó khăn",
-            "Kỷ niệm 20 năm thành lập PanNature",
+            "Giải bóng đá thiện nguyện",
             "05/01/2026",
-            "20 người quan tâm"
+            "500 người quan tâm"
         ));
 
         return list;

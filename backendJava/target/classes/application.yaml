@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /identity
+
+spring:
+  datasource:
+    url: ${DBMS_CONNECTION:jdbc:sqlserver://localhost:1433;databaseName=ThienNguyen;encrypt=true;trustServerCertificate=true}
+    username: ${DBMS_USERNAME:sa}
+    password: ${DBMS_PASSWORD:12345}
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+jwt:
+  signerKey: ${JWT_SIGNERKEY:scznhxadtipggktjczghxrmcdyhvxuxcthrqrovmoggtakhynyjxwscwuiwvoktg}
+  valid-duration: 36000 # in second
+  refreshable-duration: 360000 # in seconds

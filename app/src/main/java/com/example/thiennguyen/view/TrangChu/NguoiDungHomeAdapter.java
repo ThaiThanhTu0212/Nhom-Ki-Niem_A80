@@ -11,13 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
+import com.example.thiennguyen.view.data.DTO.Response.NguoiDungResponse;
+import com.example.thiennguyen.view.model.ChienDich;
 import com.example.thiennguyen.view.model.NguoiDung;
 
 import java.util.List;
+import java.util.zip.Inflater;
 
 public class NguoiDungHomeAdapter extends RecyclerView.Adapter<NguoiDungHomeAdapter.NguoiDungHolder> {
     public interface OnItemClickListener {
-        void onItemClick(NguoiDung nguoiDung);
+        void onItemClick(NguoiDungResponse nguoiDung);
     }
     OnItemClickListener listener;
 
@@ -25,9 +28,9 @@ public class NguoiDungHomeAdapter extends RecyclerView.Adapter<NguoiDungHomeAdap
         this.listener = listener;
     }
 
-    List<NguoiDung> nguoiDungList;
+    List<NguoiDungResponse> nguoiDungList;
 
-    public NguoiDungHomeAdapter(List<NguoiDung> nguoiDungList) {
+    public NguoiDungHomeAdapter(List<NguoiDungResponse> nguoiDungList) {
         this.nguoiDungList = nguoiDungList;
     }
 
@@ -41,7 +44,7 @@ public class NguoiDungHomeAdapter extends RecyclerView.Adapter<NguoiDungHomeAdap
 
     @Override
     public void onBindViewHolder(@NonNull NguoiDungHolder holder, int position) {
-        NguoiDung nguoiDung = nguoiDungList.get(position);
+        NguoiDungResponse nguoiDung = nguoiDungList.get(position);
         if (nguoiDung==null)return;
         holder.tvTenNDHome.setText(nguoiDung.getHoTen());
 
