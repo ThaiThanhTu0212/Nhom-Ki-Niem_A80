@@ -1,16 +1,18 @@
 package com.example.thiennguyen.view.thongbao;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
+
 import com.example.thiennguyen.R;
 import com.example.thiennguyen.view.model.ChienDich;
 import com.example.thiennguyen.view.ungho.ChiTietPagerFragment;
@@ -26,7 +28,7 @@ public class ThongBaoFragment extends Fragment implements ThongBaoAdapter.OnThon
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            chienDichList = getArguments().getParcelableArrayList("chien_dich_list");
+//            chienDichList = getArguments().getParcelableArrayList("chien_dich_list");
         }
     }
 

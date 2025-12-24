@@ -8,15 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.thiennguyen.R;
 import com.example.thiennguyen.view.model.ChienDich;
 import com.example.thiennguyen.view.model.DanhMuc;
 import com.example.thiennguyen.view.model.NguoiDung;
 import com.example.thiennguyen.view.thongbao.ThongBaoFragment;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,7 +41,7 @@ public class UngHoFragment extends Fragment implements ChienDichUngHoAdapter.OnC
         btnNotifications.setOnClickListener(v -> {
             ThongBaoFragment thongBaoFragment = new ThongBaoFragment();
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("chien_dich_list", chienDichList);
+            bundle.putSerializable("chien_dich_list", chienDichList);
             thongBaoFragment.setArguments(bundle);
 
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
@@ -119,7 +122,6 @@ public class UngHoFragment extends Fragment implements ChienDichUngHoAdapter.OnC
         chienDichList.add(new ChienDich(24, "Túi thuốc gia đình", "Trang bị những túi thuốc y tế gia đình cơ bản cho các hộ gia đình nghèo ở vùng sâu vùng xa của tỉnh Quảng Nam, giúp họ có thể xử lý các vấn đề sức khỏe thông thường một cách kịp thời.", new BigDecimal("13000000"), new BigDecimal("6000000"), new Date(), new Date(), "đang_kêu_gọi", "Quảng Nam", "Đại Lộc", "", "https://i.pinimg.com/564x/76/76/76/76767676767676767676767676767676.jpg", nd1, dm2));
         chienDichList.add(new ChienDich(25, "Vui trung thu", "Tổ chức một đêm hội trăng rằm thật ý nghĩa với đèn ông sao, bánh kẹo và các trò chơi dân gian cho các em nhỏ có hoàn cảnh thiệt thòi tại thành phố Thái Bình.", new BigDecimal("16000000"), new BigDecimal("11000000"), new Date(), new Date(), "đang_kêu_gọi", "Thái Bình", "TP. Thái Bình", "", "https://i.pinimg.com/564x/65/65/65/65656565656565656565656565656565.jpg", nd3, dm4));
     }
-
     @Override
     public void onChienDichClick(ChienDich chienDich) {
         int position = chienDichList.indexOf(chienDich);

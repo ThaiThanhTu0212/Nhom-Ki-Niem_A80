@@ -1,6 +1,8 @@
 package com.example.thiennguyen.view.model;
 
-public class DanhMuc {
+import java.io.Serializable;
+
+public class DanhMuc implements Serializable {
     private int idDm;
     private String tenDm;
 

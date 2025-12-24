@@ -4,8 +4,6 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.bumptech.glide.Glide;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.thiennguyen.R;
 import com.example.thiennguyen.view.model.ChienDich;
 
@@ -35,7 +36,7 @@ public class ChiTietChienDichFragment extends Fragment {
     public static ChiTietChienDichFragment newInstance(ChienDich chienDich) {
         ChiTietChienDichFragment fragment = new ChiTietChienDichFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_CHIEN_DICH, chienDich);
+        args.putSerializable(ARG_CHIEN_DICH, chienDich);
         fragment.setArguments(args);
         return fragment;
     }
@@ -44,7 +45,7 @@ public class ChiTietChienDichFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            chienDich = getArguments().getParcelable(ARG_CHIEN_DICH);
+            chienDich = (ChienDich) getArguments().getSerializable(ARG_CHIEN_DICH);
         }
     }
 
