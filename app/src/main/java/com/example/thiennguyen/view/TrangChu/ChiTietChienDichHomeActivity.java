@@ -2,6 +2,7 @@ package com.example.thiennguyen.view.TrangChu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +18,11 @@ import com.example.thiennguyen.R;
 import com.example.thiennguyen.view.data.ApiClient;
 import com.example.thiennguyen.view.data.DTO.ApiResponse;
 import com.example.thiennguyen.view.data.DTO.Response.ChienDichResponse;
+import com.example.thiennguyen.view.data.DTO.Response.ThamGiaChienDichResponse;
 import com.example.thiennguyen.view.data.api.ChienDichApi;
+import com.example.thiennguyen.view.data.api.ThamGiaChienDichApi;
+import com.example.thiennguyen.view.data.sharepreference.DataLocalManager;
+import com.example.thiennguyen.view.login.LoginActivity;
 import com.example.thiennguyen.view.model.ChienDich;
 import com.example.thiennguyen.view.model.DanhMuc;
 import com.example.thiennguyen.view.model.NguoiDung;
@@ -34,8 +39,9 @@ public class ChiTietChienDichHomeActivity extends AppCompatActivity {
     List<ChienDich> chienDichListHome;
     List<DanhMuc> danhMuclistHome;
     List<NguoiDung> nguoiDungListHome;
+    Button btnDkyThamGia;
     ChienDichApi chienDichApi = ApiClient.getRetrofit().create(ChienDichApi.class);
-
+    ThamGiaChienDichApi thamGiaChienDichApi = ApiClient.getRetrofit().create(ThamGiaChienDichApi.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +87,43 @@ public class ChiTietChienDichHomeActivity extends AppCompatActivity {
         img_back_tohome.setOnClickListener(v -> {
             finish();
         });
+        btnDkyThamGia.setOnClickListener(v -> {
+            dangKyChienDich();
+        });
     }
 
+    private void dangKyChienDich() {
+        String rawToken = DataLocalManager.getToken();
+
+        // 🔴 Token null hoặc rỗng → chuyển sang Login
+        if (rawToken == null || rawToken.trim().isEmpty()) {
+            Intent intent1 = new Intent(ChiTietChienDichHomeActivity.this, LoginActivity.class);
+            startActivity(intent1);
+        }
+
+        String token = "Bearer " + rawToken;
+
+        Intent intent = getIntent();
+        int idChienDich = intent.getIntExtra("ID_CHIEN_DICH",-1);
+        if (idChienDich != -1){
+            Call<ApiResponse<ThamGiaChienDichResponse>> callThamGiaCD = thamGiaChienDichApi.createThamGiaChienDich(idChienDich,token);
+            callThamGiaCD.enqueue(new Callback<ApiResponse<ThamGiaChienDichResponse>>() {
+                @Override
+                public void onResponse(Call<ApiResponse<ThamGiaChienDichResponse>> call, Response<ApiResponse<ThamGiaChienDichResponse>> response) {
+                    if(response.isSuccessful() && response.body()!= null){
+                        Toast.makeText(ChiTietChienDichHomeActivity.this, "Bạn đã đăng ký tham gia thành công", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(ChiTietChienDichHomeActivity.this, "Bạn đã đăng ký rồi!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse<ThamGiaChienDichResponse>> call, Throwable t) {
+                    Toast.makeText(ChiTietChienDichHomeActivity.this, "Lỗi mạng!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
 
 
     private void hienThiChiTiet(ChienDichResponse cd) {
@@ -109,5 +150,6 @@ public class ChiTietChienDichHomeActivity extends AppCompatActivity {
         tvsoTienHienTai_ctcd_home = findViewById(R.id.tvsoTienHienTai_ctcd_home);
         tvmoTa_ctcd_home = findViewById(R.id.tvmoTa_ctcd_home);
         img_back_tohome = findViewById(R.id.image_back_listcd_list_home);
+        btnDkyThamGia = findViewById(R.id.btnDkyThamGia);
     }
 }
