@@ -25,7 +25,7 @@ public class KhamPhaFragment extends Fragment {
     private FragmentKhamPhaBinding binding;
     private final Handler handler = new Handler();
     private int currentBanner = 0;
-    private List<BannerItem> banners = new ArrayList<>();
+    private final List<BannerItem> banners = new ArrayList<>();
 
     @Nullable
     @Override
@@ -37,13 +37,19 @@ public class KhamPhaFragment extends Fragment {
 
         setupBanner();
         setupRecyclerViews();
-        setupCampaignTop1();   // ⭐ chỉ hiển thị top 1
+        setupCampaignTop1();
+        setupHoanCanh();
         setupEvents();
+        setupSuKien();
+
 
         return view;
     }
 
     private void setupBanner() {
+        // Đảm bảo không bị nhân đôi dữ liệu khi view được tạo lại
+        banners.clear();
+
         banners.add(new BannerItem(
                 "CHUNG TAY CỨU TRỢ KHẨN CẤP ĐỒNG BÀO BỊ ẢNH HƯỞNG BỞI LŨ LỤT",
                 "Trên nền tảng VNeID năm 2025",
@@ -84,36 +90,18 @@ public class KhamPhaFragment extends Fragment {
     }
 
     private void setupRecyclerViews() {
-        binding.rvSuKien.setLayoutManager(
+        // Chỉ thiết lập LayoutManager, adapter sẽ được gán trong các hàm setup riêng
+        binding.rvSuKienNoiBat.setLayoutManager(
                 new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-
-        binding.rvHoanCanh.setLayoutManager(
-                new LinearLayoutManager(getContext()));
-
-        // demo
-        binding.rvSuKien.setAdapter(new Adapter("Sự kiện"));
-        binding.rvHoanCanh.setAdapter(new Adapter("Hoàn cảnh"));
     }
 
-    // --------------------------
-    // HIỂN THỊ TOP 1 CHIẾN DỊCH
-    // --------------------------
     private void setupCampaignTop1() {
-
-        List<DongHanhItem> list = new ArrayList<>();
-
-        list.add(new DongHanhItem(
-                R.drawable.h1,
-                "Chương trình trồng 1 triệu cây xanh cho Trường Sa",
-                "5.981.152.110 đ",
-                "24/04/2025",
-                "MB - Khối CNTT",
-                1
-        ));
-
-        //  chỉ lấy top 1
+        // Lấy danh sách chiến dịch demo dùng chung và chọn TOP 1
+        List<DongHanhItem> list = DongHanhItem.createSampleList();
         List<DongHanhItem> top1 = new ArrayList<>();
-        top1.add(list.get(0));
+        if (!list.isEmpty()) {
+            top1.add(list.get(0));
+        }
 
         DongHanhAdapter adapter = new DongHanhAdapter(top1);
 
@@ -147,7 +135,37 @@ public class KhamPhaFragment extends Fragment {
                 startActivity(new Intent(getContext(), DongHanhActivity.class))
         );
 
+        binding.btnXemTatCaSuKien.setOnClickListener(v ->
+                startActivity(new Intent(getContext(), SuKienActivity.class)));
+
+
     }
+
+    private void setupHoanCanh() {
+        // Dữ liệu mẫu dùng chung từ HoanCanhItem
+        List<HoanCanhItem> list = HoanCanhItem.createSampleList();
+
+        // chỉ hiển thị 3 item như mẫu
+        binding.rvHoanCanh.setLayoutManager(
+                new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false)
+        );
+
+        binding.rvHoanCanh.setAdapter(new HoanCanhAdapter(list));
+
+        binding.btnXemTatCaHoanCanh.setOnClickListener(v ->
+                startActivity(new Intent(getContext(), HoanCanhActivity.class))
+        );
+    }
+
+    private void setupSuKien() {
+        // Dữ liệu demo sự kiện nổi bật dùng chung
+        List<SuKienItem> suKienNoiBat = SuKienItem.createFeaturedList();
+
+        SuKienAdapter adapter = new SuKienAdapter(suKienNoiBat);
+        binding.rvSuKienNoiBat.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvSuKienNoiBat.setAdapter(adapter);
+    }
+
 
     @Override
     public void onDestroyView() {
