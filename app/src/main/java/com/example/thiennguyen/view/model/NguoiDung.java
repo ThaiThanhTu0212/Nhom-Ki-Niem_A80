@@ -9,14 +9,9 @@ public class NguoiDung implements Serializable {
     private String soDienThoai;
     private String userIdTag; // Ví dụ: @phat123
 
-    // Đường dẫn ảnh
+    // Đường dẫn ảnh (URL hoặc URI)
     private String avatarUrl;
     private String bannerUrl;
-
-    // Các trường cũ (giữ lại để tránh lỗi code cũ)
-    private String matKhau;
-    private String vaiTro;
-    private String trangThai;
 
     // Thống kê
     private int soNguoiTheoDoi;
@@ -27,7 +22,6 @@ public class NguoiDung implements Serializable {
 
     public NguoiDung() { }
 
-    // --- CONSTRUCTOR 1: MỚI (Dùng cho màn hình Tài khoản) ---
     public NguoiDung(int idNd, String hoTen, String email, String soDienThoai, String userIdTag) {
         this.idNd = idNd;
         this.hoTen = hoTen;
@@ -35,30 +29,7 @@ public class NguoiDung implements Serializable {
         this.soDienThoai = soDienThoai;
         this.userIdTag = userIdTag;
 
-        // Mặc định
-        this.soNguoiTheoDoi = 0;
-        this.soBaiViet = 0;
-        this.tongTienUngHo = "0 đ";
-        this.soChienDichThamGia = 0;
-        this.soLuotHoTro = 0;
-    }
-
-    // --- CONSTRUCTOR 2: CŨ (Fix lỗi ChiTietChienDichHomeActivity) ---
-    // Đây là cái Activity đang thiếu
-    public NguoiDung(int idNd, String hoTen, String email, String soDienThoai, String matKhau, String vaiTro, String trangThai, String avatar) {
-        this.idNd = idNd;
-        this.hoTen = hoTen;
-        this.email = email;
-        this.soDienThoai = soDienThoai;
-        this.matKhau = matKhau;
-        this.vaiTro = vaiTro;
-        this.trangThai = trangThai;
-
-        // Map dữ liệu cũ sang mới
-        this.avatarUrl = avatar;
-        this.userIdTag = "@user" + idNd; // Tạo tạm tag nếu code cũ không có
-
-        // Init chỉ số thống kê
+        // Dữ liệu mặc định
         this.soNguoiTheoDoi = 0;
         this.soBaiViet = 0;
         this.tongTienUngHo = "0 đ";
@@ -67,9 +38,6 @@ public class NguoiDung implements Serializable {
     }
 
     // --- Getters & Setters ---
-    public int getIdNd() { return idNd; }
-    public void setIdNd(int idNd) { this.idNd = idNd; }
-
     public String getHoTen() { return hoTen; }
     public void setHoTen(String hoTen) { this.hoTen = hoTen; }
 
@@ -87,11 +55,6 @@ public class NguoiDung implements Serializable {
 
     public String getBannerUrl() { return bannerUrl; }
     public void setBannerUrl(String bannerUrl) { this.bannerUrl = bannerUrl; }
-
-    // Getter cho các trường cũ
-    public String getMatKhau() { return matKhau; }
-    public String getVaiTro() { return vaiTro; }
-    public String getTrangThai() { return trangThai; }
 
     // Helpers hiển thị
     public String getDisplayFollowers() { return String.valueOf(soNguoiTheoDoi); }

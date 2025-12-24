@@ -1,0 +1,162 @@
+Index: app/src/main/java/com/example/thiennguyen/view/model/NguoiDung.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.thiennguyen.view.model;\r\n\r\nimport java.io.Serializable;\r\n\r\npublic class NguoiDung implements Serializable {\r\n    private int idNd;\r\n    private String hoTen;\r\n    private String email;\r\n    private String soDienThoai;\r\n    private String userIdTag; // Ví dụ: @phat123\r\n\r\n    // Đường dẫn ảnh (URL hoặc URI)\r\n    private String avatarUrl;\r\n    private String bannerUrl;\r\n\r\n    // Thống kê\r\n    private int soNguoiTheoDoi;\r\n    private int soBaiViet;\r\n    private String tongTienUngHo;\r\n    private int soChienDichThamGia;\r\n    private int soLuotHoTro;\r\n\r\n    public NguoiDung() { }\r\n\r\n    public NguoiDung(int idNd, String hoTen, String email, String soDienThoai, String userIdTag) {\r\n        this.idNd = idNd;\r\n        this.hoTen = hoTen;\r\n        this.email = email;\r\n        this.soDienThoai = soDienThoai;\r\n        this.userIdTag = userIdTag;\r\n\r\n        // Dữ liệu mặc định\r\n        this.soNguoiTheoDoi = 0;\r\n        this.soBaiViet = 0;\r\n        this.tongTienUngHo = \"0 đ\";\r\n        this.soChienDichThamGia = 0;\r\n        this.soLuotHoTro = 0;\r\n    }\r\n\r\n    // --- Getters & Setters ---\r\n    public String getHoTen() { return hoTen; }\r\n    public void setHoTen(String hoTen) { this.hoTen = hoTen; }\r\n\r\n    public String getEmail() { return email; }\r\n    public void setEmail(String email) { this.email = email; }\r\n\r\n    public String getSoDienThoai() { return soDienThoai; }\r\n    public void setSoDienThoai(String soDienThoai) { this.soDienThoai = soDienThoai; }\r\n\r\n    public String getUserIdTag() { return userIdTag; }\r\n    public void setUserIdTag(String userIdTag) { this.userIdTag = userIdTag; }\r\n\r\n    public String getAvatarUrl() { return avatarUrl; }\r\n    public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }\r\n\r\n    public String getBannerUrl() { return bannerUrl; }\r\n    public void setBannerUrl(String bannerUrl) { this.bannerUrl = bannerUrl; }\r\n\r\n    // Helpers hiển thị\r\n    public String getDisplayFollowers() { return String.valueOf(soNguoiTheoDoi); }\r\n    public String getDisplayPosts() { return String.valueOf(soBaiViet); }\r\n    public String getDisplayCampaigns() { return String.valueOf(soChienDichThamGia); }\r\n    public String getDisplaySupport() { return String.valueOf(soLuotHoTro); }\r\n    public String getTongTienUngHo() { return tongTienUngHo; }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/thiennguyen/view/model/NguoiDung.java b/app/src/main/java/com/example/thiennguyen/view/model/NguoiDung.java
+--- a/app/src/main/java/com/example/thiennguyen/view/model/NguoiDung.java	(revision 6eecd83cf9a1b91de49828e0d2999782d152c9fe)
++++ b/app/src/main/java/com/example/thiennguyen/view/model/NguoiDung.java	(date 1766561011290)
+@@ -9,10 +9,22 @@
+     private String soDienThoai;
+     private String userIdTag; // Ví dụ: @phat123
+ 
++<<<<<<< HEAD
+     // Đường dẫn ảnh (URL hoặc URI)
+     private String avatarUrl;
+     private String bannerUrl;
+ 
++=======
++    // Đường dẫn ảnh
++    private String avatarUrl;
++    private String bannerUrl;
++
++    // Các trường cũ (giữ lại để tránh lỗi code cũ)
++    private String matKhau;
++    private String vaiTro;
++    private String trangThai;
++
++>>>>>>> Nguyen-Thanh-Phat
+     // Thống kê
+     private int soNguoiTheoDoi;
+     private int soBaiViet;
+@@ -22,6 +34,10 @@
+ 
+     public NguoiDung() { }
+ 
++<<<<<<< HEAD
++=======
++    // --- CONSTRUCTOR 1: MỚI (Dùng cho màn hình Tài khoản) ---
++>>>>>>> Nguyen-Thanh-Phat
+     public NguoiDung(int idNd, String hoTen, String email, String soDienThoai, String userIdTag) {
+         this.idNd = idNd;
+         this.hoTen = hoTen;
+@@ -29,7 +45,34 @@
+         this.soDienThoai = soDienThoai;
+         this.userIdTag = userIdTag;
+ 
++<<<<<<< HEAD
+         // Dữ liệu mặc định
++=======
++        // Mặc định
++        this.soNguoiTheoDoi = 0;
++        this.soBaiViet = 0;
++        this.tongTienUngHo = "0 đ";
++        this.soChienDichThamGia = 0;
++        this.soLuotHoTro = 0;
++    }
++
++    // --- CONSTRUCTOR 2: CŨ (Fix lỗi ChiTietChienDichHomeActivity) ---
++    // Đây là cái Activity đang thiếu
++    public NguoiDung(int idNd, String hoTen, String email, String soDienThoai, String matKhau, String vaiTro, String trangThai, String avatar) {
++        this.idNd = idNd;
++        this.hoTen = hoTen;
++        this.email = email;
++        this.soDienThoai = soDienThoai;
++        this.matKhau = matKhau;
++        this.vaiTro = vaiTro;
++        this.trangThai = trangThai;
++
++        // Map dữ liệu cũ sang mới
++        this.avatarUrl = avatar;
++        this.userIdTag = "@user" + idNd; // Tạo tạm tag nếu code cũ không có
++
++        // Init chỉ số thống kê
++>>>>>>> Nguyen-Thanh-Phat
+         this.soNguoiTheoDoi = 0;
+         this.soBaiViet = 0;
+         this.tongTienUngHo = "0 đ";
+@@ -38,6 +81,9 @@
+     }
+ 
+     // --- Getters & Setters ---
++    public int getIdNd() { return idNd; }
++    public void setIdNd(int idNd) { this.idNd = idNd; }
++
+     public String getHoTen() { return hoTen; }
+     public void setHoTen(String hoTen) { this.hoTen = hoTen; }
+ 
+@@ -56,6 +102,14 @@
+     public String getBannerUrl() { return bannerUrl; }
+     public void setBannerUrl(String bannerUrl) { this.bannerUrl = bannerUrl; }
+ 
++<<<<<<< HEAD
++=======
++    // Getter cho các trường cũ
++    public String getMatKhau() { return matKhau; }
++    public String getVaiTro() { return vaiTro; }
++    public String getTrangThai() { return trangThai; }
++
++>>>>>>> Nguyen-Thanh-Phat
+     // Helpers hiển thị
+     public String getDisplayFollowers() { return String.valueOf(soNguoiTheoDoi); }
+     public String getDisplayPosts() { return String.valueOf(soBaiViet); }
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\">\r\n\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />\r\n    <activity android:name=\".view.taikhoan.ChinhSuaHoSoActivity\" />\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\r\n        android:fullBackupContent=\"@xml/backup_rules\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:networkSecurityConfig=\"@xml/network_security_config\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.ThienNguyen\"\r\n        tools:targetApi=\"31\">\r\n\r\n        <activity android:name=\".view.khampha.DongHanhActivity\" />\r\n        <activity android:name=\".view.khampha.BanDoActivity\" />\r\n        <activity android:name=\".view.khampha.SuKienActivity\" />\r\n        <activity android:name=\".view.khampha.HoanCanhActivity\" />\r\n\r\n        <activity\r\n            android:name=\".view.TrangChu.ProfileHomeActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".view.TrangChu.DanhSachChienDichActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".view.TrangChu.ChiTietChienDichHomeActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".view.MainActivity\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n        <activity android:name=\".view.bangtin.ThongBaoActivity\" />\r\n        <activity android:name=\".view.bangtin.BangTinCommentActivity\" />\r\n\r\n    </application>\r\n\r\n</manifest>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 6eecd83cf9a1b91de49828e0d2999782d152c9fe)
++++ b/app/src/main/AndroidManifest.xml	(date 1766561100630)
+@@ -2,23 +2,20 @@
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:tools="http://schemas.android.com/tools">
+ 
+-    <uses-permission android:name="android.permission.INTERNET" />
+-
+     <uses-permission android:name="android.permission.INTERNET" />
+     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+-    <activity android:name=".view.taikhoan.ChinhSuaHoSoActivity" />
++
+     <application
+         android:allowBackup="true"
+-        android:dataExtractionRules="@xml/data_extraction_rules"
+-        android:fullBackupContent="@xml/backup_rules"
+         android:icon="@mipmap/ic_launcher"
+         android:label="@string/app_name"
+-        android:networkSecurityConfig="@xml/network_security_config"
+         android:roundIcon="@mipmap/ic_launcher_round"
+         android:supportsRtl="true"
+         android:theme="@style/Theme.ThienNguyen"
+         tools:targetApi="31">
+ 
++        <activity android:name=".view.taikhoan.ChinhSuaHoSoActivity" />
++
+         <activity android:name=".view.khampha.DongHanhActivity" />
+         <activity android:name=".view.khampha.BanDoActivity" />
+         <activity android:name=".view.khampha.SuKienActivity" />
+@@ -33,6 +30,7 @@
+         <activity
+             android:name=".view.TrangChu.ChiTietChienDichHomeActivity"
+             android:exported="false" />
++
+         <activity
+             android:name=".view.MainActivity"
+             android:exported="true">
+@@ -41,9 +39,9 @@
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+         </activity>
++
+         <activity android:name=".view.bangtin.ThongBaoActivity" />
+         <activity android:name=".view.bangtin.BangTinCommentActivity" />
+ 
+     </application>
+-
+-</manifest>
++</manifest>
+\ No newline at end of file
