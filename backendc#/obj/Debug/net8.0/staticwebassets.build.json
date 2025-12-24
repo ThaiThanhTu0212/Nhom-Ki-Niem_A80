@@ -1,0 +1,125 @@
+{
+  "Version": 1,
+  "Hash": "HSgx4/+OfISJ3uspURaIcH+9xzLZPNfR/MB7ww7cWuM=",
+  "Source": "ThienNguyenAPI",
+  "BasePath": "_content/ThienNguyenAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "ThienNguyenAPI\\wwwroot",
+      "Source": "ThienNguyenAPI",
+      "ContentRoot": "E:\\AndroidA80\\Nhom-Ki-Niem_A80\\backendc#\\wwwroot\\",
+      "BasePath": "_content/ThienNguyenAPI",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "E:\\AndroidA80\\Nhom-Ki-Niem_A80\\backendc#\\wwwroot\\images\\415cc7cb-784c-460d-b527-6b9dac6d54e9.jpg",
+      "SourceId": "ThienNguyenAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\AndroidA80\\Nhom-Ki-Niem_A80\\backendc#\\wwwroot\\",
+      "BasePath": "_content/ThienNguyenAPI",
+      "RelativePath": "images/415cc7cb-784c-460d-b527-6b9dac6d54e9#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "tsc7fdb37l",
+      "Integrity": "c5BUvpHX8KPvYWphkvZCiGOjwV0US8lUAkQXl2b+NiU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\415cc7cb-784c-460d-b527-6b9dac6d54e9.jpg"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "images/415cc7cb-784c-460d-b527-6b9dac6d54e9.jpg",
+      "AssetFile": "E:\\AndroidA80\\Nhom-Ki-Niem_A80\\backendc#\\wwwroot\\images\\415cc7cb-784c-460d-b527-6b9dac6d54e9.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "376135"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"c5BUvpHX8KPvYWphkvZCiGOjwV0US8lUAkQXl2b+NiU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 05 Dec 2025 09:11:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-c5BUvpHX8KPvYWphkvZCiGOjwV0US8lUAkQXl2b+NiU="
+        }
+      ]
+    },
+    {
+      "Route": "images/415cc7cb-784c-460d-b527-6b9dac6d54e9.tsc7fdb37l.jpg",
+      "AssetFile": "E:\\AndroidA80\\Nhom-Ki-Niem_A80\\backendc#\\wwwroot\\images\\415cc7cb-784c-460d-b527-6b9dac6d54e9.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "376135"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"c5BUvpHX8KPvYWphkvZCiGOjwV0US8lUAkQXl2b+NiU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 05 Dec 2025 09:11:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "tsc7fdb37l"
+        },
+        {
+          "Name": "label",
+          "Value": "images/415cc7cb-784c-460d-b527-6b9dac6d54e9.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-c5BUvpHX8KPvYWphkvZCiGOjwV0US8lUAkQXl2b+NiU="
+        }
+      ]
+    }
+  ]
+}

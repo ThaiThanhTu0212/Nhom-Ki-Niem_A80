@@ -5,16 +5,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide; // THÊM IMPORT GLIDE
+import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPostViewHolder> {
 
@@ -24,7 +27,9 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
     public interface OnItemClickListener {
         void onCommentClick(int position);
         void onLikeClick(int position);
+        void onShareClick(int position);
         void onMoreOptionsClick(int position, View view);
+        void onDonateClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -48,7 +53,6 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
         holder.bind(currentPost);
     }
 
-    // Tối ưu hóa việc cập nhật chỉ phần thay đổi
     @Override
     public void onBindViewHolder(@NonNull NewsPostViewHolder holder, int position, @NonNull List<Object> payloads) {
         if (payloads.isEmpty()) {
@@ -67,88 +71,116 @@ public class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPo
     }
 
     public static class NewsPostViewHolder extends RecyclerView.ViewHolder {
-        public ImageView avatar;
-        public TextView author;
-        public TextView time;
-        public TextView content;
-        public ImageView postImage;
-        public TextView commentCount;
-        public TextView likeCount;
-        public ImageView btnLike;
-        public ImageView btnMoreOptions;
-        public LinearLayout commentArea;
+        // Views cũ
+        ImageView avatar, postImage, btnLike, btnShare, btnMoreOptions;
+        TextView author, time, content, commentCount, likeCount;
+        LinearLayout commentArea;
+        
+        // Views mới cho thanh ủng hộ
+        RelativeLayout donationBar;
+        TextView tvDonationTitle, tvDonationPercentage, tvDonationInfo;
+        ProgressBar donationProgress;
+        ImageView btnDonateHand;
 
         public NewsPostViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
 
+            // Gán ID cho views cũ
             avatar = itemView.findViewById(R.id.imgAvatar);
             author = itemView.findViewById(R.id.tvUsername);
             time = itemView.findViewById(R.id.tvTime);
             content = itemView.findViewById(R.id.tvContent);
             postImage = itemView.findViewById(R.id.imgMain);
             commentCount = itemView.findViewById(R.id.tvCommentCount);
-            likeCount = itemView.findViewById(R.id.tvLikeCount); // ID của TextView số lượt thích
+            likeCount = itemView.findViewById(R.id.tvLikeCount);
             btnLike = itemView.findViewById(R.id.btnLike);
+            btnShare = itemView.findViewById(R.id.btnShare);
             commentArea = itemView.findViewById(R.id.bangtin_layout_comment_area);
             btnMoreOptions = itemView.findViewById(R.id.btnMoreOptions);
+            
+            // Gán ID cho views mới
+            donationBar = itemView.findViewById(R.id.donation_bar);
+            tvDonationTitle = itemView.findViewById(R.id.tv_donation_title);
+            donationProgress = itemView.findViewById(R.id.donation_progress);
+            tvDonationPercentage = itemView.findViewById(R.id.tv_donation_percentage);
+            btnDonateHand = itemView.findViewById(R.id.btn_donate_hand);
+            tvDonationInfo = itemView.findViewById(R.id.tv_donation_info);
 
-            commentArea.setOnClickListener(v -> {
-                if (listener != null) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        listener.onCommentClick(position);
-                    }
-                }
-            });
-
-            btnLike.setOnClickListener(v -> {
-                if (listener != null) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        listener.onLikeClick(position);
-                    }
-                }
-            });
-
+            // Set Listeners
+            commentArea.setOnClickListener(v -> handleClick(listener, listener::onCommentClick));
+            btnLike.setOnClickListener(v -> handleClick(listener, listener::onLikeClick));
+            btnShare.setOnClickListener(v -> handleClick(listener, listener::onShareClick));
             btnMoreOptions.setOnClickListener(v -> {
-                if (listener != null) {
+                 if (listener != null) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         listener.onMoreOptionsClick(position, v);
                     }
                 }
             });
+            donationBar.setOnClickListener(v -> handleClick(listener, listener::onDonateClick));
+            btnDonateHand.setOnClickListener(v -> handleClick(listener, listener::onDonateClick));
         }
 
-        // Gán dữ liệu vào ViewHolder (ĐÃ SỬA ĐỂ DÙNG GLIDE)
+        private void handleClick(OnItemClickListener listener, SinglePositionClickListener clickListener) {
+            if (listener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    clickListener.onPositionClick(position);
+                }
+            }
+        }
+
+        @FunctionalInterface
+        interface SinglePositionClickListener {
+            void onPositionClick(int position);
+        }
+
         public void bind(NewsPost post) {
+            // Bind dữ liệu cũ
             author.setText(post.author);
             time.setText(post.time);
             content.setText(post.content);
             avatar.setImageResource(post.avatarResource);
+            updateLikeStatus(post);
+            commentCount.setText(String.format(Locale.getDefault(), "%d Bình luận", post.commentCount));
 
-            // SỬ DỤNG GLIDE ĐỂ TẢI ẢNH TỪ URL
             if (post.imageUrl != null && !post.imageUrl.isEmpty()) {
                 postImage.setVisibility(View.VISIBLE);
                 Glide.with(itemView.getContext())
                      .load(post.imageUrl)
-                     .placeholder(R.drawable.placeholder_image) // Ảnh hiển thị trong lúc tải
-                     .error(R.drawable.bangtin_img_default_post) // Ảnh hiển thị khi lỗi
+                     .placeholder(R.drawable.placeholder_image)
+                     .error(R.drawable.bangtin_img_default_post)
                      .into(postImage);
             } else {
                 postImage.setVisibility(View.GONE);
             }
-            updateLikeStatus(post);
-            commentCount.setText(String.valueOf(post.commentCount) + " Bình luận");
+            
+            // Bind dữ liệu mới cho thanh ủng hộ
+            if (post.showDonationBar) {
+                donationBar.setVisibility(View.VISIBLE);
+                tvDonationInfo.setVisibility(View.VISIBLE);
+                donationProgress.setProgress(post.donationProgress);
+                tvDonationPercentage.setText(String.format(Locale.getDefault(), "%d%%", post.donationProgress));
+                tvDonationInfo.setText(String.format(Locale.getDefault(), "%d người đã ủng hộ • Còn lại %d ngày", post.donatorsCount, post.daysLeft));
+                
+                if(post.donatorsCount == 0){
+                    tvDonationTitle.setText("Hãy là người ủng hộ đầu tiên");
+                } else {
+                    tvDonationTitle.setText("Chung tay quyên góp");
+                }
+            } else {
+                donationBar.setVisibility(View.GONE);
+                tvDonationInfo.setVisibility(View.GONE);
+            }
         }
 
-        // Cập nhật trạng thái và số lượt thích
         public void updateLikeStatus(NewsPost post) {
-            likeCount.setText(String.valueOf(post.likeCount) + " lượt thích");
+            likeCount.setText(String.format(Locale.getDefault(), "%d lượt thích", post.likeCount));
             if (post.isLiked) {
-                btnLike.setImageResource(R.drawable.bangtin_heart_filled); // Icon trái tim đã tô màu
+                btnLike.setImageResource(R.drawable.bangtin_heart_filled);
             } else {
-                btnLike.setImageResource(R.drawable.bangtin_heart_outline); // Icon trái tim rỗng
+                btnLike.setImageResource(R.drawable.bangtin_heart_outline);
             }
         }
     }

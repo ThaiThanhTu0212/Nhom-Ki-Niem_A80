@@ -16,7 +16,7 @@ import java.util.List;
 
 public class DongHanhAdapter extends RecyclerView.Adapter<DongHanhAdapter.ViewHolder> {
 
-    private final List<DongHanhItem> list;
+    private List<DongHanhItem> list;
 
     public DongHanhAdapter(List<DongHanhItem> list) {
         this.list = list;
@@ -70,6 +70,11 @@ public class DongHanhAdapter extends RecyclerView.Adapter<DongHanhAdapter.ViewHo
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public void filterList(List<DongHanhItem> filteredList) {
+        this.list = filteredList;
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

@@ -100,6 +100,7 @@
 
             <!-- Stats -->
             <LinearLayout
+                android:id="@+id/llStats"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -108,8 +109,7 @@
 
                 <ImageView
                     android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    />
+                    android:layout_height="20dp" />
 
                 <TextView
                     android:id="@+id/tvFollowers"
@@ -129,8 +129,7 @@
 
                 <ImageView
                     android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    />
+                    android:layout_height="20dp" />
 
                 <TextView
                     android:id="@+id/tvPosts"
@@ -153,23 +152,73 @@
             app:cardCornerRadius="25dp"
             app:cardElevation="2dp">
 
-            <Button
-                android:id="@+id/btnEditProfile"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#FF9800"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                android:drawablePadding="8dp"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
-                android:text="Chỉnh sửa thông tin"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                <Button
+                    android:id="@+id/btnEditProfile"
+                    android:layout_width="228dp"
+                    android:layout_height="50dp"
+                    android:background="#FF9800"
+
+                    android:drawablePadding="8dp"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
+                    android:text="Chỉnh sửa thông tin"
+                    android:textColor="#09E0FB"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvBtnLogOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#AF1111"
+                    android:textStyle="bold"
+
+                    android:layout_weight="1"
+                    android:text="Đăng xuất" />
+
+            </LinearLayout>
+
         </androidx.cardview.widget.CardView>
 
         <!-- Gmail Icon -->
+        <Button
+            android:id="@+id/btnLoginTaiKhoan"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:textStyle="bold"
+            android:text="Đăng nhập" />
+
+        <TextView
+            android:id="@+id/tvOr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:text="Hoặc" />
+
+        <Button
+            android:id="@+id/btnDangKy2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#262DDC"
+            app:backgroundTint="@null"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:textStyle="bold"
+            android:text="Đăng ký" />
+
         <ImageView
+            android:id="@+id/ivGmail"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
@@ -204,6 +253,7 @@
 
         <!-- Activity Card -->
         <androidx.cardview.widget.CardView
+            android:id="@+id/cvActivity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -238,6 +288,7 @@
 
         <!-- Stats Row -->
         <LinearLayout
+            android:id="@+id/llStatsRow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -289,7 +340,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_support_tai_khoan"/>
+                    android:src="@drawable/ic_support_tai_khoan" />
 
                 <TextView
                     android:id="@+id/tvSupportCount"
@@ -313,6 +364,7 @@
 
         <!-- Following Section -->
         <LinearLayout
+            android:id="@+id/llFollowing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "628588947238",
+    "project_id": "thiennguyen-d3854",
+    "storage_bucket": "thiennguyen-d3854.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628588947238:android:101b4e7dbb9187307f43e7",
+        "android_client_info": {
+          "package_name": "com.example.thiennguyen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASiwr8lDukBPGSUnmubrUZmqj0h_Eg_TE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

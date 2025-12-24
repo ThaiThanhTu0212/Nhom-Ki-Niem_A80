@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
+import com.example.thiennguyen.view.data.DTO.Response.ChienDichResponse;
 import com.example.thiennguyen.view.model.ChienDich;
 
 import java.util.List;
 
 public class ListChienDichHomeAdapter extends RecyclerView.Adapter<ListChienDichHomeAdapter.ListChienDichHomeHolder> {
     public interface OnItemClickListener {
-        void onItemClick(ChienDich chienDich);
+        void onItemClick(ChienDichResponse chienDich);
     }
     OnItemClickListener listener;
 
@@ -26,9 +27,9 @@ public class ListChienDichHomeAdapter extends RecyclerView.Adapter<ListChienDich
         this.listener = listener;
     }
 
-    List<ChienDich> chienDichList;
+    List<ChienDichResponse> chienDichList;
 
-    public ListChienDichHomeAdapter(List<ChienDich> chienDichList) {
+    public ListChienDichHomeAdapter(List<ChienDichResponse> chienDichList) {
         this.chienDichList = chienDichList;
     }
 
@@ -42,7 +43,7 @@ public class ListChienDichHomeAdapter extends RecyclerView.Adapter<ListChienDich
 
     @Override
     public void onBindViewHolder(@NonNull ListChienDichHomeHolder holder, int position) {
-        ChienDich chienDich = chienDichList.get(position);
+        ChienDichResponse chienDich = chienDichList.get(position);
         if (chienDich== null)return;
         holder.tvTenlistCd_home.setText(chienDich.getTenCd());
         holder.tvSotienHienTai_listcd_home.setText(chienDich.getSoTienHienTai().toString());
