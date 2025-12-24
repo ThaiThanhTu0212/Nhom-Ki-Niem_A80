@@ -1,0 +1,158 @@
+Index: app/src/main/java/com/example/thiennguyen/view/bangtin/BangTinCommentActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.thiennguyen.view.bangtin;\r\n\r\nimport android.app.Activity;\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.EditText;\r\nimport android.widget.ImageView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.widget.Toolbar;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.example.thiennguyen.R;\r\nimport com.example.thiennguyen.api.bangtin.BinhLuan;\r\nimport com.example.thiennguyen.api.bangtin.CommentRequest;\r\nimport com.example.thiennguyen.api.bangtin.NewsPost;\r\nimport com.example.thiennguyen.api.bangtin.RetrofitClient;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\nimport retrofit2.Call;\r\nimport retrofit2.Callback;\r\nimport retrofit2.Response;\r\n\r\npublic class BangTinCommentActivity extends AppCompatActivity {\r\n\r\n    private RecyclerView recyclerView;\r\n    private CommentAdapter adapter;\r\n    private List<BinhLuan> commentList;\r\n    private EditText edtCommentInput;\r\n    private ImageView btnSendComment;\r\n\r\n    private NewsPost currentPost;\r\n    private int postPosition;\r\n    private boolean hasNewComment = false;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_bang_tin_comment);\r\n\r\n        Toolbar toolbar = findViewById(R.id.comment_toolbar);\r\n        setSupportActionBar(toolbar);\r\n        getSupportActionBar().setDisplayHomeAsUpEnabled(true);\r\n        toolbar.setNavigationOnClickListener(v -> finish());\r\n\r\n        recyclerView = findViewById(R.id.comment_recyclerView);\r\n        edtCommentInput = findViewById(R.id.edt_comment_input);\r\n        btnSendComment = findViewById(R.id.btn_send_comment);\r\n\r\n        commentList = new ArrayList<>();\r\n        adapter = new CommentAdapter(commentList);\r\n        recyclerView.setLayoutManager(new LinearLayoutManager(this));\r\n        recyclerView.setAdapter(adapter);\r\n\r\n        Intent intent = getIntent();\r\n        currentPost = (NewsPost) intent.getSerializableExtra(\"post_data\");\r\n        postPosition = intent.getIntExtra(\"post_position\", -1);\r\n\r\n        if (currentPost != null) {\r\n            if (currentPost.id >= 990) {\r\n                loadDummyComments();\r\n            } else {\r\n                loadComments();\r\n            }\r\n        } else {\r\n            Toast.makeText(this, \"Lỗi: Không có dữ liệu bài viết\", Toast.LENGTH_SHORT).show();\r\n            finish();\r\n        }\r\n\r\n        btnSendComment.setOnClickListener(v -> sendComment());\r\n    }\r\n\r\n    private void loadComments() {\r\n        RetrofitClient.getService().getCommentsForPost(currentPost.id).enqueue(new Callback<List<BinhLuan>>() {\r\n            @Override\r\n            public void onResponse(Call<List<BinhLuan>> call, Response<List<BinhLuan>> response) {\r\n                if (response.isSuccessful() && response.body() != null) {\r\n                    commentList.clear();\r\n                    commentList.addAll(response.body());\r\n                    adapter.notifyDataSetChanged();\r\n                } else {\r\n                    Toast.makeText(BangTinCommentActivity.this, \"Lỗi khi tải bình luận\", Toast.LENGTH_SHORT).show();\r\n                }\r\n            }\r\n\r\n            @Override\r\n            public void onFailure(Call<List<BinhLuan>> call, Throwable t) {\r\n                Toast.makeText(BangTinCommentActivity.this, \"Lỗi mạng: \" + t.getMessage(), Toast.LENGTH_SHORT).show();\r\n            }\r\n        });\r\n    }\r\n\r\n    // THAY ĐỔI: Cập nhật lại bình luận giả theo gợi ý\r\n    private void loadDummyComments() {\r\n        commentList.clear();\r\n        \r\n        BinhLuan c1 = new BinhLuan();\r\n        c1.id = 1001;\r\n        c1.idNguoiBinhLuan = 15;\r\n        c1.noiDung = \"Hành động thật ý nghĩa và đẹp đẽ. Cảm ơn các bạn rất nhiều!\";\r\n        commentList.add(c1);\r\n\r\n        BinhLuan c2 = new BinhLuan();\r\n        c2.id = 1002;\r\n        c2.idNguoiBinhLuan = 25;\r\n        c2.noiDung = \"Mình có thể đóng góp qua đâu vậy ạ? Cho mình xin thông tin với.\";\r\n        commentList.add(c2);\r\n\r\n        adapter.notifyDataSetChanged();\r\n    }\r\n\r\n    private void sendComment() {\r\n        String content = edtCommentInput.getText().toString().trim();\r\n        if (content.isEmpty()) {\r\n            return;\r\n        }\r\n\r\n        if (currentPost.id >= 990) {\r\n            BinhLuan newDummyComment = new BinhLuan();\r\n            newDummyComment.id = (int) (System.currentTimeMillis() / 1000); \r\n            newDummyComment.idNguoiBinhLuan = 1; \r\n            newDummyComment.noiDung = content;\r\n            \r\n            commentList.add(newDummyComment);\r\n            adapter.notifyItemInserted(commentList.size() - 1);\r\n            recyclerView.scrollToPosition(commentList.size() - 1);\r\n            edtCommentInput.setText(\"\");\r\n            return;\r\n        }\r\n\r\n        int currentUserId = 1; \r\n        CommentRequest request = new CommentRequest(currentUserId, content);\r\n\r\n        RetrofitClient.getService().addCommentToPost(currentPost.id, request).enqueue(new Callback<BinhLuan>() {\r\n            @Override\r\n            public void onResponse(Call<BinhLuan> call, Response<BinhLuan> response) {\r\n                if (response.isSuccessful() && response.body() != null) {\r\n                    commentList.add(response.body());\r\n                    adapter.notifyItemInserted(commentList.size() - 1);\r\n                    recyclerView.scrollToPosition(commentList.size() - 1);\r\n                    edtCommentInput.setText(\"\");\r\n                    hasNewComment = true; \r\n                } else {\r\n                    Toast.makeText(BangTinCommentActivity.this, \"Không thể gửi bình luận\", Toast.LENGTH_SHORT).show();\r\n                }\r\n            }\r\n\r\n            @Override\r\n            public void onFailure(Call<BinhLuan> call, Throwable t) {\r\n                Toast.makeText(BangTinCommentActivity.this, \"Lỗi mạng: \" + t.getMessage(), Toast.LENGTH_SHORT).show();\r\n            }\r\n        });\r\n    }\r\n\r\n    @Override\r\n    public void finish() {\r\n        if (hasNewComment && postPosition != -1) {\r\n            Intent resultIntent = new Intent();\r\n            resultIntent.putExtra(\"post_position\", postPosition);\r\n            setResult(Activity.RESULT_OK, resultIntent);\r\n        }\r\n        super.finish();\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/app/src/main/java/com/example/thiennguyen/view/bangtin/BangTinCommentActivity.java b/app/src/main/java/com/example/thiennguyen/view/bangtin/BangTinCommentActivity.java
+--- a/app/src/main/java/com/example/thiennguyen/view/bangtin/BangTinCommentActivity.java	(revision 33d3b47e928e075d4e536a8d4cd53365d1637416)
++++ b/app/src/main/java/com/example/thiennguyen/view/bangtin/BangTinCommentActivity.java	(date 1764927107905)
+@@ -3,6 +3,7 @@
+ import android.app.Activity;
+ import android.content.Intent;
+ import android.os.Bundle;
++import android.util.Log;
+ import android.view.View;
+ import android.widget.EditText;
+ import android.widget.ImageView;
+@@ -28,6 +29,7 @@
+ 
+ public class BangTinCommentActivity extends AppCompatActivity {
+ 
++    private static final String TAG = "BangTinCommentActivity";
+     private RecyclerView recyclerView;
+     private CommentAdapter adapter;
+     private List<BinhLuan> commentList;
+@@ -79,26 +81,41 @@
+         RetrofitClient.getService().getCommentsForPost(currentPost.id).enqueue(new Callback<List<BinhLuan>>() {
+             @Override
+             public void onResponse(Call<List<BinhLuan>> call, Response<List<BinhLuan>> response) {
+-                if (response.isSuccessful() && response.body() != null) {
++                if (response.isSuccessful()) {
+                     commentList.clear();
+-                    commentList.addAll(response.body());
++                    if (response.body() != null) {
++                        commentList.addAll(response.body());
++                    }
+                     adapter.notifyDataSetChanged();
++                    if (commentList.isEmpty()) {
++                        Toast.makeText(BangTinCommentActivity.this, "Chưa có bình luận nào.", Toast.LENGTH_SHORT).show();
++                    }
+                 } else {
+-                    Toast.makeText(BangTinCommentActivity.this, "Lỗi khi tải bình luận", Toast.LENGTH_SHORT).show();
++                    String errorBodyStr = "Không đọc được nội dung lỗi";
++                    try {
++                        if (response.errorBody() != null) {
++                            errorBodyStr = response.errorBody().string();
++                        }
++                    } catch (Exception e) {
++                        Log.e(TAG, "Error parsing error body", e);
++                    }
++                    String errorMessage = "Lỗi tải bình luận. Mã lỗi: " + response.code() + "\nNội dung: " + errorBodyStr;
++                    Log.e(TAG, errorMessage);
++                    Toast.makeText(BangTinCommentActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+                 }
+             }
+ 
+             @Override
+             public void onFailure(Call<List<BinhLuan>> call, Throwable t) {
+-                Toast.makeText(BangTinCommentActivity.this, "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
++                String errorMessage = "Lỗi mạng khi tải bình luận: " + t.getMessage();
++                Log.e(TAG, errorMessage, t);
++                Toast.makeText(BangTinCommentActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+             }
+         });
+     }
+ 
+-    // THAY ĐỔI: Cập nhật lại bình luận giả theo gợi ý
+     private void loadDummyComments() {
+         commentList.clear();
+-        
+         BinhLuan c1 = new BinhLuan();
+         c1.id = 1001;
+         c1.idNguoiBinhLuan = 15;
+@@ -110,7 +127,6 @@
+         c2.idNguoiBinhLuan = 25;
+         c2.noiDung = "Mình có thể đóng góp qua đâu vậy ạ? Cho mình xin thông tin với.";
+         commentList.add(c2);
+-
+         adapter.notifyDataSetChanged();
+     }
+ 
+@@ -122,14 +138,14 @@
+ 
+         if (currentPost.id >= 990) {
+             BinhLuan newDummyComment = new BinhLuan();
+-            newDummyComment.id = (int) (System.currentTimeMillis() / 1000); 
++            newDummyComment.id = (int) (System.currentTimeMillis() / 1000);
+             newDummyComment.idNguoiBinhLuan = 1; 
+             newDummyComment.noiDung = content;
+-            
+             commentList.add(newDummyComment);
+             adapter.notifyItemInserted(commentList.size() - 1);
+             recyclerView.scrollToPosition(commentList.size() - 1);
+             edtCommentInput.setText("");
++            hasNewComment = true;
+             return;
+         }
+ 
+@@ -144,15 +160,24 @@
+                     adapter.notifyItemInserted(commentList.size() - 1);
+                     recyclerView.scrollToPosition(commentList.size() - 1);
+                     edtCommentInput.setText("");
+-                    hasNewComment = true; 
++                    hasNewComment = true;
+                 } else {
+-                    Toast.makeText(BangTinCommentActivity.this, "Không thể gửi bình luận", Toast.LENGTH_SHORT).show();
++                     String errorBodyStr = "Không đọc được nội dung lỗi";
++                    try {
++                        if (response.errorBody() != null) {
++                            errorBodyStr = response.errorBody().string();
++                        }
++                    } catch (Exception e) {
++                         Log.e(TAG, "Error parsing error body on send", e);
++                    }
++                    String errorMessage = "Gửi thất bại. Mã lỗi: " + response.code() + "\nNội dung: " + errorBodyStr;
++                    Toast.makeText(BangTinCommentActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+                 }
+             }
+ 
+             @Override
+             public void onFailure(Call<BinhLuan> call, Throwable t) {
+-                Toast.makeText(BangTinCommentActivity.this, "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
++                Toast.makeText(BangTinCommentActivity.this, "Lỗi mạng khi gửi bình luận: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+             }
+         });
+     }
+Index: app/src/main/java/com/example/thiennguyen/api/bangtin/NewsPostAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.thiennguyen.api.bangtin;\r\n\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.ImageView;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.bumptech.glide.Glide; // THÊM IMPORT GLIDE\r\nimport com.example.thiennguyen.R;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class NewsPostAdapter extends RecyclerView.Adapter<NewsPostAdapter.NewsPostViewHolder> {\r\n\r\n    private final ArrayList<NewsPost> postList;\r\n    private OnItemClickListener listener;\r\n\r\n    public interface OnItemClickListener {\r\n        void onCommentClick(int position);\r\n        void onLikeClick(int position);\r\n        void onMoreOptionsClick(int position, View view);\r\n    }\r\n\r\n    public void setOnItemClickListener(OnItemClickListener listener) {\r\n        this.listener = listener;\r\n    }\r\n\r\n    public NewsPostAdapter(ArrayList<NewsPost> postList) {\r\n        this.postList = postList;\r\n    }\r\n\r\n    @NonNull\r\n    @Override\r\n    public NewsPostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {\r\n        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news_post, parent, false);\r\n        return new NewsPostViewHolder(view, listener);\r\n    }\r\n\r\n    @Override\r\n    public void onBindViewHolder(@NonNull NewsPostViewHolder holder, int position) {\r\n        NewsPost currentPost = postList.get(position);\r\n        holder.bind(currentPost);\r\n    }\r\n\r\n    // Tối ưu hóa việc cập nhật chỉ phần thay đổi\r\n    @Override\r\n    public void onBindViewHolder(@NonNull NewsPostViewHolder holder, int position, @NonNull List<Object> payloads) {\r\n        if (payloads.isEmpty()) {\r\n            super.onBindViewHolder(holder, position, payloads);\r\n        } else {\r\n            if (payloads.contains(\"like_status_changed\")) {\r\n                NewsPost currentPost = postList.get(position);\r\n                holder.updateLikeStatus(currentPost);\r\n            }\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public int getItemCount() {\r\n        return postList != null ? postList.size() : 0;\r\n    }\r\n\r\n    public static class NewsPostViewHolder extends RecyclerView.ViewHolder {\r\n        public ImageView avatar;\r\n        public TextView author;\r\n        public TextView time;\r\n        public TextView content;\r\n        public ImageView postImage;\r\n        public TextView commentCount;\r\n        public TextView likeCount;\r\n        public ImageView btnLike;\r\n        public ImageView btnMoreOptions;\r\n        public LinearLayout commentArea;\r\n\r\n        public NewsPostViewHolder(@NonNull View itemView, final OnItemClickListener listener) {\r\n            super(itemView);\r\n\r\n            avatar = itemView.findViewById(R.id.imgAvatar);\r\n            author = itemView.findViewById(R.id.tvUsername);\r\n            time = itemView.findViewById(R.id.tvTime);\r\n            content = itemView.findViewById(R.id.tvContent);\r\n            postImage = itemView.findViewById(R.id.imgMain);\r\n            commentCount = itemView.findViewById(R.id.tvCommentCount);\r\n            likeCount = itemView.findViewById(R.id.tvLikeCount); // ID của TextView số lượt thích\r\n            btnLike = itemView.findViewById(R.id.btnLike);\r\n            commentArea = itemView.findViewById(R.id.bangtin_layout_comment_area);\r\n            btnMoreOptions = itemView.findViewById(R.id.btnMoreOptions);\r\n\r\n            commentArea.setOnClickListener(v -> {\r\n                if (listener != null) {\r\n                    int position = getAdapterPosition();\r\n                    if (position != RecyclerView.NO_POSITION) {\r\n                        listener.onCommentClick(position);\r\n                    }\r\n                }\r\n            });\r\n\r\n            btnLike.setOnClickListener(v -> {\r\n                if (listener != null) {\r\n                    int position = getAdapterPosition();\r\n                    if (position != RecyclerView.NO_POSITION) {\r\n                        listener.onLikeClick(position);\r\n                    }\r\n                }\r\n            });\r\n\r\n            btnMoreOptions.setOnClickListener(v -> {\r\n                if (listener != null) {\r\n                    int position = getAdapterPosition();\r\n                    if (position != RecyclerView.NO_POSITION) {\r\n                        listener.onMoreOptionsClick(position, v);\r\n                    }\r\n                }\r\n            });\r\n        }\r\n\r\n        // Gán dữ liệu vào ViewHolder (ĐÃ SỬA ĐỂ DÙNG GLIDE)\r\n        public void bind(NewsPost post) {\r\n            author.setText(post.author);\r\n            time.setText(post.time);\r\n            content.setText(post.content);\r\n            avatar.setImageResource(post.avatarResource);\r\n\r\n            // SỬ DỤNG GLIDE ĐỂ TẢI ẢNH TỪ URL\r\n            if (post.imageUrl != null && !post.imageUrl.isEmpty()) {\r\n                postImage.setVisibility(View.VISIBLE);\r\n                Glide.with(itemView.getContext())\r\n                     .load(post.imageUrl)\r\n                     .placeholder(R.drawable.placeholder_image) // Ảnh hiển thị trong lúc tải\r\n                     .error(R.drawable.bangtin_img_default_post) // Ảnh hiển thị khi lỗi\r\n                     .into(postImage);\r\n            } else {\r\n                postImage.setVisibility(View.GONE);\r\n            }\r\n            updateLikeStatus(post);\r\n            commentCount.setText(String.valueOf(post.commentCount) + \" Bình luận\");\r\n        }\r\n\r\n        // Cập nhật trạng thái và số lượt thích\r\n        public void updateLikeStatus(NewsPost post) {\r\n            likeCount.setText(String.valueOf(post.likeCount) + \" lượt thích\");\r\n            if (post.isLiked) {\r\n                btnLike.setImageResource(R.drawable.bangtin_heart_filled); // Icon trái tim đã tô màu\r\n            } else {\r\n                btnLike.setImageResource(R.drawable.bangtin_heart_outline); // Icon trái tim rỗng\r\n            }\r\n        }\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/app/src/main/java/com/example/thiennguyen/api/bangtin/NewsPostAdapter.java b/app/src/main/java/com/example/thiennguyen/api/bangtin/NewsPostAdapter.java
+--- a/app/src/main/java/com/example/thiennguyen/api/bangtin/NewsPostAdapter.java	(revision 33d3b47e928e075d4e536a8d4cd53365d1637416)
++++ b/app/src/main/java/com/example/thiennguyen/api/bangtin/NewsPostAdapter.java	(date 1764925565264)
+@@ -119,7 +119,6 @@
+                 }
+             });
+         }
+-
+         // Gán dữ liệu vào ViewHolder (ĐÃ SỬA ĐỂ DÙNG GLIDE)
+         public void bind(NewsPost post) {
+             author.setText(post.author);
+Index: app/src/main/java/com/example/thiennguyen/api/bangtin/RetrofitClient.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.thiennguyen.api.bangtin;\r\n\r\nimport com.google.gson.Gson;\r\nimport com.google.gson.GsonBuilder;\r\n\r\nimport retrofit2.Retrofit;\r\nimport retrofit2.converter.gson.GsonConverterFactory;\r\n\r\npublic class RetrofitClient {\r\n\r\n    private static final String BASE_URL = \"http://192.168.1.81:5089/\";\r\n\r\n    private static Retrofit retrofit;\r\n\r\n    public static ApiService getService() {\r\n        if (retrofit == null) {\r\n            // Cấu hình Gson để hiểu định dạng ngày tháng từ API\r\n            Gson gson = new GsonBuilder()\r\n                    .setDateFormat(\"yyyy-MM-dd'T'HH:mm:ss\")\r\n                    .create();\r\n\r\n            retrofit = new Retrofit.Builder()\r\n                    .baseUrl(BASE_URL)\r\n                    // Sử dụng Gson đã được cấu hình\r\n                    .addConverterFactory(GsonConverterFactory.create(gson))\r\n                    .build();\r\n        }\r\n        return retrofit.create(ApiService.class);\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/app/src/main/java/com/example/thiennguyen/api/bangtin/RetrofitClient.java b/app/src/main/java/com/example/thiennguyen/api/bangtin/RetrofitClient.java
+--- a/app/src/main/java/com/example/thiennguyen/api/bangtin/RetrofitClient.java	(revision 33d3b47e928e075d4e536a8d4cd53365d1637416)
++++ b/app/src/main/java/com/example/thiennguyen/api/bangtin/RetrofitClient.java	(date 1764926421372)
+@@ -8,7 +8,7 @@
+ 
+ public class RetrofitClient {
+ 
+-    private static final String BASE_URL = "http://192.168.1.81:5089/";
++    private static final String BASE_URL = "http://192.168.114.213:5089/";
+ 
+     private static Retrofit retrofit;
+ 

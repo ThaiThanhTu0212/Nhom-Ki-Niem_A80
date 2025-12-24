@@ -2,9 +2,11 @@ package com.example.thiennguyen.view.TrangChu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,10 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
+import com.example.thiennguyen.view.data.ApiClient;
+import com.example.thiennguyen.view.data.DTO.ApiResponse;
+import com.example.thiennguyen.view.data.DTO.Response.NguoiDungResponse;
+import com.example.thiennguyen.view.data.api.NguoiDungApi;
 import com.example.thiennguyen.view.model.ChienDich;
 import com.example.thiennguyen.view.model.DanhMuc;
 import com.example.thiennguyen.view.model.NguoiDung;
@@ -23,14 +29,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ProfileHomeActivity extends AppCompatActivity {
     ImageView imageAvatarProfileHome, imageViewBackgroundProfileHme;
     TextView tvNameProfile;
     Button btnFollowProfileHome;
 
-    List<ChienDich> chienDichListHome;
-    List<DanhMuc> danhMuclistHome;
-    List<NguoiDung> nguoiDungListHome;
+    NguoiDungApi nguoiDungApi = ApiClient.getRetrofit().create(NguoiDungApi.class);
 
 
     @Override
@@ -43,26 +51,46 @@ public class ProfileHomeActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        creatListChienDich();
         initUI();
-        initListener();
+        getProfileHomeAPI();
+
     }
 
-    private void initListener() {
+    private void getProfileHomeAPI() {
         Intent intent =getIntent();
         int idND = intent.getIntExtra("ID_NGUOI_DUNG",-1);
-        if (idND != -1){
-            for (NguoiDung nd : nguoiDungListHome){
-                if (nd.getIdNd() ==idND){
+
+        if (idND != -1) {
+            Call<ApiResponse<NguoiDungResponse>> callGetNguoiDungByid = nguoiDungApi.getNguoiDungByIdHome(idND);
+            callGetNguoiDungByid.enqueue(new Callback<ApiResponse<NguoiDungResponse>>() {
+
+                @Override
+                public void onResponse(Call<ApiResponse<NguoiDungResponse>> call, Response<ApiResponse<NguoiDungResponse>> response) {
+                    if (response.isSuccessful()&& response.body()!=null){
+                        SetProfileInformHomeUI(response.body().getResult());
+                        Log.d("DATA", "NguoiDung: " + response.body().getResult().getHoTen());
+                        Log.d("DATA", "Avatar: " + response.body().getResult().getAvatar());
+                        Log.e("Number",String.valueOf(idND));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse<NguoiDungResponse>> call, Throwable t) {
+                    Toast.makeText(ProfileHomeActivity.this, "Lỗi kết nối. Vui lòng thử lại!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else {
+            Log.e("ERORR","loix ");
+        }
+    }
+
+    private void SetProfileInformHomeUI(NguoiDungResponse nd) {
                     tvNameProfile.setText(nd.getHoTen());
                     Glide.with(this)
                             .load(nd.getAvatar())
                             .placeholder(R.drawable.nguoidung)
                             .error(R.drawable.nguoidung)
                             .into(imageAvatarProfileHome);
-                }
-            }
-        }
     }
 
     private void initUI() {
@@ -71,107 +99,5 @@ public class ProfileHomeActivity extends AppCompatActivity {
         btnFollowProfileHome = findViewById(R.id.btnFollowProfileHome);
         imageViewBackgroundProfileHme = findViewById(R.id.imageViewBackgroundProfileHme);
     }
-    private void creatListChienDich() {
-        NguoiDung nd1 = new NguoiDung(1, "Sơn Tùng", "tungnguyen@gmail.com", "0912345678", "123456", "nguoi_ung_ho", "hoat_dong", "https://i.scdn.co/image/ab6761610000e5eb5a79a6ca8c60e4ec1440be53");
-        NguoiDung nd2 = new NguoiDung(2, "Double 2T", "ha.tran@gmail.com", "0987654321", "123456", "nguoi_van_dong", "hoat_dong", "https://cdn2.tuoitre.vn/zoom/700_525/471584752817336320/2025/3/21/vt-double-2t-1-1742527225983542614988-112-0-1102-1890-crop-17425286630251174539582.jpg");
-        NguoiDung nd3 = new NguoiDung(3, "Trần Hà Linh", "vu.le@gmail.com", "0905123456", "123456", "admin", "hoat_dong", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS1EMSNtn7o75dTQvCvyarrLhvgtLWyA0P6g&s");
-        NguoiDung nd4 = new NguoiDung(4, "Độ Mixi", "mixi.pham@gmail.com", "0977888999", "123456", "nguoi_ung_ho", "hoat_dong", "https://cafefcdn.com/203337114487263232/2024/12/24/xi-cau-hon-vo-lan-2-nhung-qua-khung-the-nao-ma-cong-dong-mang-lai-choang-the-nay-16484388521731690750957-17350132878921014156514-1735022686155-17350226863391385593884.jpg");
-        NguoiDung nd5 = new NguoiDung(5, "Độ Mixi", "mixi.pham@gmail.com", "0977888999", "123456", "nguoi_ung_ho", "hoat_dong", "");
 
-        DanhMuc dm1 = new DanhMuc(1, "Y tế");
-        DanhMuc dm2 = new DanhMuc(2, "Giáo dục");
-        DanhMuc dm3 = new DanhMuc(3, "Cứu trợ thiên tai");
-        DanhMuc dm4 = new DanhMuc(4, "Hỗ trợ người vô gia cư");
-
-        // Tạo 4 chiến dịch
-        ChienDich cd1 = new ChienDich(
-                1,
-                "Gây quỹ mổ tim cho trẻ em",
-                "Chiến dịch hỗ trợ chi phí phẫu thuật tim cho trẻ em nghèo.",
-                new BigDecimal("100000000"),
-                new BigDecimal("25000000"),
-                new Date(2025 - 1900, 10, 1),   // 1/11/2025
-                new Date(2025 - 1900, 11, 1),   // 1/12/2025
-                "dang_dien_ra",
-                "TP.HCM",
-                "Quận 1",
-                "123 Nguyễn Huệ",
-                "https://static.thiennguyen.app/public/donate-target/photo/2025/10/10/879b7786-cef5-4998-8821-76b057efec01.jpg",
-                nd1,
-                dm1
-        );
-
-        ChienDich cd2 = new ChienDich(
-                2,
-                "Xây trường học vùng cao",
-                "Giúp trẻ em vùng núi có trường học kiên cố.",
-                new BigDecimal("200000000"),
-                new BigDecimal("80000000"),
-                new Date(2025 - 1900, 9, 15),
-                new Date(2025 - 1900, 11, 30),
-                "dang_dien_ra",
-                "Lào Cai",
-                "Bát Xát",
-                "Thôn A, xã Bản Vược",
-                "https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2021/3/12/888480/Pham-Dinh-Quy-2.jpg",
-                nd2,
-                dm2
-        );
-
-        ChienDich cd3 = new ChienDich(
-                3,
-                "Trồng cây xanh đô thị",
-                "Chiến dịch phủ xanh thành phố với 10.000 cây mới.",
-                new BigDecimal("50000000"),
-                new BigDecimal("12000000"),
-                new Date(2025 - 1900, 8, 20),
-                new Date(2025 - 1900, 9, 20),
-                "hoan_thanh",
-                "Hà Nội",
-                "Cầu Giấy",
-                "456 Xuân Thủy",
-                "https://maykhoanmakita.net/cdn/images/tin-tuc/cay-xanh-do-thi-la-gi-3.jpg",
-                nd3,
-                dm3
-        );
-
-        ChienDich cd4 = new ChienDich(
-                4,
-                "Cứu trợ miền Trung sau bão",
-                "Hỗ trợ người dân bị ảnh hưởng bởi thiên tai bão lũ.",
-                new BigDecimal("300000000"),
-                new BigDecimal("290000000"),
-                new Date(2025 - 1900, 7, 10),
-                new Date(2025 - 1900, 8, 10),
-                "hoan_thanh",
-                "Quảng Nam",
-                "Tam Kỳ",
-                "Thôn Trung An",
-                "https://dienbien.edu.vn/uploads/news/2024_09/image-20240901174657-7.jpeg",
-                nd4,
-                dm4
-        );
-
-
-        chienDichListHome = new ArrayList<>();
-        // Thêm vào danh sách
-        chienDichListHome.add(cd1);
-        chienDichListHome.add(cd2);
-        chienDichListHome.add(cd3);
-        chienDichListHome.add(cd4);
-
-        danhMuclistHome = new ArrayList<>();
-        danhMuclistHome.add(dm1);
-        danhMuclistHome.add(dm2);
-        danhMuclistHome.add(dm3);
-        danhMuclistHome.add(dm4);
-
-        nguoiDungListHome = new ArrayList<>();
-        nguoiDungListHome.add(nd1);
-        nguoiDungListHome.add(nd2);
-        nguoiDungListHome.add(nd3);
-        nguoiDungListHome.add(nd4);
-        nguoiDungListHome.add(nd5);
-
-    }
 }

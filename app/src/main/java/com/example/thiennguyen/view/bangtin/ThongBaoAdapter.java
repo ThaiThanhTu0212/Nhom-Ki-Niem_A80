@@ -50,8 +50,8 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.ThongB
 
         public ThongBaoViewHolder(@NonNull View itemView) {
             super(itemView);
-            avatar = itemView.findViewById(R.id.thongbao_avatar);
-            content = itemView.findViewById(R.id.thongbao_content);
+            avatar = itemView.findViewById(R.id.imgAvatar);
+            content = itemView.findViewById(R.id.tvThongBaoContent);
         }    
     }
 }

@@ -1,5 +1,6 @@
 package com.example.thiennguyen.view.khampha;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class DongHanhAdapter extends RecyclerView.Adapter<DongHanhAdapter.ViewHolder> {
 
-    private final List<DongHanhItem> list;
+    private List<DongHanhItem> list;
 
     public DongHanhAdapter(List<DongHanhItem> list) {
         this.list = list;
@@ -39,6 +40,22 @@ public class DongHanhAdapter extends RecyclerView.Adapter<DongHanhAdapter.ViewHo
         holder.txtDate.setText(item.getStartDate());
         holder.txtSponsor.setText(item.getSponsor());
         holder.imgRank.setImageResource(getRankIcon(item.getRank()));
+
+        holder.itemView.setOnClickListener(v -> {
+            // Check the position to decide which Activity to open
+            if (position == 0) {
+                Intent intent = new Intent(v.getContext(), ChiTietDongHanh1Activity.class);
+                intent.putExtra("TITLE", item.getTitle());
+                intent.putExtra("AMOUNT", item.getAmount());
+                v.getContext().startActivity(intent);
+            } else if (position == 1) {
+                Intent intent = new Intent(v.getContext(), ChiTietDongHanh2Activity.class);
+                v.getContext().startActivity(intent);
+            } else if (position == 2) {
+                Intent intent = new Intent(v.getContext(), ChiTietDongHanh3Activity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     private int getRankIcon(int rank) {
@@ -53,6 +70,11 @@ public class DongHanhAdapter extends RecyclerView.Adapter<DongHanhAdapter.ViewHo
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public void filterList(List<DongHanhItem> filteredList) {
+        this.list = filteredList;
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

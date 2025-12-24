@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "E:\\AndroidA80\\Nhom-Ki-Niem_A80\\backendc#\\wwwroot\\images\\415cc7cb-784c-460d-b527-6b9dac6d54e9.jpg",
+      "PackagePath": "staticwebassets\\images\\415cc7cb-784c-460d-b527-6b9dac6d54e9.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.ThienNguyenAPI.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.ThienNguyenAPI.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.ThienNguyenAPI.props",
+      "PackagePath": "build\\ThienNguyenAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.ThienNguyenAPI.props",
+      "PackagePath": "buildMultiTargeting\\ThienNguyenAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.ThienNguyenAPI.props",
+      "PackagePath": "buildTransitive\\ThienNguyenAPI.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

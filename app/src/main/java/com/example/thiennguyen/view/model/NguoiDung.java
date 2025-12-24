@@ -37,6 +37,14 @@ public class NguoiDung implements Serializable {
         this.soLuotHoTro = 0;
     }
 
+    // Constructor mở rộng để tương thích với dữ liệu mẫu trong UngHoFragment
+    public NguoiDung(int idNd, String hoTen, String email, String soDienThoai,
+                     String userIdTag, String vaiTro, String trangThai, String avatarUrl) {
+        this(idNd, hoTen, email, soDienThoai, userIdTag);
+        // Có thể lưu thêm thông tin nếu cần, tạm thời chỉ sử dụng avatarUrl
+        this.avatarUrl = avatarUrl;
+    }
+
     // --- Getters & Setters ---
     public String getHoTen() { return hoTen; }
     public void setHoTen(String hoTen) { this.hoTen = hoTen; }
