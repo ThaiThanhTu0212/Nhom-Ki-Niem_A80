@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="danh_muc_chien_dich">
+        <item>Giáo dục</item>
+        <item>Y tế</item>
+        <item>Môi trường</item>
+        <item>Thiên tai</item>
+        <item>Người già và trẻ em</item>
+        <item>Khác</item>
+    </string-array>
+</resources>
+

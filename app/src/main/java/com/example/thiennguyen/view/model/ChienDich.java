@@ -1,9 +1,10 @@
 package com.example.thiennguyen.view.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class ChienDich {
+public class ChienDich implements Serializable {
     private int idCd;
     private String tenCd;
     private String moTa;

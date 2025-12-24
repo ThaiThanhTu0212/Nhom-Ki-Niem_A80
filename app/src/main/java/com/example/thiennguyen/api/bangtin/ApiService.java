@@ -34,13 +34,14 @@ public interface ApiService {
     @POST("api/baiviet/{id}/like")
     Call<LikeCommentResponse> likePost(@Path("id") int postId);
 
-    // --- TÍNH NĂNG BÌNH LUẬN MỚI ---
+    // --- TÍNH NĂNG ỦNG HỘ MỚI ---
+    @POST("api/donations")
+    Call<Void> postDonation(@Body DonationRequest donationRequest);
 
-    // Lấy danh sách bình luận của một bài viết
+    // --- TÍNH NĂNG BÌNH LUẬN ---
     @GET("api/baiviet/{id}/comments")
     Call<List<BinhLuan>> getCommentsForPost(@Path("id") int postId);
 
-    // Thêm một bình luận mới vào bài viết
     @POST("api/baiviet/{id}/comments")
     Call<BinhLuan> addCommentToPost(@Path("id") int postId, @Body CommentRequest commentRequest);
 }

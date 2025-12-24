@@ -14,6 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thiennguyen.R;
+import com.example.thiennguyen.view.data.ApiClient;
+import com.example.thiennguyen.view.data.DTO.ApiResponse;
+import com.example.thiennguyen.view.data.DTO.Response.ChienDichResponse;
+import com.example.thiennguyen.view.data.api.ChienDichApi;
 import com.example.thiennguyen.view.model.ChienDich;
 import com.example.thiennguyen.view.model.DanhMuc;
 import com.example.thiennguyen.view.model.NguoiDung;
@@ -23,16 +27,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class DanhSachChienDichActivity extends AppCompatActivity {
     RecyclerView listcd_homeRecycleid, loaiCd_ctcd_home;
-    List<ChienDich> chienDichListHome;
-    List<ChienDich> chienDichListChildHome;
-    List<DanhMuc> danhMuclistHome;
-    List<NguoiDung> nguoiDungListHome;
+    List<DanhMuc> danhMuclistHome = new ArrayList<>();
     ImageView image_back_tolist;
     ListChienDichHomeAdapter listChienDichHomeAdapter;
-    DanhMucHomeAdapter danhMucHomeAdapter;
+    DanhMuchHomeAdapter danhMuchHomeAdapter;
     SearchView searchBarHomeId;
+    List<ChienDichResponse> chienDichResponseList = new ArrayList<>();
+    ChienDichApi chienDichApi = ApiClient.getRetrofit().create(ChienDichApi.class);
 
 
     @Override
@@ -45,10 +52,56 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        creatListChienDich();
-        initUI();
 
+        initUI();
+        callApi();
         initListener();
+    }
+
+    private void callApi() {
+        // Kiểm tra xem có Intent với ID_DANH_MUC không
+        int idDanhMuc = getIntent().getIntExtra("ID_DANH_MUC", -1);
+        
+        if (idDanhMuc != -1) {
+            // Nếu có ID danh mục từ Intent, lấy danh sách chiến dịch theo danh mục
+            getListChienDichByIdDm(idDanhMuc);
+        } else {
+            // Nếu không có, lấy tất cả chiến dịch
+            Call<ApiResponse<List<ChienDichResponse>>> callGetChienDich = chienDichApi.getAllChienDichResponse();
+            callGetChienDich.enqueue(new Callback<ApiResponse<List<ChienDichResponse>>>() {
+                @Override
+                public void onResponse(Call<ApiResponse<List<ChienDichResponse>>> call, Response<ApiResponse<List<ChienDichResponse>>> response) {
+                    if (response.isSuccessful() && response.body()!= null){
+                        chienDichResponseList.clear();
+                        chienDichResponseList.addAll(response.body().getResult());
+                        listChienDichHomeAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse<List<ChienDichResponse>>> call, Throwable t) {
+
+                }
+            });
+        }
+        
+        //getAllCategory
+        Call<ApiResponse<List<DanhMuc>>> callGetAllDanhMuc = chienDichApi.getAllDanhMuc();
+        callGetAllDanhMuc.enqueue(new Callback<ApiResponse<List<DanhMuc>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<DanhMuc>>> call, Response<ApiResponse<List<DanhMuc>>> response) {
+                if (response.isSuccessful() && response.body()!= null){
+                    danhMuclistHome.clear();
+                    danhMuclistHome.addAll(response.body().getResult());
+                    danhMuchHomeAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<DanhMuc>>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void initListener() {
@@ -57,48 +110,61 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
         });
     }
 
+    public void getListChienDichByIdDm(Integer idDm){
+        if(idDm == null) {
+            //lấy danh sách từ danh mục ở trang chủ
+            idDm = getIntent().getIntExtra("ID_DANH_MUC", -1);
+        }
+        if (idDm != null && idDm != -1){
+            Call<ApiResponse<List<ChienDichResponse>>> callGetListChienDichByIdDm = chienDichApi.getAllChienDichByIdDanhMuc(idDm);
+            callGetListChienDichByIdDm.enqueue(new Callback<ApiResponse<List<ChienDichResponse>>>() {
+                @Override
+                public void onResponse(Call<ApiResponse<List<ChienDichResponse>>> call, Response<ApiResponse<List<ChienDichResponse>>> response) {
+                    if (response.isSuccessful()&& response.body()!= null){
+                        chienDichResponseList.clear();
+                        chienDichResponseList.addAll(response.body().getResult());
+                        listChienDichHomeAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse<List<ChienDichResponse>>> call, Throwable t) {
+
+                }
+            });
+
+        }
+    }
+
     private void initUI() {
         image_back_tolist = findViewById(R.id.image_back_tolist);
 
-        //lấy danh sách từ danh mục ở trang chủ
-        int idDanhMuc = getIntent().getIntExtra("ID_DANH_MUC", -1);
-        if (idDanhMuc != -1){
-            chienDichListChildHome.clear();
-            for (ChienDich cd : chienDichListHome) {
-                if (cd.getDanhMuc() != null && cd.getDanhMuc().getIdDm() == idDanhMuc) {
-                    chienDichListChildHome.add(cd);
-                }
-            }
-        }
+
 
         //danh sach chien dich
         listcd_homeRecycleid = findViewById(R.id.listcd_homeRecycleid);
-        listChienDichHomeAdapter = new ListChienDichHomeAdapter(chienDichListChildHome);
+        listChienDichHomeAdapter = new ListChienDichHomeAdapter(chienDichResponseList);
         listcd_homeRecycleid.setLayoutManager(new LinearLayoutManager(this));
         listChienDichHomeAdapter.setListener(chienDich -> {
             Intent intent = new Intent(DanhSachChienDichActivity.this,ChiTietChienDichHomeActivity.class);
-            intent.putExtra("ID_CHIEN_DICH",String.valueOf(chienDich.getIdCd()));
+            intent.putExtra("ID_CHIEN_DICH",chienDich.getIdCd());
             startActivity(intent);
         });
         listcd_homeRecycleid.setAdapter(listChienDichHomeAdapter);
 
         //danh sach loai chien dich
         loaiCd_ctcd_home = findViewById(R.id.loaiCd_ctcd_home);
-        danhMucHomeAdapter = new DanhMucHomeAdapter(danhMuclistHome);
+        danhMuchHomeAdapter = new DanhMuchHomeAdapter(danhMuclistHome);
         loaiCd_ctcd_home.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
 
-        danhMucHomeAdapter.setListener(danhMuc -> {
-            chienDichListChildHome.clear();
-            for (ChienDich cd : chienDichListHome){
-                if (cd.getDanhMuc() != null && cd.getDanhMuc().getIdDm() == danhMuc.getIdDm()){
-                    chienDichListChildHome.add(cd);
-                }
-            }
-            listChienDichHomeAdapter.notifyDataSetChanged();
+        danhMuchHomeAdapter.setListener(danhMuc -> {
+
+            getListChienDichByIdDm(danhMuc.getIdDm());
+
         });
 
-        loaiCd_ctcd_home.setAdapter(danhMucHomeAdapter);
+        loaiCd_ctcd_home.setAdapter(danhMuchHomeAdapter);
 
 
 
@@ -118,110 +184,5 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
 
 
     }
-    private void creatListChienDich() {
-        NguoiDung nd1 = new NguoiDung(1, "Sơn Tùng", "tungnguyen@gmail.com", "0912345678", "123456", "nguoi_ung_ho", "hoat_dong", "https://i.scdn.co/image/ab6761610000e5eb5a79a6ca8c60e4ec1440be53");
-        NguoiDung nd2 = new NguoiDung(2, "Double 2T", "ha.tran@gmail.com", "0987654321", "123456", "nguoi_van_dong", "hoat_dong", "https://cdn2.tuoitre.vn/zoom/700_525/471584752817336320/2025/3/21/vt-double-2t-1-1742527225983542614988-112-0-1102-1890-crop-17425286630251174539582.jpg");
-        NguoiDung nd3 = new NguoiDung(3, "Trần Hà Linh", "vu.le@gmail.com", "0905123456", "123456", "admin", "hoat_dong", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS1EMSNtn7o75dTQvCvyarrLhvgtLWyA0P6g&s");
-        NguoiDung nd4 = new NguoiDung(4, "Độ Mixi", "mixi.pham@gmail.com", "0977888999", "123456", "nguoi_ung_ho", "hoat_dong", "https://cafefcdn.com/203337114487263232/2024/12/24/xi-cau-hon-vo-lan-2-nhung-qua-khung-the-nao-ma-cong-dong-mang-lai-choang-the-nay-16484388521731690750957-17350132878921014156514-1735022686155-17350226863391385593884.jpg");
-        NguoiDung nd5 = new NguoiDung(5, "Độ Mixi", "mixi.pham@gmail.com", "0977888999", "123456", "nguoi_ung_ho", "hoat_dong", "");
 
-        DanhMuc dm1 = new DanhMuc(1, "Y tế");
-        DanhMuc dm2 = new DanhMuc(2, "Giáo dục");
-        DanhMuc dm3 = new DanhMuc(3, "Cứu trợ thiên tai");
-        DanhMuc dm4 = new DanhMuc(4, "Hỗ trợ người vô gia cư");
-
-        // Tạo 4 chiến dịch
-        ChienDich cd1 = new ChienDich(
-                1,
-                "Gây quỹ mổ tim cho trẻ em",
-                "Chiến dịch hỗ trợ chi phí phẫu thuật tim cho trẻ em nghèo.",
-                new BigDecimal("100000000"),
-                new BigDecimal("25000000"),
-                new Date(2025 - 1900, 10, 1),   // 1/11/2025
-                new Date(2025 - 1900, 11, 1),   // 1/12/2025
-                "dang_dien_ra",
-                "TP.HCM",
-                "Quận 1",
-                "123 Nguyễn Huệ",
-                "https://static.thiennguyen.app/public/donate-target/photo/2025/10/10/879b7786-cef5-4998-8821-76b057efec01.jpg",
-                nd1,
-                dm1
-        );
-
-        ChienDich cd2 = new ChienDich(
-                2,
-                "Xây trường học vùng cao",
-                "Giúp trẻ em vùng núi có trường học kiên cố.",
-                new BigDecimal("200000000"),
-                new BigDecimal("80000000"),
-                new Date(2025 - 1900, 9, 15),
-                new Date(2025 - 1900, 11, 30),
-                "dang_dien_ra",
-                "Lào Cai",
-                "Bát Xát",
-                "Thôn A, xã Bản Vược",
-                "https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2021/3/12/888480/Pham-Dinh-Quy-2.jpg",
-                nd2,
-                dm2
-        );
-
-        ChienDich cd3 = new ChienDich(
-                3,
-                "Trồng cây xanh đô thị",
-                "Chiến dịch phủ xanh thành phố với 10.000 cây mới.",
-                new BigDecimal("50000000"),
-                new BigDecimal("12000000"),
-                new Date(2025 - 1900, 8, 20),
-                new Date(2025 - 1900, 9, 20),
-                "hoan_thanh",
-                "Hà Nội",
-                "Cầu Giấy",
-                "456 Xuân Thủy",
-                "https://maykhoanmakita.net/cdn/images/tin-tuc/cay-xanh-do-thi-la-gi-3.jpg",
-                nd3,
-                dm3
-        );
-
-        ChienDich cd4 = new ChienDich(
-                4,
-                "Cứu trợ miền Trung sau bão",
-                "Hỗ trợ người dân bị ảnh hưởng bởi thiên tai bão lũ.",
-                new BigDecimal("300000000"),
-                new BigDecimal("290000000"),
-                new Date(2025 - 1900, 7, 10),
-                new Date(2025 - 1900, 8, 10),
-                "hoan_thanh",
-                "Quảng Nam",
-                "Tam Kỳ",
-                "Thôn Trung An",
-                "https://dienbien.edu.vn/uploads/news/2024_09/image-20240901174657-7.jpeg",
-                nd4,
-                dm4
-        );
-
-
-        chienDichListHome = new ArrayList<>();
-        // Thêm vào danh sách
-        chienDichListHome.add(cd1);
-        chienDichListHome.add(cd2);
-        chienDichListHome.add(cd3);
-        chienDichListHome.add(cd4);
-
-        chienDichListChildHome = new ArrayList<>(chienDichListHome);
-
-
-        danhMuclistHome = new ArrayList<>();
-        danhMuclistHome.add(dm1);
-        danhMuclistHome.add(dm2);
-        danhMuclistHome.add(dm3);
-        danhMuclistHome.add(dm4);
-
-        nguoiDungListHome = new ArrayList<>();
-        nguoiDungListHome.add(nd1);
-        nguoiDungListHome.add(nd2);
-        nguoiDungListHome.add(nd3);
-        nguoiDungListHome.add(nd4);
-        nguoiDungListHome.add(nd5);
-
-    }
 }
