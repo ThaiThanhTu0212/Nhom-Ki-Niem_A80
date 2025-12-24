@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class NewsPost implements Serializable {
     public int id;
+    public Integer campaignId; // ID của chiến dịch (có thể null)
     public String author;
     public String time;
     public String content;
@@ -21,12 +22,13 @@ public class NewsPost implements Serializable {
 
     // Constructor cũ (giữ lại để tương thích nếu cần)
     public NewsPost(int id, String author, String time, String content, String imageUrl, int avatarResource, int likeCount, int commentCount) {
-        this(id, author, time, content, imageUrl, avatarResource, likeCount, commentCount, false, 0, 0, 0);
+        this(id, null, author, time, content, imageUrl, avatarResource, likeCount, commentCount, false, 0, 0, 0);
     }
 
     // Constructor mới đầy đủ
-    public NewsPost(int id, String author, String time, String content, String imageUrl, int avatarResource, int likeCount, int commentCount, boolean showDonationBar, int donationProgress, int donatorsCount, int daysLeft) {
+    public NewsPost(int id, Integer campaignId, String author, String time, String content, String imageUrl, int avatarResource, int likeCount, int commentCount, boolean showDonationBar, int donationProgress, int donatorsCount, int daysLeft) {
         this.id = id;
+        this.campaignId = campaignId;
         this.author = author;
         this.time = time;
         this.content = content;

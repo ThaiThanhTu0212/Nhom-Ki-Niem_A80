@@ -56,7 +56,7 @@ public class ProfileHomeActivity extends AppCompatActivity {
                 if (nd.getIdNd() ==idND){
                     tvNameProfile.setText(nd.getHoTen());
                     Glide.with(this)
-                            .load(nd.getAvatar())
+                            .load(nd.getAvatarUrl())
                             .placeholder(R.drawable.nguoidung)
                             .error(R.drawable.nguoidung)
                             .into(imageAvatarProfileHome);

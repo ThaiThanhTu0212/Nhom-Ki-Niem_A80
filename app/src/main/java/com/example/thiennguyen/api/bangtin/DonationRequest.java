@@ -5,16 +5,16 @@ import com.google.gson.annotations.SerializedName;
 public class DonationRequest {
 
     @SerializedName("UserId")
-    private int userId;
+    public int userId;
 
     @SerializedName("PostId")
-    private int postId;
+    public int postId;
 
     @SerializedName("Amount")
-    private double amount;
+    public double amount;
 
     @SerializedName("Message")
-    private String message;
+    public String message;
 
     public DonationRequest(int userId, int postId, double amount, String message) {
         this.userId = userId;

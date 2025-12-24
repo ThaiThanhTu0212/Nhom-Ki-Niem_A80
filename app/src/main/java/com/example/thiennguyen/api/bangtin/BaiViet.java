@@ -3,12 +3,15 @@ package com.example.thiennguyen.api.bangtin;
 import com.google.gson.annotations.SerializedName;
 
 public class BaiViet {
-    // SỬA LỖI: Đồng bộ lại với server, server trả về "id"
+
     @SerializedName("id")
     public int id;
 
     @SerializedName("idNguoiDang")
-    public int idNguoiDang;
+    public Integer idNguoiDang;
+
+    @SerializedName("idChienDich")
+    public Integer idChienDich;
 
     @SerializedName("noiDung")
     public String noiDung;
