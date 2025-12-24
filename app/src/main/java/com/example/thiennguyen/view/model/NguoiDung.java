@@ -3,38 +3,62 @@ package com.example.thiennguyen.view.model;
 import java.io.Serializable;
 
 public class NguoiDung implements Serializable {
-    // Các trường cơ bản
     private int idNd;
     private String hoTen;
     private String email;
     private String soDienThoai;
-    private String userIdTag; // @phat123
+    private String userIdTag; // Ví dụ: @phat123
 
-    // Dữ liệu ảnh (Lưu dưới dạng String URI hoặc URL)
+    // Đường dẫn ảnh
     private String avatarUrl;
     private String bannerUrl;
 
-    // Dữ liệu thống kê
+    // Các trường cũ (giữ lại để tránh lỗi code cũ)
+    private String matKhau;
+    private String vaiTro;
+    private String trangThai;
+
+    // Thống kê
     private int soNguoiTheoDoi;
     private int soBaiViet;
     private String tongTienUngHo;
     private int soChienDichThamGia;
     private int soLuotHoTro;
 
-    public NguoiDung() {
-        // Constructor rỗng cần thiết cho một số thao tác
-    }
+    public NguoiDung() { }
 
-    // Constructor đầy đủ
-    public NguoiDung(int idNd, String hoTen, String email, String soDienThoai, String userIdTag, String avatarUrl) {
+    // --- CONSTRUCTOR 1: MỚI (Dùng cho màn hình Tài khoản) ---
+    public NguoiDung(int idNd, String hoTen, String email, String soDienThoai, String userIdTag) {
         this.idNd = idNd;
         this.hoTen = hoTen;
         this.email = email;
         this.soDienThoai = soDienThoai;
         this.userIdTag = userIdTag;
-        this.avatarUrl = avatarUrl;
 
-        // Dữ liệu giả định ban đầu
+        // Mặc định
+        this.soNguoiTheoDoi = 0;
+        this.soBaiViet = 0;
+        this.tongTienUngHo = "0 đ";
+        this.soChienDichThamGia = 0;
+        this.soLuotHoTro = 0;
+    }
+
+    // --- CONSTRUCTOR 2: CŨ (Fix lỗi ChiTietChienDichHomeActivity) ---
+    // Đây là cái Activity đang thiếu
+    public NguoiDung(int idNd, String hoTen, String email, String soDienThoai, String matKhau, String vaiTro, String trangThai, String avatar) {
+        this.idNd = idNd;
+        this.hoTen = hoTen;
+        this.email = email;
+        this.soDienThoai = soDienThoai;
+        this.matKhau = matKhau;
+        this.vaiTro = vaiTro;
+        this.trangThai = trangThai;
+
+        // Map dữ liệu cũ sang mới
+        this.avatarUrl = avatar;
+        this.userIdTag = "@user" + idNd; // Tạo tạm tag nếu code cũ không có
+
+        // Init chỉ số thống kê
         this.soNguoiTheoDoi = 0;
         this.soBaiViet = 0;
         this.tongTienUngHo = "0 đ";
@@ -43,6 +67,9 @@ public class NguoiDung implements Serializable {
     }
 
     // --- Getters & Setters ---
+    public int getIdNd() { return idNd; }
+    public void setIdNd(int idNd) { this.idNd = idNd; }
+
     public String getHoTen() { return hoTen; }
     public void setHoTen(String hoTen) { this.hoTen = hoTen; }
 
@@ -53,6 +80,7 @@ public class NguoiDung implements Serializable {
     public void setSoDienThoai(String soDienThoai) { this.soDienThoai = soDienThoai; }
 
     public String getUserIdTag() { return userIdTag; }
+    public void setUserIdTag(String userIdTag) { this.userIdTag = userIdTag; }
 
     public String getAvatarUrl() { return avatarUrl; }
     public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
@@ -60,7 +88,12 @@ public class NguoiDung implements Serializable {
     public String getBannerUrl() { return bannerUrl; }
     public void setBannerUrl(String bannerUrl) { this.bannerUrl = bannerUrl; }
 
-    // Helpers trả về String cho TextView
+    // Getter cho các trường cũ
+    public String getMatKhau() { return matKhau; }
+    public String getVaiTro() { return vaiTro; }
+    public String getTrangThai() { return trangThai; }
+
+    // Helpers hiển thị
     public String getDisplayFollowers() { return String.valueOf(soNguoiTheoDoi); }
     public String getDisplayPosts() { return String.valueOf(soBaiViet); }
     public String getDisplayCampaigns() { return String.valueOf(soChienDichThamGia); }
