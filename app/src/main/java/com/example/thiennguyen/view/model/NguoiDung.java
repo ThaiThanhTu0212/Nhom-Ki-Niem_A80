@@ -16,6 +16,7 @@ public class NguoiDung implements Serializable {
     // Thống kê
     private int soNguoiTheoDoi;
     private int soBaiViet;
+
     private String tongTienUngHo;
     private int soChienDichThamGia;
     private int soLuotHoTro;
@@ -44,6 +45,7 @@ public class NguoiDung implements Serializable {
         // Có thể lưu thêm thông tin nếu cần, tạm thời chỉ sử dụng avatarUrl
         this.avatarUrl = avatarUrl;
     }
+
 
     // --- Getters & Setters ---
     public String getHoTen() { return hoTen; }
