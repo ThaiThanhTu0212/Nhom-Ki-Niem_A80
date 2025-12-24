@@ -48,7 +48,7 @@ public class ChiTietDongHanh2Activity extends AppCompatActivity {
         txtCampaignTitleDetail.setText(title);
 
         // Use the correct image for the elderly support campaign
-        Glide.with(this).load(R.drawable.khampha_donghanh2).into(imgCampaign);
+        Glide.with(this).load(R.drawable.h2).into(imgCampaign);
 
         txtSponsorDetail.setText("Tổ chức bởi: MB ĐỒNG SÀI GÒN");
         

@@ -36,7 +36,7 @@ public class DongHanhItem {
         List<DongHanhItem> list = new ArrayList<>();
 
         list.add(new DongHanhItem(
-                R.drawable.khampha_donghanh1,
+                R.drawable.h3,
                 "Chương trình cứu đói vùng thiên tai",
                 "1.943.863.336 đ",
                 "05/08/2025",
@@ -46,7 +46,7 @@ public class DongHanhItem {
 
 
         list.add(new DongHanhItem(
-                R.drawable.khampha_donghanh2,
+                R.drawable.h2,
                 "Chương trình hỗ trợ những cụ già neo đơn",
                 "1.006.243.000 đ",
                 "09/08/2025",
@@ -56,7 +56,7 @@ public class DongHanhItem {
 
 
         list.add(new DongHanhItem(
-                R.drawable.khampha_donghanh3,
+                R.drawable.h1,
                 "Chương trình hỗ trợ gia đình nghèo",
                 "981.152.110 đ",
                 "24/04/2025",

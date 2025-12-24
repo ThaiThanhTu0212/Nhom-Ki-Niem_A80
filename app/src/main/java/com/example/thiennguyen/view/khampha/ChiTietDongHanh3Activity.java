@@ -45,7 +45,7 @@ public class ChiTietDongHanh3Activity extends AppCompatActivity {
         txtCampaignTitleDetail.setText(title);
 
         // Use a suitable image for the poor families support campaign
-        Glide.with(this).load(R.drawable.khampha_donghanh3).into(imgCampaignHeader);
+        Glide.with(this).load(R.drawable.h1).into(imgCampaignHeader);
 
         txtSponsorDetail.setText("Tổ chức bởi: MB - Khối CNTT");
 
