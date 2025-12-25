@@ -43,7 +43,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import okhttp3.MediaType;
@@ -113,7 +115,6 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        // Tải lại toàn bộ bài viết để cập nhật số lượng comment
                         loadPostsFromServer();
                     }
                 });
@@ -147,12 +148,10 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
+            public void onTabUnselected(TabLayout.Tab tab) {}
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
     }
 
@@ -175,16 +174,12 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
                 emptyMessage = "Chưa có bài viết nào.";
                 break;
             case 1: // Đã lưu
-                List<NewsPost> savedPosts = allPosts.stream()
-                        .filter(p -> p.isSaved)
-                        .collect(Collectors.toList());
+                List<NewsPost> savedPosts = allPosts.stream().filter(p -> p.isSaved).collect(Collectors.toList());
                 displayedPostList.addAll(savedPosts);
                 emptyMessage = "Bạn chưa lưu bài viết nào.";
                 break;
             case 2: // Đang theo dõi
-                List<NewsPost> followedPosts = allPosts.stream()
-                        .filter(p -> p.isFollowingAuthor)
-                        .collect(Collectors.toList());
+                List<NewsPost> followedPosts = allPosts.stream().filter(p -> p.isFollowingAuthor).collect(Collectors.toList());
                 displayedPostList.addAll(followedPosts);
                 emptyMessage = "Bạn chưa theo dõi một cá nhân hay tổ chức nào.";
                 break;
@@ -203,9 +198,7 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
     }
 
     private void loadPostsFromServer() {
-        if (RetrofitClient.getService() == null || getContext() == null) {
-            return;
-        }
+        if (RetrofitClient.getService() == null || getContext() == null) return;
 
         RetrofitClient.getService().getBaiViets().enqueue(new Callback<List<BaiViet>>() {
             @Override
@@ -216,9 +209,8 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
                     allPosts.clear();
                     for (BaiViet bv : response.body()) {
                         String imageUrl = buildImageUrl(bv.hinhAnh);
-
-                        boolean showDonation = bv.idChienDich != null;
-                        allPosts.add(new NewsPost(bv.id, bv.idChienDich, "Người dùng " + bv.idNguoiDang, bv.ngayDang, bv.noiDung, imageUrl, R.drawable.ic_launcher_background, bv.soLuotThich, bv.soLuotBinhLuan, showDonation, 25, 120, 7));
+                        // SỬA LỖI Ở ĐÂY: Sử dụng trực tiếp giá trị `showDonationBar` từ backend
+                        allPosts.add(new NewsPost(bv.id, bv.idChienDich, "Người dùng " + bv.idNguoiDang, bv.ngayDang, bv.noiDung, imageUrl, R.drawable.ic_launcher_background, bv.soLuotThich, bv.soLuotBinhLuan, bv.showDonationBar, bv.donationProgress, bv.donatorsCount, bv.daysLeft));
                     }
                     filterAndShowPosts(tabLayout.getSelectedTabPosition());
                 } else {
@@ -230,6 +222,94 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
             public void onFailure(Call<List<BaiViet>> call, Throwable t) {
                 if (!isAdded()) return;
                 Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void showCreatePostDialog() {
+        if (getContext() == null) return;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_create_post, null);
+        EditText edt = dialogView.findViewById(R.id.edt_create_post_content);
+        ImageView btnAddPhoto = dialogView.findViewById(R.id.btn_add_photo);
+        dialogImgSelectedPhoto = dialogView.findViewById(R.id.img_selected_photo);
+        dialogBtnRemovePhoto = dialogView.findViewById(R.id.btn_remove_photo);
+        final CheckBox chkCallForDonation = dialogView.findViewById(R.id.chk_call_for_donation);
+
+        selectedImageUri = null;
+        dialogImgSelectedPhoto.setImageURI(null);
+        dialogImgSelectedPhoto.setVisibility(View.GONE);
+        dialogBtnRemovePhoto.setVisibility(View.GONE);
+
+        btnAddPhoto.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            imagePickerLauncher.launch(intent);
+        });
+
+        dialogBtnRemovePhoto.setOnClickListener(v -> {
+            selectedImageUri = null;
+            dialogImgSelectedPhoto.setImageURI(null);
+            dialogImgSelectedPhoto.setVisibility(View.GONE);
+            dialogBtnRemovePhoto.setVisibility(View.GONE);
+        });
+
+        builder.setView(dialogView)
+                .setTitle("Chia sẻ điều gì đó...")
+                .setPositiveButton("Đăng", (d, w) -> {
+                    String content = edt.getText().toString().trim();
+                    boolean isCallingForDonation = chkCallForDonation.isChecked();
+                    if (!content.isEmpty() || selectedImageUri != null) {
+                        createPostOnServer(1, content, selectedImageUri, isCallingForDonation);
+                    } else {
+                        Toast.makeText(getContext(), "Nhập nội dung hoặc chọn ảnh đi nào!", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
+    }
+
+    private void createPostOnServer(int idNguoiDang, String noiDung, @Nullable Uri imageUri, boolean isCallingForDonation) {
+        if (RetrofitClient.getService() == null || getContext() == null) return;
+
+        Map<String, RequestBody> params = new HashMap<>();
+        params.put("IdNguoiDang", RequestBody.create(MediaType.parse("text/plain"), String.valueOf(idNguoiDang)));
+        params.put("NoiDung", RequestBody.create(MediaType.parse("text/plain"), noiDung));
+
+        String isCallingValue = isCallingForDonation ? "1" : "0";
+        params.put("IsCallingForDonation", RequestBody.create(MediaType.parse("text/plain"), isCallingValue));
+
+        MultipartBody.Part filePart = null;
+        if (imageUri != null) {
+            try (InputStream inputStream = getContext().getContentResolver().openInputStream(imageUri)) {
+                if (inputStream == null) throw new IOException("Không thể mở InputStream từ Uri");
+                byte[] fileBytes = getBytes(inputStream);
+                String mimeType = getMimeType(imageUri);
+                String fileName = getFileName(imageUri);
+                if (mimeType == null || fileName == null) throw new IOException("Không thể lấy thông tin tệp tin.");
+                RequestBody fileBody = RequestBody.create(MediaType.parse(mimeType), fileBytes);
+                filePart = MultipartBody.Part.createFormData("File", fileName, fileBody);
+            } catch (IOException e) {
+                Toast.makeText(getContext(), "Lỗi khi xử lý tệp hình ảnh.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
+        Call<CreatePostResponse> call = RetrofitClient.getService().createBaiViet(params, filePart);
+
+        call.enqueue(new Callback<CreatePostResponse>() {
+            @Override
+            public void onResponse(Call<CreatePostResponse> call, Response<CreatePostResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Toast.makeText(getContext(), "Đăng thành công!", Toast.LENGTH_SHORT).show();
+                    loadPostsFromServer();
+                } else {
+                    Toast.makeText(getContext(), "Đăng bài thất bại, mã lỗi: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CreatePostResponse> call, Throwable t) {
+                Toast.makeText(getContext(), "Lỗi: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -302,7 +382,6 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
         PopupMenu popup = new PopupMenu(getContext(), view);
         popup.getMenuInflater().inflate(R.menu.post_options_menu, popup.getMenu());
 
-        // Dynamically change menu item titles
         Menu menu = popup.getMenu();
         MenuItem saveItem = menu.findItem(R.id.action_save_post);
         MenuItem followItem = menu.findItem(R.id.action_follow_author);
@@ -334,29 +413,25 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
 
     private void toggleSaveStatus(NewsPost post) {
         boolean isCurrentlyOnSavedTab = tabLayout.getSelectedTabPosition() == 1;
-        boolean isUnsaving = post.isSaved; // The state BEFORE toggling
+        boolean isUnsaving = post.isSaved;
 
-        post.isSaved = !post.isSaved; // Toggle the state
+        post.isSaved = !post.isSaved;
         Toast.makeText(getContext(), post.isSaved ? "Đã lưu bài viết" : "Đã bỏ lưu bài viết", Toast.LENGTH_SHORT).show();
 
-        // If user is unsaving while on the 'Saved' tab, go back to 'Latest'
         if (isUnsaving && isCurrentlyOnSavedTab) {
             tabLayout.selectTab(tabLayout.getTabAt(0));
         } else {
-            // Otherwise, just refresh the current list.
             filterAndShowPosts(tabLayout.getSelectedTabPosition());
         }
     }
 
     private void toggleFollowStatus(NewsPost post) {
         boolean isCurrentlyOnFollowingTab = tabLayout.getSelectedTabPosition() == 2;
-        boolean isUnfollowing = post.isFollowingAuthor; // The state BEFORE toggling
+        boolean isUnfollowing = post.isFollowingAuthor;
         String author = post.author;
 
-        // The new state will be the opposite of the current state
         boolean nowFollowing = !isUnfollowing;
 
-        // Update follow status for all posts by the same author in the master list
         for (NewsPost p : allPosts) {
             if (p.author.equals(author)) {
                 p.isFollowingAuthor = nowFollowing;
@@ -365,11 +440,9 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
 
         Toast.makeText(getContext(), nowFollowing ? "Đã theo dõi " + author : "Đã bỏ theo dõi " + author, Toast.LENGTH_SHORT).show();
 
-        // If user is unfollowing while on the 'Following' tab, go back to 'Latest'
         if (isUnfollowing && isCurrentlyOnFollowingTab) {
             tabLayout.selectTab(tabLayout.getTabAt(0));
         } else {
-            // Otherwise, just refresh the current list.
             filterAndShowPosts(tabLayout.getSelectedTabPosition());
         }
     }
@@ -381,110 +454,14 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
         Intent intent = new Intent(getActivity(), ChuyenTienActivity.class);
         intent.putExtra("POST_ID", post.id);
         intent.putExtra("RECEIVER_NAME", post.author);
-        // Thêm ID chiến dịch vào Intent
         if (post.campaignId != null) {
             intent.putExtra("CAMPAIGN_ID", post.campaignId);
         }
         startActivity(intent);
     }
 
-    private void showCreatePostDialog() {
-        if (getContext() == null) return;
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_create_post, null);
-        EditText edt = dialogView.findViewById(R.id.edt_create_post_content);
-        ImageView btnAddPhoto = dialogView.findViewById(R.id.btn_add_photo);
-        dialogImgSelectedPhoto = dialogView.findViewById(R.id.img_selected_photo);
-        dialogBtnRemovePhoto = dialogView.findViewById(R.id.btn_remove_photo);
-        final CheckBox chkCallForDonation = dialogView.findViewById(R.id.chk_call_for_donation);
-
-        selectedImageUri = null;
-        dialogImgSelectedPhoto.setImageURI(null);
-        dialogImgSelectedPhoto.setVisibility(View.GONE);
-        dialogBtnRemovePhoto.setVisibility(View.GONE);
-
-        btnAddPhoto.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            imagePickerLauncher.launch(intent);
-        });
-
-        dialogBtnRemovePhoto.setOnClickListener(v -> {
-            selectedImageUri = null;
-            dialogImgSelectedPhoto.setImageURI(null);
-            dialogImgSelectedPhoto.setVisibility(View.GONE);
-            dialogBtnRemovePhoto.setVisibility(View.GONE);
-        });
-
-        builder.setView(dialogView)
-                .setTitle("Chia sẻ điều gì đó...")
-                .setPositiveButton("Đăng", (d, w) -> {
-                    String content = edt.getText().toString().trim();
-                    boolean isCallingForDonation = chkCallForDonation.isChecked();
-                    if (!content.isEmpty() || selectedImageUri != null) {
-                        createPostOnServer(1, content, selectedImageUri, isCallingForDonation);
-                    } else {
-                        Toast.makeText(getContext(), "Nhập nội dung hoặc chọn ảnh đi nào!", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .setNegativeButton("Hủy", null)
-                .show();
-    }
-
-    private void createPostOnServer(int idNguoiDang, String noiDung, @Nullable Uri imageUri, boolean isCallingForDonation) {
-        if (RetrofitClient.getService() == null || getContext() == null) return;
-
-        RequestBody idNguoiDangPart = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(idNguoiDang));
-        RequestBody noiDungPart = RequestBody.create(MediaType.parse("text/plain"), noiDung);
-
-        // SỬA LỖI: Gửi 1 hoặc 0 thay vì "true"/"false"
-        String isCallingValue = isCallingForDonation ? "1" : "0";
-        RequestBody isCallingPart = RequestBody.create(MediaType.parse("text/plain"), isCallingValue);
-
-        MultipartBody.Part filePart = null;
-
-        if (imageUri != null) {
-            try (InputStream inputStream = getContext().getContentResolver().openInputStream(imageUri)) {
-                if (inputStream == null) throw new IOException("Không thể mở InputStream từ Uri");
-
-                byte[] fileBytes = getBytes(inputStream);
-                String mimeType = getMimeType(imageUri);
-                String fileName = getFileName(imageUri);
-
-                if (mimeType == null || fileName == null) throw new IOException("Không thể lấy thông tin tệp tin.");
-
-                RequestBody fileBody = RequestBody.create(MediaType.parse(mimeType), fileBytes);
-                filePart = MultipartBody.Part.createFormData("File", fileName, fileBody);
-
-            } catch (IOException e) {
-                Toast.makeText(getContext(), "Lỗi khi xử lý tệp hình ảnh.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }
-
-        Call<CreatePostResponse> call = RetrofitClient.getService().createBaiViet(idNguoiDangPart, noiDungPart, isCallingPart, filePart);
-
-        call.enqueue(new Callback<CreatePostResponse>() {
-            @Override
-            public void onResponse(Call<CreatePostResponse> call, Response<CreatePostResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    Toast.makeText(getContext(), "Đăng thành công!", Toast.LENGTH_SHORT).show();
-                    loadPostsFromServer();
-                } else {
-                    Toast.makeText(getContext(), "Đăng bài thất bại, mã lỗi: " + response.code(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CreatePostResponse> call, Throwable t) {
-                Toast.makeText(getContext(), "Lỗi: " + t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
     private void deletePost(final int position) {
-        if (getContext() == null || position < 0 || position >= displayedPostList.size()) {
-            return;
-        }
+        if (getContext() == null || position < 0 || position >= displayedPostList.size()) return;
 
         NewsPost postToDelete = displayedPostList.get(position);
         int postId = postToDelete.id;
@@ -497,24 +474,17 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
         RetrofitClient.getService().deletePost(postId).enqueue(new Callback<DeletePostResponse>() {
             @Override
             public void onResponse(Call<DeletePostResponse> call, Response<DeletePostResponse> response) {
-                if (!isAdded()) return; // Fragment not attached
+                if (!isAdded()) return;
 
                 if (response.isSuccessful() && response.body() != null) {
                     Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-
-                    // Xóa bài viết khỏi cả hai danh sách để đảm bảo tính nhất quán
                     allPosts.removeIf(p -> p.id == postId);
                     displayedPostList.remove(position);
-
-                    // Thông báo cho adapter
                     adapter.notifyItemRemoved(position);
                     adapter.notifyItemRangeChanged(position, displayedPostList.size());
-
-                    // Kiểm tra và hiển thị chế độ xem trống nếu cần
                     if (displayedPostList.isEmpty()) {
                         filterAndShowPosts(tabLayout.getSelectedTabPosition());
                     }
-
                 } else {
                     String errorMessage = "Lỗi khi xóa bài viết. Mã lỗi: " + response.code();
                     Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
@@ -523,12 +493,11 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
 
             @Override
             public void onFailure(Call<DeletePostResponse> call, Throwable t) {
-                if (!isAdded()) return; // Fragment not attached
+                if (!isAdded()) return;
                 Toast.makeText(getContext(), "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 
     private byte[] getBytes(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();

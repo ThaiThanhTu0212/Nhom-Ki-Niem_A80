@@ -51,6 +51,14 @@
                 android:layout_height="wrap_content"
                 android:text="ngày còn lại" />
 
+            <ProgressBar
+                android:id="@+id/progressBar_listcd_home"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:max="100" />
+
             <TextView
                 android:id="@+id/tvSotienHienTai_listcd_home"
                 android:layout_width="match_parent"

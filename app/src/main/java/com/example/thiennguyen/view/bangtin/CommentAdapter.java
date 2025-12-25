@@ -10,7 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thiennguyen.R;
-import com.example.thiennguyen.api.bangtin.BinhLuan;
+// SỬA Ở ĐÂY: Import đúng lớp BinhLuan từ package 'view.bangtin'
+import com.example.thiennguyen.view.bangtin.BinhLuan;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     private Context context;
     private List<BinhLuan> commentList;
 
+    // Bây giờ hàm khởi tạo này sẽ chấp nhận List<BinhLuan> từ BangTinCommentActivity
     public CommentAdapter(Context context, List<BinhLuan> commentList) {
         this.context = context;
         this.commentList = commentList;
@@ -34,10 +37,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         BinhLuan comment = commentList.get(position);
-        holder.username.setText("Người dùng " + comment.idNguoiBinhLuan);
-        holder.content.setText(comment.noiDung);
-        // TODO: Format the date
-        holder.time.setText(comment.ngayBinhLuan.toString());
+
+        // SỬA Ở ĐÂY: Sử dụng các phương thức getter từ lớp BinhLuan trong package 'view'
+        holder.username.setText(comment.getAuthor());
+        holder.content.setText(comment.getContent());
+        holder.time.setText(comment.getTime());
+        holder.avatar.setImageResource(comment.getAvatarRes());
     }
 
     @Override
@@ -46,10 +51,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     }
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
+        CircleImageView avatar;
         TextView username, content, time;
 
         public CommentViewHolder(@NonNull View itemView) {
             super(itemView);
+            avatar = itemView.findViewById(R.id.comment_avatar);
             username = itemView.findViewById(R.id.comment_username);
             content = itemView.findViewById(R.id.comment_content);
             time = itemView.findViewById(R.id.comment_time);

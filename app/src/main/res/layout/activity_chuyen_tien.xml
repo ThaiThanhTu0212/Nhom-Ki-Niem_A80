@@ -13,14 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@android:color/white"
-        app:title="Ủng hộ chiến dịch"
-        app:navigationIcon="@drawable/ic_arrow_back" />
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:title="Ủng hộ chiến dịch" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
-        android:layout_above="@+id/btn_confirm_donation">
+        android:layout_above="@+id/btn_confirm_donation"
+        android:layout_below="@id/toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,35 +32,43 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp">
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:padding="16dp">
+
                     <ImageView
                         android:id="@+id/img_receiver_avatar"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@drawable/quy_tamlongvang_avatar"/>
+                        android:src="@drawable/quy_tamlongvang_avatar" />
+
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginStart="16dp">
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ủng hộ tới" 
-                            android:textSize="14sp"/>
+                            android:text="Ủng hộ tới"
+                            android:textSize="14sp" />
+
                         <TextView
                             android:id="@+id/tv_receiver_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Quỹ Tấm Lòng Vàng"
+                            android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:textColor="@android:color/black"/>
+                            tools:text="Quỹ Tấm Lòng Vàng" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -69,74 +77,110 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Số tiền (VND)"
                 android:layout_marginTop="24dp"
-                android:textStyle="bold"/>
+                android:text="Số tiền (VND)"
+                android:textStyle="bold" />
+
             <EditText
                 android:id="@+id/edt_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:textSize="32sp"
-                android:textStyle="bold"
-                android:hint="0"
+                android:background="@drawable/edittext_bottom_line"
                 android:gravity="center"
-                android:background="@drawable/edittext_bottom_line"/>
+                android:hint="0"
+                android:inputType="numberDecimal"
+                android:paddingBottom="8dp"
+                android:textSize="32sp"
+                android:textStyle="bold" />
 
             <!-- Gợi ý số tiền -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="16dp">
-                <Button android:id="@+id/btn_50k" style="@style/Widget.MaterialComponents.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="50.000" android:layout_marginEnd="8dp"/>
-                <Button android:id="@+id/btn_100k" style="@style/Widget.MaterialComponents.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="100.000" android:layout_marginEnd="8dp"/>
-                <Button android:id="@+id/btn_200k" style="@style/Widget.MaterialComponents.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="200.000"/>
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_50k"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:text="50.000" />
+
+                <Button
+                    android:id="@+id/btn_100k"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:text="100.000" />
+
+                <Button
+                    android:id="@+id/btn_200k"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="200.000" />
             </LinearLayout>
 
             <!-- Lời nhắn -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lời nhắn"
                 android:layout_marginTop="24dp"
-                android:textStyle="bold"/>
+                android:text="Lời nhắn"
+                android:textStyle="bold" />
+
             <EditText
                 android:id="@+id/edt_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Chúc chiến dịch thành công!"/>
-                
+                android:background="@drawable/edittext_bottom_line"
+                android:hint="Chúc chiến dịch thành công!"
+                android:paddingBottom="8dp" />
+
             <!-- Thông tin QR và STK -->
-             <com.google.android.material.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 app:cardCornerRadius="12dp"
-                android:layout_marginTop="24dp">
-                 <LinearLayout
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:orientation="vertical"
-                     android:padding="16dp"
-                     android:gravity="center_horizontal">
-                     <TextView
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="Quét mã QR để ủng hộ tự động"
-                         android:textStyle="bold"/>
-                      <ImageView
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Quét mã QR để ủng hộ tự động"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <ImageView
                         android:id="@+id/img_qr_code"
                         android:layout_width="200dp"
                         android:layout_height="200dp"
-                        android:layout_marginTop="8dp"
-                        android:src="@drawable/anhmomo"/>
-                     <TextView
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="Hoặc chuyển khoản thủ công:\nSTK: 123456789\nNgân hàng: Vietcombank\nChủ tài khoản: QUY TAM LONG VANG"
-                         android:gravity="center"
-                         android:layout_marginTop="16dp"/>
-                 </LinearLayout>
+                        android:layout_marginTop="12dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/anhmomo" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Hoặc chuyển khoản thủ công:\nSTK: 123456789\nNgân hàng: Vietcombank\nChủ tài khoản: QUY TAM LONG VANG" />
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
@@ -148,7 +192,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Xác nhận ủng hộ"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:text="Xác nhận ủng hộ" />
 
 </RelativeLayout>
