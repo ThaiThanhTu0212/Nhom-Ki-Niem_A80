@@ -77,7 +77,13 @@ public class CreateChienDichActivity extends AppCompatActivity {
     }
 
     private void createChienDichHome(ChienDichRequest request) {
-        String token = "Bearer " + DataLocalManager.getToken();
+        String tokenValue = DataLocalManager.getToken();
+        if (tokenValue == null || tokenValue.isEmpty()) {
+            Toast.makeText(CreateChienDichActivity.this, "Vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String token = "Bearer " + tokenValue;
 
         Call<ApiResponse<ChienDichResponse>> callCreateChienDich = chienDichApi.createChienDichHome(request,token);
         callCreateChienDich.enqueue(new Callback<ApiResponse<ChienDichResponse>>() {
