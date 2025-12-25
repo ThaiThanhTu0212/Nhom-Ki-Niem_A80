@@ -20,10 +20,19 @@ import com.example.thiennguyen.view.data.DTO.Response.AuthenticationResponse;
 import com.example.thiennguyen.view.data.DTO.Response.NguoiDungResponse;
 import com.example.thiennguyen.view.data.api.AuthenticationApi;
 import com.example.thiennguyen.view.data.api.NguoiDungApi;
+import com.example.thiennguyen.view.data.api.ThamGiaChienDichApi;
+import com.example.thiennguyen.view.data.DTO.Response.ThamGiaChienDichDetailResponse;
+import com.example.thiennguyen.view.data.DTO.Response.ThamGiaChienDichResponse;
+import com.example.thiennguyen.view.data.DTO.request.UpdateThamGiaChienDich;
 import com.example.thiennguyen.view.data.sharepreference.DataLocalManager;
 import com.example.thiennguyen.view.login.RegisterActivity;
 import com.example.thiennguyen.view.model.NguoiDung;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.List;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,17 +42,20 @@ public class TaiKhoanFragment extends Fragment {
 
     // Views
     private ImageView ivBanner, ivAvatar, ivCameraAvatar, ivCameraBanner, ivGmail;
-    private TextView tvUserName, tvUserId, tvFollowers, tvPosts, tvOr;
+    private TextView tvUserName, tvUserId, tvFollowers, tvPosts, tvOr, tvHistory;
     private TextView tvDonationDays, tvCampaignsJoined, tvSupportCount, tvBtnLogOut;
     private Button btnEditProfile,btnLoginTaiKhoan, btnDangKy2;
     private TabLayout tabLayout;
     private View llStats, llStatsRow, llFollowing, cvActivity;
+    private RecyclerView recyclerViewThamGia;
 
     private View view;
     private NguoiDung currentUser;
+    private ThamGiaChienDichAdapter thamGiaChienDichAdapter;
 
     AuthenticationApi authenticationApi = ApiClient.getRetrofit().create(AuthenticationApi.class);
     NguoiDungApi nguoiDungApi = ApiClient.getRetrofit().create(NguoiDungApi.class);
+    ThamGiaChienDichApi thamGiaChienDichApi = ApiClient.getRetrofit().create(ThamGiaChienDichApi.class);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,6 +63,7 @@ public class TaiKhoanFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_tai_khoan, container, false);
 
         initViews();
+        setupRecyclerView();
         setupUserData();
         Logout();
 
@@ -144,6 +157,7 @@ public class TaiKhoanFragment extends Fragment {
             ivAvatar.setVisibility(View.GONE);
             tvBtnLogOut.setVisibility(View.GONE);
             btnEditProfile.setVisibility(View.GONE);
+            tvHistory.setVisibility(View.GONE);
 
         } else {
             // --- Đã đăng nhập ---
@@ -167,12 +181,165 @@ public class TaiKhoanFragment extends Fragment {
             btnLoginTaiKhoan.setVisibility(View.GONE);
             btnDangKy2.setVisibility(View.GONE);
             tvOr.setVisibility(View.GONE);
+            tvHistory.setVisibility(View.VISIBLE);
 
 
             // Load user từ API (hoặc dữ liệu local)
             LoadMyInform();
+            // Load danh sách tham gia chiến dịch
+            loadThamGiaChienDich();
         }
     }
+
+    private void setupRecyclerView() {
+        recyclerViewThamGia = view.findViewById(R.id.idReCycleViewDSThamGia);
+        if (recyclerViewThamGia == null) {
+            android.util.Log.e("TaiKhoanFragment", "RecyclerView not found!");
+            return;
+        }
+        recyclerViewThamGia.setLayoutManager(new LinearLayoutManager(getContext()));
+        thamGiaChienDichAdapter = new ThamGiaChienDichAdapter();
+        thamGiaChienDichAdapter.setOnHuyThamGiaClickListener(item -> {
+            huyThamGiaChienDich(item);
+        });
+        recyclerViewThamGia.setAdapter(thamGiaChienDichAdapter);
+        android.util.Log.d("TaiKhoanFragment", "RecyclerView setup completed");
+    }
+
+    private void loadThamGiaChienDich() {
+        String tokenValue = DataLocalManager.getToken();
+        if (tokenValue == null || tokenValue.isEmpty()) {
+            android.util.Log.e("TaiKhoanFragment", "Token is null or empty");
+            return;
+        }
+
+        String token = "Bearer " + tokenValue;
+        android.util.Log.d("TaiKhoanFragment", "Calling API with token: " + (tokenValue.length() > 10 ? tokenValue.substring(0, 10) + "..." : tokenValue));
+        android.util.Log.d("TaiKhoanFragment", "Base URL: " + com.example.thiennguyen.view.data.ApiClient.URL_BASE);
+        
+        Call<ApiResponse<List<ThamGiaChienDichDetailResponse>>> call = thamGiaChienDichApi.getThamGiaChienDichByid(token);
+        call.enqueue(new Callback<ApiResponse<List<ThamGiaChienDichDetailResponse>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<ThamGiaChienDichDetailResponse>>> call, 
+                                 Response<ApiResponse<List<ThamGiaChienDichDetailResponse>>> response) {
+                android.util.Log.d("TaiKhoanFragment", "Response received. Code: " + response.code());
+                android.util.Log.d("TaiKhoanFragment", "Response successful: " + response.isSuccessful());
+                
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        android.util.Log.d("TaiKhoanFragment", "Response body not null");
+                        if (response.body().getResult() != null) {
+                            List<ThamGiaChienDichDetailResponse> list = response.body().getResult();
+                            android.util.Log.d("TaiKhoanFragment", "Got " + list.size() + " items");
+                            if (list.size() > 0) {
+                                android.util.Log.d("TaiKhoanFragment", "First item: " + list.get(0).getTenChienDich());
+                            }
+                            if (thamGiaChienDichAdapter != null) {
+                                thamGiaChienDichAdapter.setThamGiaChienDichList(list);
+                                android.util.Log.d("TaiKhoanFragment", "Adapter updated with " + list.size() + " items");
+                            } else {
+                                android.util.Log.e("TaiKhoanFragment", "Adapter is null!");
+                            }
+                        } else {
+                            android.util.Log.e("TaiKhoanFragment", "Result is null");
+                            Toast.makeText(getContext(), "Không có dữ liệu!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        android.util.Log.e("TaiKhoanFragment", "Response body is null");
+                        Toast.makeText(getContext(), "Không có dữ liệu trả về!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    android.util.Log.e("TaiKhoanFragment", "Response not successful. Code: " + response.code());
+                    String errorBody = "";
+                    if (response.errorBody() != null) {
+                        try {
+                            errorBody = response.errorBody().string();
+                            android.util.Log.e("TaiKhoanFragment", "Error body: " + errorBody);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (response.code() == 401) {
+                        Toast.makeText(getContext(), "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Lỗi " + response.code() + ": " + errorBody, Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<ThamGiaChienDichDetailResponse>>> call, Throwable t) {
+                android.util.Log.e("TaiKhoanFragment", "Request failed", t);
+                String errorMsg = "Lỗi kết nối";
+                if (t != null) {
+                    errorMsg += ": " + t.getMessage();
+                    android.util.Log.e("TaiKhoanFragment", "Error: " + t.getClass().getName() + " - " + t.getMessage());
+                    t.printStackTrace();
+                }
+                Toast.makeText(getContext(), errorMsg, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void huyThamGiaChienDich(ThamGiaChienDichDetailResponse item) {
+        String tokenValue = DataLocalManager.getToken();
+        if (tokenValue == null || tokenValue.isEmpty()) {
+            Toast.makeText(getContext(), "Vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Tạo dialog xác nhận
+        new android.app.AlertDialog.Builder(getContext())
+                .setTitle("Xác nhận hủy tham gia")
+                .setMessage("Bạn có chắc chắn muốn hủy tham gia chiến dịch \"" + 
+                           (item.getTenChienDich() != null ? item.getTenChienDich() : "") + "\"?")
+                .setPositiveButton("Hủy tham gia", (dialog, which) -> {
+                    // Thực hiện hủy tham gia
+                    String token = "Bearer " + tokenValue;
+                    
+                    UpdateThamGiaChienDich updateRequest = new UpdateThamGiaChienDich();
+                    updateRequest.setIdThamGia(item.getIdThamGia());
+                    updateRequest.setTrangThai("huy_bo");
+                    
+                    Call<ApiResponse<ThamGiaChienDichResponse>> call = 
+                            thamGiaChienDichApi.updateThamGiaCD(updateRequest, token);
+                    
+                    call.enqueue(new Callback<ApiResponse<ThamGiaChienDichResponse>>() {
+                        @Override
+                        public void onResponse(Call<ApiResponse<ThamGiaChienDichResponse>> call, 
+                                             Response<ApiResponse<ThamGiaChienDichResponse>> response) {
+                            if (response.isSuccessful() && response.body() != null) {
+                                Toast.makeText(getContext(), "Đã hủy tham gia chiến dịch thành công!", Toast.LENGTH_SHORT).show();
+                                // Reload danh sách
+                                loadThamGiaChienDich();
+                            } else {
+                                if (response.code() == 401) {
+                                    Toast.makeText(getContext(), "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    String errorMsg = "Không thể hủy tham gia";
+                                    if (response.errorBody() != null) {
+                                        try {
+                                            errorMsg += ": " + response.errorBody().string();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    Toast.makeText(getContext(), errorMsg, Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResponse<ThamGiaChienDichResponse>> call, Throwable t) {
+                            android.util.Log.e("TaiKhoanFragment", "Failed to cancel participation", t);
+                            Toast.makeText(getContext(), "Lỗi kết nối. Vui lòng thử lại!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
+    }
+
     private void initViews() {
         // Images
         ivBanner = view.findViewById(R.id.ivBanner);
@@ -208,6 +375,7 @@ public class TaiKhoanFragment extends Fragment {
         btnLoginTaiKhoan = view.findViewById(R.id.btnLoginTaiKhoan);
         btnDangKy2 = view.findViewById(R.id.btnDangKy2);
         tvOr = view.findViewById(R.id.tvOr);
+        tvHistory = view.findViewById(R.id.tvHistory);
 
 
 

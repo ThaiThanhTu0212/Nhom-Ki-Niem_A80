@@ -360,9 +360,27 @@
                     android:textColor="#666666"
                     android:textSize="14sp" />
             </LinearLayout>
+
         </LinearLayout>
 
         <!-- Following Section -->
+        <TextView
+            android:id="@+id/tvHistory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="20dp"
+            android:paddingLeft="20dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="Lịch sử tham gia chiến dich"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/idReCycleViewDSThamGia"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="8dp" />
+
         <LinearLayout
             android:id="@+id/llFollowing"
             android:layout_width="match_parent"
@@ -431,16 +449,6 @@
                     android:textColor="#666666"
                     android:textSize="16sp" />
             </LinearLayout>
-
-            <!-- Empty State -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="24dp"
-                android:text="Không có nội dung hiện thị"
-                android:textColor="#999999"
-                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

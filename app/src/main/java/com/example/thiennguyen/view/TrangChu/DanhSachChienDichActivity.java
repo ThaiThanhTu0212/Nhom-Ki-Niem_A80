@@ -168,20 +168,6 @@ public class DanhSachChienDichActivity extends AppCompatActivity {
 
 
 
-        searchBarHomeId = findViewById(R.id.searchBarHomeId);
-        searchBarHomeId.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-        });
-
-
 
     }
 

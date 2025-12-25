@@ -37,13 +37,6 @@
     </LinearLayout>
 
 
-    <SearchView
-        android:id="@+id/searchBarHomeId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:iconifiedByDefault="false"
-        android:queryHint="Tìm kiếm..." />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/loaiCd_ctcd_home"
         android:layout_width="match_parent"
