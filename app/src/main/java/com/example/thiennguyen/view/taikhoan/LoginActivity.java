@@ -21,7 +21,7 @@ import com.example.thiennguyen.view.data.DTO.Response.AuthenticationResponse;
 import com.example.thiennguyen.view.data.DTO.request.AuthenticationRequest;
 import com.example.thiennguyen.view.data.api.AuthenticationApi;
 import com.example.thiennguyen.view.data.sharepreference.DataLocalManager;
-import com.example.thiennguyen.view.login.RegisterActivity;
+import com.example.thiennguyen.view.taikhoan.RegistrationActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
 
         });
         btnDangKy.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
             startActivity(intent);
         });
     }
