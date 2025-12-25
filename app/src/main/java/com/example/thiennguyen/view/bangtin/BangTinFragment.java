@@ -63,7 +63,7 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
     private TextView tvEmptyView;
 
     // Đảm bảo địa chỉ IP này là của máy tính đang chạy backend
-    private static final String IMAGE_BASE_URL = "http://192.168.114.213:5089";
+    private static final String IMAGE_BASE_URL = "http://192.168.1.118:5089";
 
     private ActivityResultLauncher<Intent> imagePickerLauncher;
     private ActivityResultLauncher<Intent> commentLauncher;
