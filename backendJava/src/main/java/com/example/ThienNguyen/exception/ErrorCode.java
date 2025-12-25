@@ -32,6 +32,7 @@ public enum ErrorCode {
     ORDER_DETAIL_EXIST(1017,"Order Detail has been existed ",HttpStatus.BAD_REQUEST),
     EMAIL_EXISTS(1018,"Email has been existed ",HttpStatus.BAD_REQUEST),
     CAMPAIGN_NOT_EXIST(1019,"Campaign does not exist yet ",HttpStatus.BAD_REQUEST),
+    THAM_GIA_CHIEN_DICH_NOT_EXIST(1020,"Tham gia chien dich does not exist yet ",HttpStatus.NOT_FOUND),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

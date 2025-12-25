@@ -19,4 +19,5 @@ public class NguoiDungResponse {
     String vaiTro;
     String trangThai;
     String avatar;
+
 }
