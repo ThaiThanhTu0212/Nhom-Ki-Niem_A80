@@ -17,7 +17,7 @@ public class RetrofitClient {
         if (retrofit == null) {
             // Cấu hình Gson để hiểu định dạng ngày tháng từ API
             Gson gson = new GsonBuilder()
-                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                    .setDateFormat("dd/MM/yyyy HH:mm") // SỬA LẠI ĐỊNH DẠNG NGÀY THÁNG
                     .create();
 
             retrofit = new Retrofit.Builder()

@@ -2,8 +2,6 @@ package com.example.thiennguyen.api.bangtin;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
-
 public class BinhLuan {
 
     @SerializedName("id")
@@ -19,5 +17,5 @@ public class BinhLuan {
     public String noiDung;
 
     @SerializedName("ngayBinhLuan")
-    public Date ngayBinhLuan;
+    public String ngayBinhLuan;
 }

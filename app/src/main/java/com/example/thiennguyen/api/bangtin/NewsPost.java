@@ -4,29 +4,25 @@ import java.io.Serializable;
 
 public class NewsPost implements Serializable {
     public int id;
-    public Integer campaignId; // ID của chiến dịch (có thể null)
+    public Integer campaignId;
     public String author;
     public String time;
     public String content;
     public String imageUrl;
     public int avatarResource;
-    public int commentCount;
     public int likeCount;
+    public int commentCount;
     public boolean isLiked;
-
-    // Các trường mới cho thanh ủng hộ
-    public boolean showDonationBar;
+    public boolean showDonation;
     public int donationProgress;
     public int donatorsCount;
     public int daysLeft;
 
-    // Constructor cũ (giữ lại để tương thích nếu cần)
-    public NewsPost(int id, String author, String time, String content, String imageUrl, int avatarResource, int likeCount, int commentCount) {
-        this(id, null, author, time, content, imageUrl, avatarResource, likeCount, commentCount, false, 0, 0, 0);
-    }
+    // Các thuộc tính mới được thêm vào
+    public boolean isSaved = false; // Bài viết đã được lưu chưa
+    public boolean isFollowingAuthor = false; // Đã theo dõi tác giả chưa
 
-    // Constructor mới đầy đủ
-    public NewsPost(int id, Integer campaignId, String author, String time, String content, String imageUrl, int avatarResource, int likeCount, int commentCount, boolean showDonationBar, int donationProgress, int donatorsCount, int daysLeft) {
+    public NewsPost(int id, Integer campaignId, String author, String time, String content, String imageUrl, int avatarResource, int likeCount, int commentCount, boolean showDonation, int donationProgress, int donatorsCount, int daysLeft) {
         this.id = id;
         this.campaignId = campaignId;
         this.author = author;
@@ -36,10 +32,10 @@ public class NewsPost implements Serializable {
         this.avatarResource = avatarResource;
         this.likeCount = likeCount;
         this.commentCount = commentCount;
-        this.isLiked = false;
-        this.showDonationBar = showDonationBar;
+        this.showDonation = showDonation;
         this.donationProgress = donationProgress;
         this.donatorsCount = donatorsCount;
         this.daysLeft = daysLeft;
+        this.isLiked = false; // Mặc định là chưa thích
     }
 }

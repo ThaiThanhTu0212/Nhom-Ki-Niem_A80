@@ -6,6 +6,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -28,6 +29,9 @@ public interface ApiService {
             @Part("IsCallingForDonation") RequestBody isCallingForDonation,
             @Part MultipartBody.Part file
     );
+
+    @DELETE("/api/baiviet/{id}")
+    Call<DeletePostResponse> deletePost(@Path("id") int postId);
 
     // --- BÌNH LUẬN ---
     @GET("/api/baiviet/{id}/comments")
