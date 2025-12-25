@@ -22,6 +22,7 @@ import com.example.thiennguyen.view.data.DTO.ApiResponse;
 import com.example.thiennguyen.view.data.DTO.Response.ChienDichResponse;
 import com.example.thiennguyen.view.data.DTO.Response.NguoiDungResponse;
 import com.example.thiennguyen.view.data.api.ChienDichApi;
+import com.example.thiennguyen.view.data.sharepreference.DataLocalManager;
 import com.example.thiennguyen.view.model.ChienDich;
 import com.example.thiennguyen.view.model.DanhMuc;
 import com.example.thiennguyen.view.model.NguoiDung;
@@ -139,6 +140,12 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
         btnCreateChienDich.setOnClickListener(v -> {
+            String tokenValue = DataLocalManager.getToken();
+            if (tokenValue == null || tokenValue.isEmpty()) {
+                Toast.makeText(getContext(), "Vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             Intent intent = new Intent(getContext(), CreateChienDichActivity.class);
             startActivity(intent);
         });
