@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/action_save_post"
+        android:title="Lưu bài viết" />
+    <item
+        android:id="@+id/action_follow_author"
+        android:title="Theo dõi tác giả" />
+    <item
         android:id="@+id/action_delete_post"
-        android:title="Xóa" />
+        android:title="Xóa bài viết" />
 </menu>

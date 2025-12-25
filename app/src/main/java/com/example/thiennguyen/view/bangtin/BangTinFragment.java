@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
@@ -31,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.thiennguyen.R;
 import com.example.thiennguyen.api.bangtin.BaiViet;
 import com.example.thiennguyen.api.bangtin.CreatePostResponse;
+import com.example.thiennguyen.api.bangtin.DeletePostResponse;
 import com.example.thiennguyen.api.bangtin.LikeCommentResponse;
 import com.example.thiennguyen.api.bangtin.NewsPost;
 import com.example.thiennguyen.api.bangtin.RetrofitClient;
@@ -62,11 +65,15 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
     private TabLayout tabLayout;
     private TextView tvEmptyView;
 
-    // Đảm bảo địa chỉ IP này là của máy tính đang chạy backend
-    private static final String IMAGE_BASE_URL = "http://192.168.114.213:5089";
-
     private ActivityResultLauncher<Intent> imagePickerLauncher;
     private ActivityResultLauncher<Intent> commentLauncher;
+
+    private String buildImageUrl(String imagePath) {
+        if (imagePath == null || imagePath.isEmpty()) {
+            return null;
+        }
+        return RetrofitClient.BASE_URL + "images/" + imagePath;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -129,7 +136,7 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
     private void setupTabs(View view) {
         if (tabLayout.getTabCount() == 0) {
             tabLayout.addTab(tabLayout.newTab().setText("Mới nhất"));
-            tabLayout.addTab(tabLayout.newTab().setText("Nổi bật"));
+            tabLayout.addTab(tabLayout.newTab().setText("Đã lưu"));
             tabLayout.addTab(tabLayout.newTab().setText("Đang theo dõi"));
         }
 
@@ -167,14 +174,18 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
                 displayedPostList.addAll(allPosts);
                 emptyMessage = "Chưa có bài viết nào.";
                 break;
-            case 1: // Nổi bật
-                List<NewsPost> trendingPosts = allPosts.stream()
-                        .filter(p -> p.likeCount > 50)
+            case 1: // Đã lưu
+                List<NewsPost> savedPosts = allPosts.stream()
+                        .filter(p -> p.isSaved)
                         .collect(Collectors.toList());
-                displayedPostList.addAll(trendingPosts);
-                emptyMessage = "Chưa có bài viết nào nổi bật.";
+                displayedPostList.addAll(savedPosts);
+                emptyMessage = "Bạn chưa lưu bài viết nào.";
                 break;
             case 2: // Đang theo dõi
+                List<NewsPost> followedPosts = allPosts.stream()
+                        .filter(p -> p.isFollowingAuthor)
+                        .collect(Collectors.toList());
+                displayedPostList.addAll(followedPosts);
                 emptyMessage = "Bạn chưa theo dõi một cá nhân hay tổ chức nào.";
                 break;
         }
@@ -204,11 +215,7 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
                 if (response.isSuccessful() && response.body() != null) {
                     allPosts.clear();
                     for (BaiViet bv : response.body()) {
-                        // Xây dựng URL đầy đủ cho hình ảnh
-                        String imageUrl = null;
-                        if (bv.hinhAnh != null && !bv.hinhAnh.isEmpty()) {
-                            imageUrl = IMAGE_BASE_URL + "/images/" + bv.hinhAnh;
-                        }
+                        String imageUrl = buildImageUrl(bv.hinhAnh);
 
                         boolean showDonation = bv.idChienDich != null;
                         allPosts.add(new NewsPost(bv.id, bv.idChienDich, "Người dùng " + bv.idNguoiDang, bv.ngayDang, bv.noiDung, imageUrl, R.drawable.ic_launcher_background, bv.soLuotThich, bv.soLuotBinhLuan, showDonation, 25, 120, 7));
@@ -288,10 +295,30 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
 
     @Override
     public void onMoreOptionsClick(int position, View view) {
+        if (getContext() == null || position < 0 || position >= displayedPostList.size()) return;
+
+        NewsPost clickedPost = displayedPostList.get(position);
+
         PopupMenu popup = new PopupMenu(getContext(), view);
         popup.getMenuInflater().inflate(R.menu.post_options_menu, popup.getMenu());
+
+        // Dynamically change menu item titles
+        Menu menu = popup.getMenu();
+        MenuItem saveItem = menu.findItem(R.id.action_save_post);
+        MenuItem followItem = menu.findItem(R.id.action_follow_author);
+
+        saveItem.setTitle(clickedPost.isSaved ? "Bỏ lưu" : "Lưu bài viết");
+        followItem.setTitle(clickedPost.isFollowingAuthor ? "Bỏ theo dõi" : "Theo dõi tác giả");
+
         popup.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.action_delete_post) {
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_save_post) {
+                toggleSaveStatus(clickedPost);
+                return true;
+            } else if (itemId == R.id.action_follow_author) {
+                toggleFollowStatus(clickedPost);
+                return true;
+            } else if (itemId == R.id.action_delete_post) {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Xóa bài viết")
                         .setMessage("Bạn có chắc chắn muốn xóa bài viết này không?")
@@ -303,6 +330,48 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
             return false;
         });
         popup.show();
+    }
+
+    private void toggleSaveStatus(NewsPost post) {
+        boolean isCurrentlyOnSavedTab = tabLayout.getSelectedTabPosition() == 1;
+        boolean isUnsaving = post.isSaved; // The state BEFORE toggling
+
+        post.isSaved = !post.isSaved; // Toggle the state
+        Toast.makeText(getContext(), post.isSaved ? "Đã lưu bài viết" : "Đã bỏ lưu bài viết", Toast.LENGTH_SHORT).show();
+
+        // If user is unsaving while on the 'Saved' tab, go back to 'Latest'
+        if (isUnsaving && isCurrentlyOnSavedTab) {
+            tabLayout.selectTab(tabLayout.getTabAt(0));
+        } else {
+            // Otherwise, just refresh the current list.
+            filterAndShowPosts(tabLayout.getSelectedTabPosition());
+        }
+    }
+
+    private void toggleFollowStatus(NewsPost post) {
+        boolean isCurrentlyOnFollowingTab = tabLayout.getSelectedTabPosition() == 2;
+        boolean isUnfollowing = post.isFollowingAuthor; // The state BEFORE toggling
+        String author = post.author;
+
+        // The new state will be the opposite of the current state
+        boolean nowFollowing = !isUnfollowing;
+
+        // Update follow status for all posts by the same author in the master list
+        for (NewsPost p : allPosts) {
+            if (p.author.equals(author)) {
+                p.isFollowingAuthor = nowFollowing;
+            }
+        }
+
+        Toast.makeText(getContext(), nowFollowing ? "Đã theo dõi " + author : "Đã bỏ theo dõi " + author, Toast.LENGTH_SHORT).show();
+
+        // If user is unfollowing while on the 'Following' tab, go back to 'Latest'
+        if (isUnfollowing && isCurrentlyOnFollowingTab) {
+            tabLayout.selectTab(tabLayout.getTabAt(0));
+        } else {
+            // Otherwise, just refresh the current list.
+            filterAndShowPosts(tabLayout.getSelectedTabPosition());
+        }
     }
 
     @Override
@@ -366,11 +435,11 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
 
         RequestBody idNguoiDangPart = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(idNguoiDang));
         RequestBody noiDungPart = RequestBody.create(MediaType.parse("text/plain"), noiDung);
-        
+
         // SỬA LỖI: Gửi 1 hoặc 0 thay vì "true"/"false"
         String isCallingValue = isCallingForDonation ? "1" : "0";
         RequestBody isCallingPart = RequestBody.create(MediaType.parse("text/plain"), isCallingValue);
-        
+
         MultipartBody.Part filePart = null;
 
         if (imageUri != null) {
@@ -413,12 +482,53 @@ public class BangTinFragment extends Fragment implements NewsPostAdapter.OnItemC
     }
 
     private void deletePost(final int position) {
-        // TODO: Gọi API để xóa bài viết trên server
-        displayedPostList.remove(position);
-        adapter.notifyItemRemoved(position);
-        adapter.notifyItemRangeChanged(position, displayedPostList.size());
-        Toast.makeText(getContext(), "Đã xóa bài viết", Toast.LENGTH_SHORT).show();
+        if (getContext() == null || position < 0 || position >= displayedPostList.size()) {
+            return;
+        }
+
+        NewsPost postToDelete = displayedPostList.get(position);
+        int postId = postToDelete.id;
+
+        if (RetrofitClient.getService() == null) {
+            Toast.makeText(getContext(), "Lỗi: Service không khả dụng.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        RetrofitClient.getService().deletePost(postId).enqueue(new Callback<DeletePostResponse>() {
+            @Override
+            public void onResponse(Call<DeletePostResponse> call, Response<DeletePostResponse> response) {
+                if (!isAdded()) return; // Fragment not attached
+
+                if (response.isSuccessful() && response.body() != null) {
+                    Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                    // Xóa bài viết khỏi cả hai danh sách để đảm bảo tính nhất quán
+                    allPosts.removeIf(p -> p.id == postId);
+                    displayedPostList.remove(position);
+
+                    // Thông báo cho adapter
+                    adapter.notifyItemRemoved(position);
+                    adapter.notifyItemRangeChanged(position, displayedPostList.size());
+
+                    // Kiểm tra và hiển thị chế độ xem trống nếu cần
+                    if (displayedPostList.isEmpty()) {
+                        filterAndShowPosts(tabLayout.getSelectedTabPosition());
+                    }
+
+                } else {
+                    String errorMessage = "Lỗi khi xóa bài viết. Mã lỗi: " + response.code();
+                    Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DeletePostResponse> call, Throwable t) {
+                if (!isAdded()) return; // Fragment not attached
+                Toast.makeText(getContext(), "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 
     private byte[] getBytes(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
