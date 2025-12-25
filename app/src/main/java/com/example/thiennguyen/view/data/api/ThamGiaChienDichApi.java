@@ -5,6 +5,7 @@ import com.example.thiennguyen.view.data.DTO.Response.ChienDichResponse;
 import com.example.thiennguyen.view.data.DTO.Response.ThamGiaChienDichDetailResponse;
 import com.example.thiennguyen.view.data.DTO.Response.ThamGiaChienDichResponse;
 import com.example.thiennguyen.view.data.DTO.request.ChienDichRequest;
+import com.example.thiennguyen.view.data.DTO.request.UpdateThamGiaChienDich;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ThamGiaChienDichApi {
@@ -21,4 +23,7 @@ public interface ThamGiaChienDichApi {
                                                              @Header("Authorization") String token);
     @GET("thamgia/me")
     Call<ApiResponse<List<ThamGiaChienDichDetailResponse>>> getThamGiaChienDichByid(@Header("Authorization") String token);
+
+    @PUT("thamgia")
+    Call<ApiResponse<ThamGiaChienDichResponse>> updateThamGiaCD(@Body UpdateThamGiaChienDich updateThamGiaChienDich,@Header("Authorization") String token);
 }

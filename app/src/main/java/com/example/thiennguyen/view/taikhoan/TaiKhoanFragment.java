@@ -22,6 +22,8 @@ import com.example.thiennguyen.view.data.api.AuthenticationApi;
 import com.example.thiennguyen.view.data.api.NguoiDungApi;
 import com.example.thiennguyen.view.data.api.ThamGiaChienDichApi;
 import com.example.thiennguyen.view.data.DTO.Response.ThamGiaChienDichDetailResponse;
+import com.example.thiennguyen.view.data.DTO.Response.ThamGiaChienDichResponse;
+import com.example.thiennguyen.view.data.DTO.request.UpdateThamGiaChienDich;
 import com.example.thiennguyen.view.data.sharepreference.DataLocalManager;
 import com.example.thiennguyen.view.login.RegisterActivity;
 import com.example.thiennguyen.view.model.NguoiDung;
@@ -197,6 +199,9 @@ public class TaiKhoanFragment extends Fragment {
         }
         recyclerViewThamGia.setLayoutManager(new LinearLayoutManager(getContext()));
         thamGiaChienDichAdapter = new ThamGiaChienDichAdapter();
+        thamGiaChienDichAdapter.setOnHuyThamGiaClickListener(item -> {
+            huyThamGiaChienDich(item);
+        });
         recyclerViewThamGia.setAdapter(thamGiaChienDichAdapter);
         android.util.Log.d("TaiKhoanFragment", "RecyclerView setup completed");
     }
@@ -275,6 +280,66 @@ public class TaiKhoanFragment extends Fragment {
             }
         });
     }
+
+    private void huyThamGiaChienDich(ThamGiaChienDichDetailResponse item) {
+        String tokenValue = DataLocalManager.getToken();
+        if (tokenValue == null || tokenValue.isEmpty()) {
+            Toast.makeText(getContext(), "Vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Tạo dialog xác nhận
+        new android.app.AlertDialog.Builder(getContext())
+                .setTitle("Xác nhận hủy tham gia")
+                .setMessage("Bạn có chắc chắn muốn hủy tham gia chiến dịch \"" + 
+                           (item.getTenChienDich() != null ? item.getTenChienDich() : "") + "\"?")
+                .setPositiveButton("Hủy tham gia", (dialog, which) -> {
+                    // Thực hiện hủy tham gia
+                    String token = "Bearer " + tokenValue;
+                    
+                    UpdateThamGiaChienDich updateRequest = new UpdateThamGiaChienDich();
+                    updateRequest.setIdThamGia(item.getIdThamGia());
+                    updateRequest.setTrangThai("huy_bo");
+                    
+                    Call<ApiResponse<ThamGiaChienDichResponse>> call = 
+                            thamGiaChienDichApi.updateThamGiaCD(updateRequest, token);
+                    
+                    call.enqueue(new Callback<ApiResponse<ThamGiaChienDichResponse>>() {
+                        @Override
+                        public void onResponse(Call<ApiResponse<ThamGiaChienDichResponse>> call, 
+                                             Response<ApiResponse<ThamGiaChienDichResponse>> response) {
+                            if (response.isSuccessful() && response.body() != null) {
+                                Toast.makeText(getContext(), "Đã hủy tham gia chiến dịch thành công!", Toast.LENGTH_SHORT).show();
+                                // Reload danh sách
+                                loadThamGiaChienDich();
+                            } else {
+                                if (response.code() == 401) {
+                                    Toast.makeText(getContext(), "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    String errorMsg = "Không thể hủy tham gia";
+                                    if (response.errorBody() != null) {
+                                        try {
+                                            errorMsg += ": " + response.errorBody().string();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    Toast.makeText(getContext(), errorMsg, Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResponse<ThamGiaChienDichResponse>> call, Throwable t) {
+                            android.util.Log.e("TaiKhoanFragment", "Failed to cancel participation", t);
+                            Toast.makeText(getContext(), "Lỗi kết nối. Vui lòng thử lại!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
+    }
+
     private void initViews() {
         // Images
         ivBanner = view.findViewById(R.id.ivBanner);
