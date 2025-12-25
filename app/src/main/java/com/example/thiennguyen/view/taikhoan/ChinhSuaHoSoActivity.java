@@ -7,22 +7,12 @@ import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
-import com.example.thiennguyen.view.data.ApiClient;
-import com.example.thiennguyen.view.data.DTO.ApiResponse;
-import com.example.thiennguyen.view.data.DTO.request.UpdateProfileRequest;
-import com.example.thiennguyen.view.data.api.NguoiDungApi;
-import com.example.thiennguyen.view.data.sharepreference.DataLocalManager;
 import com.example.thiennguyen.view.model.NguoiDung;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ChinhSuaHoSoActivity extends AppCompatActivity {
 
@@ -30,22 +20,19 @@ public class ChinhSuaHoSoActivity extends AppCompatActivity {
     private ImageView ivAvatarEdit, btnBack;
     private Button btnSave;
     private NguoiDung user;
-    private NguoiDungApi nguoiDungApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chinh_sua_ho_so);
 
-        nguoiDungApi = ApiClient.getRetrofit().create(NguoiDungApi.class);
-
         // Ánh xạ View
         edtHoTen = findViewById(R.id.edtHoTen);
         edtPhone = findViewById(R.id.edtSoDienThoai);
         edtEmail = findViewById(R.id.edtEmail);
-        ivAvatarEdit = findViewById(R.id.ivAvatarEdit);
-        btnBack = findViewById(R.id.btnBack);
-        btnSave = findViewById(R.id.btnLuuThayDoi);
+        ivAvatarEdit = findViewById(R.id.ivAvatarEdit); // Cần có ID này trong XML
+        btnBack = findViewById(R.id.btnBack);           // Cần có ID này trong XML
+        btnSave = findViewById(R.id.btnLuuThayDoi);     // Cần có ID này trong XML
 
         // Nhận dữ liệu
         user = (NguoiDung) getIntent().getSerializableExtra("user_data");
@@ -60,7 +47,7 @@ public class ChinhSuaHoSoActivity extends AppCompatActivity {
 
         // Sự kiện
         if (btnBack != null) btnBack.setOnClickListener(v -> finish());
-        if (btnSave != null) btnSave.setOnClickListener(v -> saveProfile());
+        btnSave.setOnClickListener(v -> saveProfile());
     }
 
     private void saveProfile() {
@@ -72,32 +59,15 @@ public class ChinhSuaHoSoActivity extends AppCompatActivity {
             return;
         }
 
-        UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(name, phone);
-        String token = "Bearer " + DataLocalManager.getToken();
-        Call<ApiResponse<Void>> call = nguoiDungApi.updateMyInfo(token, updateProfileRequest);
+        if (user != null) {
+            user.setHoTen(name);
+            user.setSoDienThoai(phone);
+            user.setEmail(edtEmail.getText().toString().trim());
+        }
 
-        call.enqueue(new Callback<ApiResponse<Void>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
-                if(response.isSuccessful()){
-                    Toast.makeText(ChinhSuaHoSoActivity.this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
-                    if (user != null) {
-                        user.setHoTen(name);
-                        user.setSoDienThoai(phone);
-                    }
-                    Intent result = new Intent();
-                    result.putExtra("updated_user", user);
-                    setResult(Activity.RESULT_OK, result);
-                    finish();
-                } else {
-                    Toast.makeText(ChinhSuaHoSoActivity.this, "Cập nhật thất bại!", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
-                Toast.makeText(ChinhSuaHoSoActivity.this, "Lỗi kết nối!", Toast.LENGTH_SHORT).show();
-            }
-        });
+        Intent result = new Intent();
+        result.putExtra("updated_user", user);
+        setResult(Activity.RESULT_OK, result);
+        finish();
     }
 }

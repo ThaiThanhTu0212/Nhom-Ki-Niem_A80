@@ -2,7 +2,6 @@ package com.example.thiennguyen.view.taikhoan;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,27 +10,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
 import com.example.thiennguyen.view.MainActivity;
 import com.example.thiennguyen.view.data.ApiClient;
 import com.example.thiennguyen.view.data.DTO.ApiResponse;
-import com.example.thiennguyen.view.data.DTO.Response.AuthenticationResponse;
 import com.example.thiennguyen.view.data.DTO.Response.NguoiDungResponse;
-import com.example.thiennguyen.view.data.api.AuthenticationApi;
-import com.example.thiennguyen.view.data.api.NguoiDungApi;
-import com.example.thiennguyen.view.data.api.ThamGiaChienDichApi;
 import com.example.thiennguyen.view.data.DTO.Response.ThamGiaChienDichDetailResponse;
 import com.example.thiennguyen.view.data.DTO.Response.ThamGiaChienDichResponse;
 import com.example.thiennguyen.view.data.DTO.request.UpdateThamGiaChienDich;
+import com.example.thiennguyen.view.data.api.AuthenticationApi;
+import com.example.thiennguyen.view.data.api.NguoiDungApi;
+import com.example.thiennguyen.view.data.api.ThamGiaChienDichApi;
 import com.example.thiennguyen.view.data.sharepreference.DataLocalManager;
+import com.example.thiennguyen.view.login.RegisterActivity;
 import com.example.thiennguyen.view.model.NguoiDung;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -93,7 +93,6 @@ public class TaiKhoanFragment extends Fragment {
             public void onResponse(Call<ApiResponse<NguoiDungResponse>> call, Response<ApiResponse<NguoiDungResponse>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().getResult() != null) {
                     NguoiDungResponse nguoiDungResponse = response.body().getResult();
-                    currentUser = new NguoiDung(nguoiDungResponse.getIdNd(), nguoiDungResponse.getHoTen(), nguoiDungResponse.getEmail(), nguoiDungResponse.getSoDienThoai(), nguoiDungResponse.getAvatar());
                     // Hiển thị thông tin người dùng
                     tvUserName.setText(nguoiDungResponse.getHoTen() != null ? nguoiDungResponse.getHoTen() : "");
                     Glide.with(view.getContext())
@@ -139,7 +138,7 @@ public class TaiKhoanFragment extends Fragment {
                 startActivity(new Intent(getContext(), LoginActivity.class));
             });
             btnDangKy2.setOnClickListener(v -> {
-                startActivity(new Intent(getContext(), RegistrationActivity.class));
+                startActivity(new Intent(getContext(), RegisterActivity.class));
             });
 
             // Ẩn các icon camera
@@ -164,9 +163,7 @@ public class TaiKhoanFragment extends Fragment {
             tvUserId.setVisibility(View.VISIBLE);
             btnEditProfile.setText("Chỉnh sửa hồ sơ");
             btnEditProfile.setOnClickListener(v -> {
-                Intent intent = new Intent(getContext(), ChinhSuaHoSoActivity.class);
-                intent.putExtra("user_data", currentUser);
-                startActivity(intent);
+                // TODO: Mở activity chỉnh sửa hồ sơ
             });
 
             // Hiện các icon camera
@@ -217,7 +214,7 @@ public class TaiKhoanFragment extends Fragment {
 
         String token = "Bearer " + tokenValue;
         android.util.Log.d("TaiKhoanFragment", "Calling API with token: " + (tokenValue.length() > 10 ? tokenValue.substring(0, 10) + "..." : tokenValue));
-        android.util.Log.d("TaiKhoanFragment", "Base URL: " + com.example.thiennguyen.view.data.ApiClient.URL_BASE);
+        android.util.Log.d("TaiKhoanFragment", "Base URL: " + ApiClient.URL_BASE);
         
         Call<ApiResponse<List<ThamGiaChienDichDetailResponse>>> call = thamGiaChienDichApi.getThamGiaChienDichByid(token);
         call.enqueue(new Callback<ApiResponse<List<ThamGiaChienDichDetailResponse>>>() {

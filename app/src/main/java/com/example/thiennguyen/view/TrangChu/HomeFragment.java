@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +22,9 @@ import com.example.thiennguyen.view.data.DTO.Response.ChienDichResponse;
 import com.example.thiennguyen.view.data.DTO.Response.NguoiDungResponse;
 import com.example.thiennguyen.view.data.api.ChienDichApi;
 import com.example.thiennguyen.view.data.sharepreference.DataLocalManager;
-import com.example.thiennguyen.view.model.ChienDich;
 import com.example.thiennguyen.view.model.DanhMuc;
-import com.example.thiennguyen.view.model.NguoiDung;
-import com.example.thiennguyen.view.taikhoan.LoginActivity;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
