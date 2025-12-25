@@ -27,4 +27,17 @@ public class BaiViet {
 
     @SerializedName("soLuotBinhLuan")
     public int soLuotBinhLuan;
+
+    // Các trường được thêm vào để khớp với API
+    @SerializedName("showDonationBar")
+    public boolean showDonationBar;
+
+    @SerializedName("donationProgress")
+    public int donationProgress;
+
+    @SerializedName("donatorsCount")
+    public int donatorsCount;
+
+    @SerializedName("daysLeft")
+    public int daysLeft;
 }

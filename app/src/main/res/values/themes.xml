@@ -1,33 +1,32 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme -->
-    <style name="Base.Theme.ThienNguyen" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Màu chủ đạo của app bạn -->
-        <item name="colorPrimary">#FF9800</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#FFD180</item>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.ThienNguyen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorSecondaryVariant">@color/accent</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.ThienNguyen" parent="Base.Theme.ThienNguyen" />
-
-    <!-- Style TabLayout Bảng tin -->
-    <style name="BangTin.TabTextAppearance" parent="TextAppearance.Material3.LabelLarge">
-        <item name="android:textSize">15sp</item>
+    <style name="PostActionButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textColor">#606770</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="textAllCaps">false</item>
+        <item name="android:drawableTint">#606770</item>
+        <item name="android:drawablePadding">8dp</item>
     </style>
 
-    <!-- Các style dùng chung trong item bài viết -->
-    <style name="BangTin.PostUserName" parent="TextAppearance.Material3.TitleSmall">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#1A1A1A</item>
-    </style>
-
-    <style name="BangTin.PostTime" parent="TextAppearance.Material3.BodySmall">
-        <item name="android:textColor">#888888</item>
-    </style>
-
-    <style name="BangTin.PostContent" parent="TextAppearance.Material3.BodyMedium">
-        <item name="android:textColor">#333333</item>
-        <item name="android:lineSpacingExtra">4dp</item>
-    </style>
 </resources>

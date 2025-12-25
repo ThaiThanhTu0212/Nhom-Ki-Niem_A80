@@ -80,6 +80,19 @@ CREATE TABLE giao_dich (
     trang_thai NVARCHAR(20),
     ngay_tao DATETIME DEFAULT GETDATE()
 );
+CREATE TABLE tham_gia_chien_dich (
+    id_tg INT IDENTITY(1,1) PRIMARY KEY,
+    id_cd INT NOT NULL,
+    id_nd INT NOT NULL,
+    vai_tro NVARCHAR(50), -- tinh_nguyen_vien, thanh_vien, nguoi_van_dong
+    trang_thai NVARCHAR(20) DEFAULT N'cho_duyet', -- cho_duyet, da_duyet, tu_choi
+    ngay_dang_ky DATETIME DEFAULT GETDATE(),
+
+    CONSTRAINT fk_tg_cd FOREIGN KEY (id_cd) REFERENCES chien_dich(id_cd),
+    CONSTRAINT fk_tg_nd FOREIGN KEY (id_nd) REFERENCES nguoi_dung(id_nd),
+
+    CONSTRAINT uq_thamgia UNIQUE (id_cd, id_nd) -- tránh đăng ký trùng
+);
 
 -- ======================================
 -- 7. TẠO BẢNG TỆP ĐÍNH KÈM

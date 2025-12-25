@@ -3,7 +3,6 @@ package com.example.thiennguyen.view.bangtin;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -14,10 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thiennguyen.R;
-import com.example.thiennguyen.api.bangtin.BinhLuan;
+import com.example.thiennguyen.api.bangtin.CommentDto;
 import com.example.thiennguyen.api.bangtin.CommentRequest;
+import com.example.thiennguyen.api.bangtin.LikeCommentResponse;
 import com.example.thiennguyen.api.bangtin.NewsPost;
 import com.example.thiennguyen.api.bangtin.RetrofitClient;
+// THÊM DÒNG NÀY ĐỂ IMPORT LỚP BinhLuan
+import com.example.thiennguyen.view.bangtin.BinhLuan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,7 @@ public class BangTinCommentActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private CommentAdapter adapter;
-    private List<BinhLuan> commentList;
+    private List<BinhLuan> commentList; // Bây giờ BinhLuan đã được nhận diện
     private EditText edtCommentInput;
     private ImageView btnSendComment;
 
@@ -73,12 +75,15 @@ public class BangTinCommentActivity extends AppCompatActivity {
     }
 
     private void loadComments() {
-        RetrofitClient.getService().getCommentsForPost(postId).enqueue(new Callback<List<BinhLuan>>() {
+        RetrofitClient.getService().getComments(postId).enqueue(new Callback<List<CommentDto>>() {
             @Override
-            public void onResponse(Call<List<BinhLuan>> call, Response<List<BinhLuan>> response) {
+            public void onResponse(Call<List<CommentDto>> call, Response<List<CommentDto>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     commentList.clear();
-                    commentList.addAll(response.body());
+                    for (CommentDto dto : response.body()) {
+                        BinhLuan uiComment = new BinhLuan(dto.tenNguoiBinhLuan, dto.noiDung, dto.ngayBinhLuan, R.drawable.tinh_nguyen_vien_an_avatar);
+                        commentList.add(uiComment);
+                    }
                     adapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(BangTinCommentActivity.this, "Lỗi khi tải bình luận", Toast.LENGTH_SHORT).show();
@@ -86,7 +91,7 @@ public class BangTinCommentActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<BinhLuan>> call, Throwable t) {
+            public void onFailure(Call<List<CommentDto>> call, Throwable t) {
                 Toast.makeText(BangTinCommentActivity.this, "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -101,22 +106,21 @@ public class BangTinCommentActivity extends AppCompatActivity {
         // TODO: Thay thế 1 bằng ID người dùng thật
         CommentRequest request = new CommentRequest(1, content);
 
-        RetrofitClient.getService().addCommentToPost(postId, request).enqueue(new Callback<BinhLuan>() {
+        RetrofitClient.getService().postComment(postId, request).enqueue(new Callback<LikeCommentResponse>() {
             @Override
-            public void onResponse(Call<BinhLuan> call, Response<BinhLuan> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    commentList.add(response.body());
-                    adapter.notifyItemInserted(commentList.size() - 1);
-                    recyclerView.scrollToPosition(commentList.size() - 1);
+            public void onResponse(Call<LikeCommentResponse> call, Response<LikeCommentResponse> response) {
+                if (response.isSuccessful()) {
                     edtCommentInput.setText("");
                     hasNewComment = true;
+                    Toast.makeText(BangTinCommentActivity.this, "Đã gửi bình luận", Toast.LENGTH_SHORT).show();
+                    loadComments(); // Tải lại để cập nhật
                 } else {
                     Toast.makeText(BangTinCommentActivity.this, "Không thể gửi bình luận", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<BinhLuan> call, Throwable t) {
+            public void onFailure(Call<LikeCommentResponse> call, Throwable t) {
                 Toast.makeText(BangTinCommentActivity.this, "Lỗi mạng: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

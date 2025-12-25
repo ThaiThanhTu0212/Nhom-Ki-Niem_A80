@@ -2,15 +2,14 @@ package com.example.thiennguyen.api.bangtin;
 
 import com.google.gson.annotations.SerializedName;
 
-// DTO để hứng dữ liệu trả về từ server sau khi tạo bài viết thành công
 public class CreatePostResponse {
-
-    @SerializedName("id")
-    public int id;
-
-    @SerializedName("hinhAnh")
-    public String hinhAnh;
-
     @SerializedName("message")
     public String message;
+
+    @SerializedName("idBaiViet")
+    public int idBaiViet;
+
+    // Thêm trường này để nhận ID chiến dịch từ backend
+    @SerializedName("idChienDich")
+    public Integer idChienDich;
 }
