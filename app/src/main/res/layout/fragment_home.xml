@@ -11,17 +11,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/btnCreateChienDich"
-            android:layout_width="242dp"
-            android:layout_height="wrap_content"
-            android:text="Tạo chiến dịch" />
-
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:paddingTop="20dp"
             android:text="Danh mục" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/danhmucHomeRecyleid"
@@ -98,6 +93,14 @@
             android:id="@+id/ToChuchomeRecycleId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnCreateChienDich"
+            android:layout_width="242dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:text="Tạo chiến dịch nào!" />
 
         <ImageView
             android:id="@+id/imageView"
