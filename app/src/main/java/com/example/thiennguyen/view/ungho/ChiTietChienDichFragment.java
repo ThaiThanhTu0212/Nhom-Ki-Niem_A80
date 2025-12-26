@@ -13,15 +13,15 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.thiennguyen.R;
 import com.example.thiennguyen.view.model.ChienDich;
 
 import java.text.NumberFormat;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
 public class ChiTietChienDichFragment extends Fragment {
@@ -53,12 +53,17 @@ public class ChiTietChienDichFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_chi_tiet_chien_dich, container, false);
+        return inflater.inflate(R.layout.fragment_chi_tiet_chien_dich, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         if (chienDich != null) {
-            RecyclerView imageRecyclerView = view.findViewById(R.id.imageRecyclerView);
-            ImageAdapter imageAdapter = new ImageAdapter(getContext(), getSampleImageUrls());
-            imageRecyclerView.setAdapter(imageAdapter);
+            ImageView imageView = view.findViewById(R.id.imgchiendich);
+            int imageId = requireContext().getResources().getIdentifier(chienDich.getHinhAnh(), "drawable", requireContext().getPackageName());
+            Glide.with(requireContext()).load(imageId).into(imageView);
 
             TextView tvTenChienDich = view.findViewById(R.id.tvTenChienDich);
             TextView tvTenToChuc = view.findViewById(R.id.tvTenToChuc);
@@ -69,7 +74,9 @@ public class ChiTietChienDichFragment extends Fragment {
             Button btnUngHo = view.findViewById(R.id.btnUngHo);
 
             tvTenChienDich.setText(chienDich.getTenCd());
-            tvTenToChuc.setText(chienDich.getNguoiToChuc().getHoTen());
+            if (chienDich.getNguoiToChuc() != null) {
+                tvTenToChuc.setText(chienDich.getNguoiToChuc().getHoTen());
+            }
             tvMoTa.setText(chienDich.getMoTa());
 
             NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
@@ -83,22 +90,11 @@ public class ChiTietChienDichFragment extends Fragment {
 
             btnUngHo.setOnClickListener(v -> showQrDialog());
         }
-
-        return view;
-    }
-
-    private List<String> getSampleImageUrls() {
-        return Arrays.asList(
-                "https://i.pinimg.com/564x/b8/69/27/b8692797a22459434bedb93301077334.jpg",
-                "https://i.pinimg.com/564x/4b/7e/37/4b7e373b8a2e58a23351945a8f579d4b.jpg",
-                "https://i.pinimg.com/564x/a2/45/63/a24563a61f3f615f3f4e2f3d61172c1c.jpg",
-                "https://i.pinimg.com/564x/d1/a7/6b/d1a76b0f1d82e2e7a4f89a9f2d15024b.jpg",
-                "https://i.pinimg.com/564x/e7/7c/49/e77c49b145e1b1d1f7c3c3a9f73315a2.jpg"
-        );
     }
 
     private void showQrDialog() {
-        Dialog dialog = new Dialog(getContext());
+        if (getContext() == null) return;
+        Dialog dialog = new Dialog(requireContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_qr_code);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

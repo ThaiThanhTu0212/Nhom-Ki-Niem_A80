@@ -4,14 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thiennguyen.R;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.util.List;
 
@@ -45,13 +44,13 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.ThongB
     }
 
     public static class ThongBaoViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView avatar;
+        ImageView avatar; // ĐÃ SỬA: từ CircleImageView thành ImageView
         TextView content;
 
         public ThongBaoViewHolder(@NonNull View itemView) {
             super(itemView);
             avatar = itemView.findViewById(R.id.imgAvatar);
             content = itemView.findViewById(R.id.tvThongBaoContent);
-        }    
+        }
     }
 }

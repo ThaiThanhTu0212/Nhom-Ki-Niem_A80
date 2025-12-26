@@ -1,5 +1,6 @@
 package com.example.thiennguyen.view.ungho;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,9 +62,11 @@ public class ChienDichUngHoAdapter extends RecyclerView.Adapter<ChienDichUngHoAd
         ImageView imgchiendichUngHo;
         TextView tvTenChienDichUngHo, tvSotienHienTai, tvSotienMucTieu;
         ProgressBar progressBarItem;
+        Context context;
 
         public ChienDichUngHoViewHolder(@NonNull View itemView) {
             super(itemView);
+            context = itemView.getContext();
             imgchiendichUngHo = itemView.findViewById(R.id.imgchiendichUngHo);
             tvTenChienDichUngHo = itemView.findViewById(R.id.tvTenChienDichUngHo);
             tvSotienHienTai = itemView.findViewById(R.id.tvSotienHienTai);
@@ -78,8 +81,9 @@ public class ChienDichUngHoAdapter extends RecyclerView.Adapter<ChienDichUngHoAd
             tvSotienHienTai.setText(currencyFormat.format(chienDich.getSoTienHienTai()));
             tvSotienMucTieu.setText("trên " + currencyFormat.format(chienDich.getSoTienMucTieu()));
 
+            int imageId = context.getResources().getIdentifier(chienDich.getHinhAnh(), "drawable", context.getPackageName());
             Glide.with(itemView.getContext())
-                    .load(chienDich.getHinhAnh())
+                    .load(imageId)
                     .into(imgchiendichUngHo);
 
             if (chienDich.getSoTienMucTieu().doubleValue() > 0) {
